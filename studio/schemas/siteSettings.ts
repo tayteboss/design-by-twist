@@ -50,8 +50,8 @@ export default {
       type: 'string',
     },
     {
-      title: 'Footer Highlight Colour',
-      name: 'footerHighlightColour',
+      title: 'Highlight Colour',
+      name: 'HighlightColour',
       type: 'color',
     },
     {

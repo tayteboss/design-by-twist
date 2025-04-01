@@ -30,11 +30,6 @@ export default {
           type: 'string',
         },
         {
-          title: 'Hero Foreground Colour',
-          name: 'heroForegroundColour',
-          type: 'color',
-        },
-        {
           title: 'Hero Background Colour',
           name: 'heroBackgroundColour',
           type: 'color',

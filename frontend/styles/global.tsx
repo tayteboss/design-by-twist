@@ -6,7 +6,10 @@ export const GlobalStyles = createGlobalStyle`
 	:root {
 		--colour-white: ${theme.colours.white};
 		--colour-black: ${theme.colours.black};
-		--font-default: ${theme.fonts.default};
+		--colour-foreground: ${theme.colours.pink};
+		--font-acid-grotesk-bold: ${theme.fonts.acidGroteskBold};
+		--font-acid-grotesk-regular: ${theme.fonts.acidGroteskRegular};
+		--font-holise-extra-light: ${theme.fonts.holiseExtraLight};
 		--transition-speed-default: ${theme.transitionSpeed.default};
 		--transition-speed-fast: ${theme.transitionSpeed.fast};
 		--transition-speed-extra-fast: ${theme.transitionSpeed.extraFast};
@@ -32,8 +35,8 @@ export const GlobalStyles = createGlobalStyle`
 	-webkit-text-size-adjust: 100%;
 
 	::selection {
-		background-color: black;
-		color: white;
+		background-color: var(--colour-pink);
+		color: var(--colour-white);
 	}
 
 	html {
@@ -59,7 +62,7 @@ export const GlobalStyles = createGlobalStyle`
 	button,
 	label,
 	body {
-		font-family: var(--font-default);
+		font-family: var(--font-acid-grotesk-regular);
 		color: var(--colour-black);
 		line-height: normal;
 	}
@@ -74,7 +77,6 @@ export const GlobalStyles = createGlobalStyle`
 	}
 
 	a {
-		text-decoration: underline;
 		color: var(--colour-black);
 	}
 
@@ -84,17 +86,13 @@ export const GlobalStyles = createGlobalStyle`
 
 	h1,
 	.type-h1 {
-		font-size: ${pxToRem(48)};
-		line-height: ${pxToRem(48)};
+		font-size: ${pxToRem(54)};
+		line-height: ${pxToRem(55)};
+		font-family: var(--font-holise-extra-light);
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
-			font-size: ${pxToRem(38)};
-			line-height: ${pxToRem(38)};
-		}
-
-		@media ${theme.mediaBreakpoints.mobile} {
-			font-size: ${pxToRem(28)};
-			line-height: ${pxToRem(28)};
+			font-size: ${pxToRem(35)};
+			line-height: ${pxToRem(40)};
 		}
 	}
 
@@ -102,15 +100,11 @@ export const GlobalStyles = createGlobalStyle`
 	.type-h2 {
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(48)};
+		font-family: var(--font-holise-extra-light);
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
 			line-height: ${pxToRem(38)};
-		}
-
-		@media ${theme.mediaBreakpoints.mobile} {
-			font-size: ${pxToRem(28)};
-			line-height: ${pxToRem(28)};
 		}
 	}
 
@@ -118,15 +112,11 @@ export const GlobalStyles = createGlobalStyle`
 	.type-h3 {
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(28)};
+		font-family: var(--font-holise-extra-light);
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
 			line-height: ${pxToRem(38)};
-		}
-
-		@media ${theme.mediaBreakpoints.mobile} {
-			font-size: ${pxToRem(28)};
-			line-height: ${pxToRem(28)};
 		}
 	}
 
@@ -134,15 +124,11 @@ export const GlobalStyles = createGlobalStyle`
 	.type-h4 {
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(28)};
+		font-family: var(--font-holise-extra-light);
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
 			line-height: ${pxToRem(38)};
-		}
-
-		@media ${theme.mediaBreakpoints.mobile} {
-			font-size: ${pxToRem(28)};
-			line-height: ${pxToRem(28)};
 		}
 	}
 
@@ -151,8 +137,9 @@ export const GlobalStyles = createGlobalStyle`
 	a,
 	button,
 	div {
-		font-size: ${pxToRem(16)};
-		line-height: ${pxToRem(16)};
+		font-size: ${pxToRem(30)};
+		line-height: ${pxToRem(35)};
+		font-family: var(--font-acid-grotesk-regular);
 	}
 
 	mux-player {

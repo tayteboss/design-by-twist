@@ -1,5 +1,22 @@
-/* @font-face {
-	font-family: 'HaasGrot';
-	src: url('/fonts/HaasGrotDisp-55Roman.woff2') format('woff2'), url('/fonts/HaasGrotDisp-55Roman.woff') format('woff'), url('/fonts/HaasGrotDisp-55Roman.ttf') format('truetype'), url('/fonts/HaasGrotDisp-55Roman.otf') format('opentype');
+@font-face {
+	font-family: 'Acid Grotesk Bold';
+	src: url('/fonts/AcidGrotesk-Bold.otf') format('opentype');
+	font-weight: 700;
 	font-display: swap;
-} */
+}
+
+@font-face {
+	font-family: 'Acid Grotesk Regular';
+	src: url('/fonts/AcidGrotesk-Regular.otf') format('opentype');
+	font-weight: 400;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Holise Extra Light';
+	src: url('/fonts/Holise-ExtraLight.woff2') format('woff2'),
+		url('/fonts/Holise-ExtraLight.woff') format('woff'),
+		url('/fonts/Holise-ExtraLight.otf') format('opentype');
+	font-weight: 200;
+	font-display: swap;
+}
