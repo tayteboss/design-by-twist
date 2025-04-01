@@ -77,6 +77,7 @@ export const GlobalStyles = createGlobalStyle`
 	}
 
 	a {
+		text-decoration: none;
 		color: var(--colour-black);
 	}
 
@@ -89,6 +90,7 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(54)};
 		line-height: ${pxToRem(55)};
 		font-family: var(--font-holise-extra-light);
+		font-weight: 200;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(35)};
@@ -101,6 +103,7 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(48)};
 		font-family: var(--font-holise-extra-light);
+		font-weight: 200;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
@@ -113,6 +116,7 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(28)};
 		font-family: var(--font-holise-extra-light);
+		font-weight: 200;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
@@ -125,6 +129,7 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(48)};
 		line-height: ${pxToRem(28)};
 		font-family: var(--font-holise-extra-light);
+		font-weight: 200;
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(38)};
@@ -140,6 +145,11 @@ export const GlobalStyles = createGlobalStyle`
 		font-size: ${pxToRem(30)};
 		line-height: ${pxToRem(35)};
 		font-family: var(--font-acid-grotesk-regular);
+
+		@media ${theme.mediaBreakpoints.tabletPortrait} {
+			font-size: ${pxToRem(20)};
+			line-height: ${pxToRem(25)};
+		}
 	}
 
 	mux-player {
@@ -154,7 +164,8 @@ export const GlobalStyles = createGlobalStyle`
 	{
 		opacity: 0;
 
-		transition: opacity var(--transition-speed-default) ease;
+		transition: opacity var(--transition-speed-slow) ease;
+		transition-delay: 0.25s;
 
 		&--in-view
 		{
@@ -166,8 +177,9 @@ export const GlobalStyles = createGlobalStyle`
 	{
 		opacity: 0;
 		transform: translateY(15px);
-
-		transition: opacity var(--transition-speed-default) cubic-bezier(0.65, 0, 0.35, 1), transform var(--transition-speed-default) cubic-bezier(0.65, 0, 0.35, 1);
+		
+		transition: opacity var(--transition-speed-slow) cubic-bezier(0.65, 0, 0.35, 1), transform var(--transition-speed-default) cubic-bezier(0.65, 0, 0.35, 1);
+		transition-delay: 0.25s;
 
 		&--in-view
 		{

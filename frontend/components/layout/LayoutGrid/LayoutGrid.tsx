@@ -13,7 +13,8 @@ const Grid = styled.div`
   align-items: start;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    grid-template-columns: repeat(10, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-column-gap: ${pxToRem(8)};
   }
 `;
 

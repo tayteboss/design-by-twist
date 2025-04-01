@@ -15,7 +15,9 @@ import FeaturedProjects from "../components/blocks/FeaturedProjects";
 import HomeStudio from "../components/blocks/HomeStudio";
 import HomeHero from "../components/blocks/HomeHero";
 
-const PageWrapper = styled(motion.div)``;
+const PageWrapper = styled(motion.div)`
+  overflow: hidden;
+`;
 
 type Props = {
   data: HomePageType;
@@ -41,7 +43,7 @@ const Page = (props: Props) => {
         description={data?.seoDescription || ""}
       />
       <HomeHero data={data?.heroSection} />
-      <HomeStudio />
+      <HomeStudio data={data?.studioSection} />
       <FeaturedProjects />
     </PageWrapper>
   );

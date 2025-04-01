@@ -7,6 +7,8 @@ import pxToRem from "../../../utils/pxToRem";
 import MuxPlayer from "@mux/mux-player-react";
 import router from "next/router";
 import { useState, useEffect } from "react";
+import useWindowDimensions from "../../../hooks/useWindowDimensions";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
   background-color: ${(props) => props.$bg};
@@ -65,12 +67,12 @@ const Word = styled(motion.span)`
   }
 `;
 
-const MediaWrapper = styled.div`
+const MediaWrapper = styled(motion.div)`
   position: relative;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     padding-top: 56.25%;
-    transform: translateY(50%);
+    /* transform: translateY(50%) !important; */
     width: 100%;
   }
 `;
@@ -109,7 +111,7 @@ const wrapperVariants = {
     transition: {
       duration: 0.3,
       ease: "easeInOut",
-      staggerChildren: 0.1,
+      staggerChildren: 0.05,
       delayChildren: 0.5,
       when: "beforeChildren",
     },
@@ -131,8 +133,11 @@ const childVariants = {
     x: 0,
     filter: "blur(0px)",
     transition: {
-      duration: 0.3,
+      duration: 0.03,
       ease: "easeInOut",
+      type: "spring",
+      stiffness: 200,
+      bounce: 0.9,
     },
   },
 };
@@ -151,12 +156,18 @@ const HomeHero = (props: Props) => {
   const [windowHeight, setWindowHeight] = useState(0);
   const [mediaHeight, setMediaHeight] = useState(0);
 
+  const viewport = useViewportWidth();
+  const isMobile = viewport === "mobile";
+
   const width = useTransform(scrollY, [0, windowHeight], ["80vw", "100vw"]);
 
   const mediaTransform = useTransform(
     scrollY,
     [0, windowHeight],
-    ["translateY(-25%)", "translateY(0%)"]
+    [
+      isMobile ? "translateY(-25%)" : "translateY(-25%)",
+      isMobile ? "translateY(50%)" : "translateY(0%)",
+    ]
   );
 
   const contentTransform = useTransform(
@@ -221,7 +232,11 @@ const HomeHero = (props: Props) => {
         </Inner>
       </LayoutWrapper>
       {showreelVideo?.asset?.playbackId && (
-        <MediaWrapper>
+        <MediaWrapper
+          initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.75, delay: 1 }}
+        >
           <MediaInner style={{ width, transform: mediaTransform }}>
             <MuxPlayer
               streamType="on-demand"
