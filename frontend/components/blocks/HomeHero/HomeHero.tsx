@@ -8,8 +8,12 @@ import MuxPlayer from "@mux/mux-player-react";
 import router from "next/router";
 import { useState, useEffect } from "react";
 
-const HomeHeroWrapper = styled.section<{ $bg: string }>`
+const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
   background-color: ${(props) => props.$bg};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    margin-bottom: ${(props) => pxToRem(props.$mediaHeight)};
+  }
 `;
 
 const Inner = styled.div`
@@ -22,6 +26,17 @@ const LogoWrapper = styled.span`
   align-items: center;
   justify-content: center;
   margin-right: ${pxToRem(24)};
+  position: relative;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    margin-right: ${pxToRem(8)};
+    top: 2px;
+
+    svg {
+      width: 104px;
+      height: auto;
+    }
+  }
 `;
 
 const ContentWrapper = styled(motion.div)``;
@@ -30,6 +45,10 @@ const ContentInner = styled(motion.span)`
   display: flex;
   flex-wrap: wrap;
   padding-top: ${pxToRem(40)};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    padding-top: ${pxToRem(10)};
+  }
 `;
 
 const Word = styled(motion.span)`
@@ -39,10 +58,21 @@ const Word = styled(motion.span)`
   font-family: var(--font-holise-extra-light);
   white-space: pre;
   line-height: 0.9;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    font-size: ${pxToRem(45)};
+    line-height: ${pxToRem(45)};
+  }
 `;
 
 const MediaWrapper = styled.div`
   position: relative;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    padding-top: 56.25%;
+    transform: translateY(50%);
+    width: 100%;
+  }
 `;
 
 const MediaInner = styled(motion.div)`
@@ -50,6 +80,14 @@ const MediaInner = styled(motion.div)`
   width: 80vw;
   transform: translateY(-25%);
   margin: 0 auto;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    height: 100%;
+    width: 100%;
+    transform: unset;
+    position: absolute;
+    inset: 0;
+  }
 
   mux-player {
     width: 100%;
@@ -111,6 +149,7 @@ const HomeHero = (props: Props) => {
   const { scrollY } = useScroll();
 
   const [windowHeight, setWindowHeight] = useState(0);
+  const [mediaHeight, setMediaHeight] = useState(0);
 
   const width = useTransform(scrollY, [0, windowHeight], ["80vw", "100vw"]);
 
@@ -135,6 +174,11 @@ const HomeHero = (props: Props) => {
   useEffect(() => {
     const handleResize = () => {
       setWindowHeight(window.innerHeight);
+      if (window.innerWidth < 768) {
+        setMediaHeight(window.innerWidth * 0.5625);
+      } else {
+        setMediaHeight(0);
+      }
     };
 
     handleResize();
@@ -147,7 +191,10 @@ const HomeHero = (props: Props) => {
   }, [router]);
 
   return (
-    <HomeHeroWrapper $bg={heroBackgroundColour?.hex || "#421244"}>
+    <HomeHeroWrapper
+      $bg={heroBackgroundColour?.hex || "#421244"}
+      $mediaHeight={mediaHeight}
+    >
       <LayoutWrapper>
         <Inner>
           {heroDescription && (
