@@ -83,7 +83,9 @@ export type ProjectType = {
   defaultTagline: any[];
   featuredTagline: string;
   featuredDescription: string;
-  featuredColour: string;
+  featuredColour: {
+    hex: string;
+  };
   informationTitle: string;
   informationDescription: string;
   pageBuilder: any;
@@ -109,7 +111,9 @@ export type HomePageType = {
     studioTitle: string;
     studioDescription: string;
   };
-  featuredProjectsSection: ProjectType[];
+  featuredProjectsSection: {
+    featuredProjects: ProjectType[];
+  };
 };
 
 export type WorkPageType = {

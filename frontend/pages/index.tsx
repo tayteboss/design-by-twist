@@ -44,7 +44,7 @@ const Page = (props: Props) => {
       />
       <HomeHero data={data?.heroSection} />
       <HomeStudio data={data?.studioSection} />
-      <FeaturedProjects />
+      <FeaturedProjects data={data?.featuredProjectsSection} />
     </PageWrapper>
   );
 };

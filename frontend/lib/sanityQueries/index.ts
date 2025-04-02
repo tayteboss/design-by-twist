@@ -66,12 +66,7 @@ export const homePageQueryString = `
 					}
 				},
 				defaultThumbnail {
-					asset -> {
-						url,
-						metadata {
-							lqip
-						}
-					}
+					${mediaString}
 				},
 				defaultThumbnailRatio,
 				defaultTagline,

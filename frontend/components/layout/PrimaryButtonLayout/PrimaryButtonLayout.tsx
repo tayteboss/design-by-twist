@@ -14,11 +14,10 @@ const PrimaryButtonLayoutWrapper = styled.div`
   font-size: ${pxToRem(30)};
   line-height: 1;
 
-  transition: all var(--transition-speed-fast) var(--transition-ease);
+  transition: all 200ms var(--transition-ease);
 
   &:hover {
-    background: var(--colour-foreground);
-    color: var(--colour-black);
+    box-shadow: 0 0 27px rgba(255, 107, 241, 0.75);
   }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
