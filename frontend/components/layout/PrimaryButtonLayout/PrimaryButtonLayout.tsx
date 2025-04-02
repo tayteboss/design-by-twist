@@ -1,14 +1,18 @@
 import styled from "styled-components";
 import pxToRem from "../../../utils/pxToRem";
 
-const PrimaryButtonLayoutWrapper = styled.div`
+const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
   min-width: ${pxToRem(300)};
   padding: 0 ${pxToRem(24)};
   height: ${pxToRem(48)};
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--colour-black);
+  border: 1px solid;
+  border-color: ${(props) =>
+    props.$useLightTheme ? "var(--colour-white)" : "var(--colour-pink)"};
+  color: ${(props) =>
+    props.$useLightTheme ? "var(--colour-white)" : "var(--colour-black)"};
   border-radius: 100px;
   font-family: var(--font-holise-extra-light);
   font-size: ${pxToRem(30)};
@@ -27,12 +31,17 @@ const PrimaryButtonLayoutWrapper = styled.div`
 
 type Props = {
   children: React.ReactNode;
+  useLightTheme?: boolean;
 };
 
 const PrimaryButtonLayout = (props: Props) => {
-  const { children } = props;
+  const { children, useLightTheme = false } = props;
 
-  return <PrimaryButtonLayoutWrapper>{children}</PrimaryButtonLayoutWrapper>;
+  return (
+    <PrimaryButtonLayoutWrapper $useLightTheme={useLightTheme}>
+      {children}
+    </PrimaryButtonLayoutWrapper>
+  );
 };
 
 export default PrimaryButtonLayout;
