@@ -35,7 +35,7 @@ const Page = (props: Props) => {
       <StudioHero data={data?.heroSection} />
       <AboutSection data={data?.aboutSection} />
       <ServicesSection />
-      <PartnersSection />
+      <PartnersSection data={data?.partnersSection} />
     </PageWrapper>
   );
 };

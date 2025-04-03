@@ -77,43 +77,48 @@ type Props = {
   data: MediaType;
   isPriority: boolean;
   inView: boolean;
+  noAnimation?: boolean;
 };
 
 const ImageComponent = (props: Props) => {
-  const { data, isPriority, inView } = props;
+  const { data, isPriority, inView, noAnimation } = props;
 
   const imageUrl = data?.media?.image?.asset?.url;
   const blurDataURL = data?.media?.image?.asset?.metadata?.lqip;
 
   return (
     <ImageComponentWrapper className="media-wrapper">
-      <AnimatePresence initial={false}>
-        {(inView || isPriority) &&
-          data?.media?.image?.asset?.metadata?.lqip && (
-            <InnerBlur
-              variants={wrapperVariants}
-              initial="hidden"
-              animate="visible"
-              exit="hidden"
-            >
-              <Image
-                src={blurDataURL}
-                alt={data?.media?.image?.alt || ""}
-                priority={isPriority}
-                blurDataURL={blurDataURL}
-                fill
-                style={{
-                  objectFit: "cover",
-                }}
-                sizes="50vw"
-              />
-            </InnerBlur>
-          )}
-      </AnimatePresence>
+      {!noAnimation && (
+        <AnimatePresence initial={false}>
+          {(inView || isPriority) &&
+            data?.media?.image?.asset?.metadata?.lqip && (
+              <InnerBlur
+                variants={wrapperVariants}
+                initial={noAnimation ? "visible" : "hidden"}
+                animate={noAnimation ? "hidden" : "visible"}
+                exit={noAnimation ? "hidden" : "visible"}
+              >
+                <Image
+                  src={blurDataURL}
+                  alt={data?.media?.image?.alt || ""}
+                  priority={isPriority}
+                  blurDataURL={blurDataURL}
+                  fill
+                  style={{
+                    objectFit: "cover",
+                  }}
+                  sizes="50vw"
+                />
+              </InnerBlur>
+            )}
+        </AnimatePresence>
+      )}
       <Inner
         variants={defaultVariants}
-        initial="hidden"
-        animate={inView || isPriority ? "visible" : "hidden"}
+        initial={noAnimation ? "visible" : "hidden"}
+        animate={
+          noAnimation ? "visible" : inView || isPriority ? "visible" : "hidden"
+        }
       >
         {imageUrl && (
           <Image

@@ -9,10 +9,11 @@ const MediaStackWrapper = styled.div``;
 type Props = {
   data: MediaType;
   isPriority?: boolean;
+  noAnimation?: boolean;
 };
 
 const MediaStack = (props: Props) => {
-  const { data, isPriority = false } = props ?? {};
+  const { data, isPriority = false, noAnimation = false } = props ?? {};
 
   const useVideo = data?.media?.mediaType === "video";
 
@@ -25,10 +26,20 @@ const MediaStack = (props: Props) => {
   return (
     <MediaStackWrapper ref={ref}>
       {useVideo && (
-        <VideoComponent data={data} inView={inView} isPriority={isPriority} />
+        <VideoComponent
+          data={data}
+          inView={inView}
+          isPriority={isPriority}
+          noAnimation={noAnimation}
+        />
       )}
       {!useVideo && (
-        <ImageComponent data={data} isPriority={isPriority} inView={inView} />
+        <ImageComponent
+          data={data}
+          isPriority={isPriority}
+          inView={inView}
+          noAnimation={noAnimation}
+        />
       )}
     </MediaStackWrapper>
   );

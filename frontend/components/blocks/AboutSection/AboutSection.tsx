@@ -49,14 +49,14 @@ const DescriptionWrapper = styled(motion.div)`
 `;
 
 const Description = styled.p`
-  text-indent: 20%;
+  text-indent: ${pxToRem(140)};
   font-size: ${pxToRem(50)};
   line-height: ${pxToRem(56)};
   font-family: var(--font-holise-extra-light);
   font-weight: 200;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
-    text-indent: 30%;
+    text-indent: ${pxToRem(80)};
     font-size: ${pxToRem(30)};
     line-height: ${pxToRem(35)};
   }
