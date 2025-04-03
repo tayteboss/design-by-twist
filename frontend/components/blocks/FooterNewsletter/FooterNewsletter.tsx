@@ -3,6 +3,14 @@ import FooterTextCell from "../../elements/FooterTextCell";
 
 const FooterNewsletterWrapper = styled.div`
   grid-column: span 4;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletLandscape} {
+    grid-column: span 5;
+  }
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
+    grid-column: 1 / -1;
+  }
 `;
 
 type Props = {

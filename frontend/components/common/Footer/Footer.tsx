@@ -12,6 +12,7 @@ import LogoIcon from "../../svgs/LogoIcon";
 import { motion, useScroll, useTransform } from "framer-motion";
 import router from "next/router";
 import { useRef, useState, useEffect } from "react";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const FooterWrapper = styled.footer``;
 
@@ -24,6 +25,16 @@ const Inner = styled.div`
 
 const FooterTop = styled.div`
   padding: ${pxToRem(40)} 0;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
+    .footer-socials {
+      display: none;
+    }
+
+    .layout-grid {
+      gap: ${pxToRem(36)};
+    }
+  }
 `;
 
 const FooterBottom = styled(motion.div)`
@@ -66,15 +77,28 @@ const Footer = (props: Props) => {
   const [windowHeight, setWindowHeight] = useState(0);
   const [distanceToTop, setDistanceToTop] = useState(0);
 
+  const viewport = useViewportWidth();
+  const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
+
   const blur = useTransform(
     scrollY,
-    [distanceToTop - windowHeight, distanceToTop + windowHeight / 2],
+    [
+      distanceToTop - windowHeight,
+      isMobile
+        ? distanceToTop + (windowHeight - 200)
+        : distanceToTop + windowHeight / 2,
+    ],
     ["blur(100px)", "blur(0px)"]
   );
 
   const opacity = useTransform(
     scrollY,
-    [distanceToTop, distanceToTop + windowHeight / 2],
+    [
+      distanceToTop,
+      isMobile
+        ? distanceToTop + (windowHeight - 200)
+        : distanceToTop + windowHeight / 2,
+    ],
     ["0", "1"]
   );
 
@@ -120,15 +144,22 @@ const Footer = (props: Props) => {
                 instagramUrl={instagramUrl}
                 linkedInUrl={linkedInUrl}
                 behanceUrl={behanceUrl}
+                desktopSize={true}
               />
               <FooterEmails
                 newBusinessEmail={newBusinessEmail}
                 careersEmail={careersEmail}
+                instagramUrl={instagramUrl}
+                linkedInUrl={linkedInUrl}
+                behanceUrl={behanceUrl}
               />
               <FooterNewsletter newsletterCta={newsletterCta} />
               <FooterAddress
                 officeAddress={officeAddress}
                 officeGoogleMapsLink={officeGoogleMapsLink}
+                instagramUrl={instagramUrl}
+                linkedInUrl={linkedInUrl}
+                behanceUrl={behanceUrl}
               />
             </LayoutGrid>
           </FooterTop>

@@ -27,16 +27,27 @@ const Title = styled.h5`
   line-height: 1.2;
   text-transform: uppercase;
   font-weight: 200;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    font-size: ${pxToRem(13)};
+  }
 `;
+
+const TextWrapper = styled.div``;
 
 const Text = styled.p`
   font-size: ${pxToRem(20)};
   line-height: 1.2;
   font-weight: 200;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    font-size: ${pxToRem(18)};
+  }
 `;
 
 const NewsletterButtonWrapper = styled.div`
   padding-top: ${pxToRem(16)};
+  max-width: 200px;
 
   a {
     text-decoration: none;
@@ -72,14 +83,16 @@ const FooterTextCell = (props: Props) => {
           {linkTitle}
         </Link>
       )}
-      {text && <Text>{text}</Text>}
-      {useNewsletterButton && (
-        <NewsletterButtonWrapper>
-          <Link href="/#" target="_blank">
-            <PrimaryButtonLayout>Sign up</PrimaryButtonLayout>
-          </Link>
-        </NewsletterButtonWrapper>
-      )}
+      <TextWrapper>
+        {text && <Text>{text}</Text>}
+        {useNewsletterButton && (
+          <NewsletterButtonWrapper>
+            <Link href="/#" target="_blank">
+              <PrimaryButtonLayout>Sign up</PrimaryButtonLayout>
+            </Link>
+          </NewsletterButtonWrapper>
+        )}
+      </TextWrapper>
     </FooterTextCellWrapper>
   );
 };

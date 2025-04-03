@@ -32,7 +32,7 @@ const Page = (props: Props) => {
         title={data?.seoTitle || ""}
         description={data?.seoDescription || ""}
       />
-      <StudioHero />
+      <StudioHero data={data?.heroSection} />
       <AboutSection />
       <ServicesSection />
       <PartnersSection />
