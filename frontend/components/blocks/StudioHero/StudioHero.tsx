@@ -29,8 +29,8 @@ const Title = styled.div`
     text-align: center;
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      font-size: ${pxToRem(50)};
-      line-height: ${pxToRem(50)};
+      font-size: ${pxToRem(40)};
+      line-height: ${pxToRem(40)};
     }
   }
 `;

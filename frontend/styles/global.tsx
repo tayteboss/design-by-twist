@@ -163,27 +163,31 @@ export const GlobalStyles = createGlobalStyle`
 	.view-element-fade-in
 	{
 		opacity: 0;
+		filter: blur(5px);
 
-		transition: opacity var(--transition-speed-slow) ease;
+		transition: all var(--transition-speed-slow) ease;
 		transition-delay: 0.25s;
 
 		&--in-view
 		{
 			opacity: 1;
+			filter: blur(0px);
 		}
 	}
 
 	.view-element-bottom-top
 	{
 		opacity: 0;
+		filter: blur(5px);
 		transform: translateY(15px);
 		
-		transition: opacity var(--transition-speed-slow) cubic-bezier(0.65, 0, 0.35, 1), transform var(--transition-speed-default) cubic-bezier(0.65, 0, 0.35, 1);
+		transition: all var(--transition-speed-slow) cubic-bezier(0.65, 0, 0.35, 1), transform var(--transition-speed-default) cubic-bezier(0.65, 0, 0.35, 1);
 		transition-delay: 0.25s;
 
 		&--in-view
 		{
 			opacity: 1;
+			filter: blur(0px);
 			transform: translateY(0);
 		}
 	}

@@ -3,7 +3,7 @@ import pxToRem from "../../../utils/pxToRem";
 
 const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
   min-width: ${pxToRem(300)};
-  padding: 0 ${pxToRem(24)};
+  padding: 0 ${pxToRem(64)};
   height: ${pxToRem(48)};
   display: flex;
   justify-content: center;
@@ -17,6 +17,7 @@ const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
   font-family: var(--font-holise-extra-light);
   font-size: ${pxToRem(30)};
   line-height: 1;
+  white-space: nowrap;
 
   transition: all 200ms var(--transition-ease);
 
@@ -26,6 +27,7 @@ const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(22)};
+    padding: 0 ${pxToRem(24)};
   }
 `;
 

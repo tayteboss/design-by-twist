@@ -33,7 +33,7 @@ const Page = (props: Props) => {
         description={data?.seoDescription || ""}
       />
       <StudioHero data={data?.heroSection} />
-      <AboutSection />
+      <AboutSection data={data?.aboutSection} />
       <ServicesSection />
       <PartnersSection />
     </PageWrapper>
