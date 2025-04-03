@@ -14,7 +14,10 @@ import router from "next/router";
 import { useRef, useState, useEffect } from "react";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 
-const FooterWrapper = styled.footer``;
+const FooterWrapper = styled.footer`
+  position: relative;
+  z-index: 5;
+`;
 
 const Inner = styled.div`
   display: flex;

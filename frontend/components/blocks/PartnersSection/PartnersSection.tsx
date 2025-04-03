@@ -52,7 +52,7 @@ const Description = styled.p`
   max-width: ${pxToRem(1200)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
-    text-indent: ${pxToRem(80)};
+    text-indent: ${pxToRem(100)};
     font-size: ${pxToRem(30)};
     line-height: ${pxToRem(35)};
   }
@@ -71,7 +71,7 @@ const PartnerOuter = styled.div<{ $activeIndex: boolean }>`
   z-index: ${(props) => props.$activeIndex && "2"};
 `;
 
-const Partner = styled.p<{ $activeIndex: boolean }>`
+const Partner = styled.div<{ $activeIndex: boolean }>`
   font-size: ${pxToRem(50)};
   line-height: ${pxToRem(56)};
   opacity: ${(props) => (props.$activeIndex ? "1" : "0.2")};
@@ -80,6 +80,12 @@ const Partner = styled.p<{ $activeIndex: boolean }>`
     opacity 50ms var(--transition-ease),
     transform 150ms var(--transition-ease);
   position: relative;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    font-size: ${pxToRem(30)};
+    line-height: ${pxToRem(37)};
+    transform: translateX(${(props) => (props.$activeIndex ? "10px" : "0px")});
+  }
 `;
 
 const PartnerMediaWrapper = styled.div`
@@ -97,11 +103,17 @@ const ImageInner = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-20%, -50%);
   height: auto;
   width: 50vw;
   margin: 0 auto;
   background: var(--colour-white);
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    left: unset;
+    right: ${pxToRem(10)};
+    transform: translateY(-50%);
+  }
 
   .media-wrapper {
     padding-top: 56.25%;
@@ -226,12 +238,12 @@ const PartnersSection = (props: Props) => {
                 key={activeIndex}
                 initial={{
                   opacity: 0,
-                  y: -10,
+                  y: -20,
                   scale: 0.99,
                   filter: "blur(3px)",
                 }}
                 animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: 10, scale: 0.99, filter: "blur(3px)" }}
+                exit={{ opacity: 0, y: 20, scale: 0.99, filter: "blur(3px)" }}
                 transition={{ duration: 0.3 }}
               >
                 {activeIndex >= 0 && data?.partnersList[activeIndex]?.media && (

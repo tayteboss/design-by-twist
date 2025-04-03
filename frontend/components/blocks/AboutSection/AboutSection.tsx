@@ -56,7 +56,7 @@ const Description = styled.p`
   font-weight: 200;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
-    text-indent: ${pxToRem(80)};
+    text-indent: ${pxToRem(100)};
     font-size: ${pxToRem(30)};
     line-height: ${pxToRem(35)};
   }
