@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { HomePageType } from "../../../shared/types/types";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import LogoIcon from "../../svgs/LogoIcon";
@@ -7,6 +7,8 @@ import pxToRem from "../../../utils/pxToRem";
 import MediaStack from "../../common/MediaStack";
 import { EmblaCarouselType, EmblaEventType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 const FeaturedProjectsWrapper = styled.section<{ $bg: string }>`
   background-color: ${(props) => props.$bg};
@@ -25,17 +27,20 @@ const ContentInner = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: ${pxToRem(50)};
-  line-height: ${pxToRem(50)};
-  font-family: var(--font-holise-extra-light);
-  font-weight: 200;
   display: flex;
   align-items: start;
   gap: ${pxToRem(16)};
 
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    font-size: ${pxToRem(35)};
-    line-height: ${pxToRem(40)};
+  div {
+    font-size: ${pxToRem(50)};
+    line-height: ${pxToRem(50)};
+    font-family: var(--font-holise-extra-light);
+    font-weight: 200;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      font-size: ${pxToRem(35)};
+      line-height: ${pxToRem(40)};
+    }
   }
 
   svg {
@@ -46,19 +51,24 @@ const Title = styled.h2`
   }
 `;
 
-const Description = styled.p`
+const Description = styled(motion.p)`
   font-size: ${pxToRem(20)};
   line-height: ${pxToRem(17)};
   text-align: right;
 `;
 
 const FeaturedGalleryWrapper = styled.div`
-  padding: ${pxToRem(50)} 0 ${pxToRem(120)};
+  padding: ${pxToRem(80)} 0 ${pxToRem(120)};
   overflow: hidden;
 `;
 
 const Embla = styled.div`
   overflow: hidden;
+  cursor: grab;
+
+  &.grabbing {
+    cursor: grabbing;
+  }
 `;
 
 const EmblaContainer = styled.div<{ $height: number }>`
@@ -83,7 +93,9 @@ const MediaWrapper = styled.div<{ $isActive: boolean }>`
   transform-origin: center center;
   transition: padding-top 1s cubic-bezier(0.23, 1, 0.32, 1);
 
-  & > * {
+  & > *,
+  a,
+  div {
     position: absolute;
     top: 0;
     left: 0;
@@ -113,7 +125,7 @@ const FeaturedProjects = (props: Props) => {
 
   const hasData = featuredProjects && featuredProjects.length > 0;
 
-  const startIndex = 2;
+  const startIndex = 1;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -137,7 +149,6 @@ const FeaturedProjects = (props: Props) => {
 
   const tweenScale = useCallback(
     (emblaApi: EmblaCarouselType, eventName?: EmblaEventType) => {
-      const engine = emblaApi.internalEngine();
       const scrollProgress = emblaApi.scrollProgress();
 
       scaleNodes.current = emblaApi.slideNodes();
@@ -205,6 +216,16 @@ const FeaturedProjects = (props: Props) => {
     return () => clearTimeout(timer);
   };
 
+  const addGrabCursor = () => {
+    const emblaContainer = document.querySelector(".embla");
+    emblaContainer?.classList.add("grabbing");
+  };
+
+  const removeGrabCursor = () => {
+    const emblaContainer = document.querySelector(".embla");
+    emblaContainer?.classList.remove("grabbing");
+  };
+
   useEffect(() => {
     if (!emblaApi) return;
 
@@ -213,19 +234,25 @@ const FeaturedProjects = (props: Props) => {
     emblaApi
       .on("select", onSelect)
       .on("scroll", tweenScale)
-      .on("reInit", tweenScale);
+      .on("reInit", tweenScale)
+      .on("pointerDown", addGrabCursor)
+      .on("pointerUp", removeGrabCursor);
 
     return () => {
       emblaApi
         .off("select", onSelect)
         .off("scroll", tweenScale)
-        .off("reInit", tweenScale);
+        .off("reInit", tweenScale)
+        .off("pointerDown", addGrabCursor)
+        .off("pointerUp", removeGrabCursor);
     };
   }, [emblaApi, tweenScale, onSelect]);
 
   useEffect(() => {
     findEmblaHeight();
   }, [emblaApi]);
+
+  console.log("featuredProjects", featuredProjects);
 
   return (
     <FeaturedProjectsWrapper
@@ -241,9 +268,23 @@ const FeaturedProjects = (props: Props) => {
               <ContentInner>
                 <Title>
                   <LogoIcon />
-                  {featuredProjects[activeIndex]?.featuredTagline || ""}
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
+                    animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    {featuredProjects[activeIndex]?.featuredTagline || ""}
+                  </motion.div>
                 </Title>
-                <Description>
+                <Description
+                  key={activeIndex}
+                  initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
+                  animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
+                  transition={{ duration: 0.5 }}
+                >
                   {featuredProjects[activeIndex]?.featuredDescription || ""}
                 </Description>
               </ContentInner>
@@ -265,12 +306,14 @@ const FeaturedProjects = (props: Props) => {
                       $isActive={i === activeIndex}
                       className="embla__media-wrapper"
                     >
-                      <MediaStack
-                        data={project?.defaultThumbnail}
-                        isPriority={
-                          i >= activeIndex - 1 && i <= activeIndex + 1
-                        }
-                      />
+                      <Link href={`/work/${project?.slug?.current}`}>
+                        <MediaStack
+                          data={project?.defaultThumbnail}
+                          isPriority={
+                            i >= activeIndex - 1 && i <= activeIndex + 1
+                          }
+                        />
+                      </Link>
                     </MediaWrapper>
                   </EmblaSlide>
                 ))}

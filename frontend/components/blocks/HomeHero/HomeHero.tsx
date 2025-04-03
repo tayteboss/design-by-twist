@@ -7,7 +7,6 @@ import pxToRem from "../../../utils/pxToRem";
 import MuxPlayer from "@mux/mux-player-react";
 import router from "next/router";
 import { useState, useEffect } from "react";
-import useWindowDimensions from "../../../hooks/useWindowDimensions";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
@@ -68,11 +67,8 @@ const Word = styled(motion.span)`
 `;
 
 const MediaWrapper = styled(motion.div)`
-  position: relative;
-
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     padding-top: 56.25%;
-    /* transform: translateY(50%) !important; */
     width: 100%;
   }
 `;

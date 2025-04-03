@@ -5,6 +5,7 @@ import LayoutWrapper from "../../layout/LayoutWrapper";
 import { useEffect, useState } from "react";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 import Link from "next/link";
+import AnimateTextLayout from "../../layout/AnimateTextLayout";
 
 const ContactCtaWrapper = styled.section`
   background: var(--colour-black);
@@ -24,18 +25,20 @@ const Inner = styled.div`
 `;
 
 const Title = styled.h3`
-  font-size: ${pxToRem(70)};
-  line-height: ${pxToRem(75)};
-  font-family: var(--font-holise-extra-light);
-  font-weight: 200;
-  color: var(--colour-white);
-  max-width: ${pxToRem(1000)};
-  margin: 0 auto;
-  text-align: center;
+  * {
+    font-size: ${pxToRem(70)};
+    line-height: ${pxToRem(75)};
+    font-family: var(--font-holise-extra-light);
+    font-weight: 200;
+    color: var(--colour-white);
+    max-width: ${pxToRem(1000)};
+    margin: 0 auto;
+    text-align: center;
 
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    font-size: ${pxToRem(50)};
-    line-height: ${pxToRem(50)};
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      font-size: ${pxToRem(50)};
+      line-height: ${pxToRem(50)};
+    }
   }
 `;
 
@@ -49,11 +52,11 @@ const ButtonWrapper = styled.div`
 
 type Props = {
   data: SiteSettingsType["footerContactCtas"];
-  careersEmail: SiteSettingsType["careersEmail"];
+  newBusinessEmail: SiteSettingsType["newBusinessEmail"];
 };
 
 const ContactCta = (props: Props) => {
-  const { data, careersEmail } = props;
+  const { data, newBusinessEmail } = props;
 
   const [title, setTitle] = useState("");
 
@@ -66,9 +69,11 @@ const ContactCta = (props: Props) => {
     <ContactCtaWrapper>
       <LayoutWrapper>
         <Inner>
-          <Title>{title || ""}</Title>
+          <Title>
+            <AnimateTextLayout>{title || ""}</AnimateTextLayout>
+          </Title>
           <ButtonWrapper>
-            <Link href={`mailto${careersEmail}`}>
+            <Link href={`mailto${newBusinessEmail}`}>
               <PrimaryButtonLayout useLightTheme={true}>
                 Let's work
               </PrimaryButtonLayout>
