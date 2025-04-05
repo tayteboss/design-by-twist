@@ -3,12 +3,15 @@ import { StudioPageType } from "../../../shared/types/types";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import pxToRem from "../../../utils/pxToRem";
 import formatHTML from "../../../utils/formatHTML";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRouter } from "next/router";
+import { useRef, useState, useEffect } from "react";
 
 const StudioHeroWrapper = styled.section`
   background: var(--colour-black);
 `;
 
-const Inner = styled.div`
+const Inner = styled(motion.div)`
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -42,10 +45,42 @@ type Props = {
 const StudioHero = (props: Props) => {
   const { data } = props;
 
+  const ref = useRef<HTMLDivElement>(null);
+
+  const { scrollY } = useScroll();
+
+  const [windowHeight, setWindowHeight] = useState(0);
+
+  const router = useRouter();
+
+  const blur = useTransform(
+    scrollY,
+    [0, windowHeight * 2],
+    ["blur(0px)", "blur(25px)"]
+  );
+
+  const transform = useTransform(
+    scrollY,
+    [0, windowHeight * 2],
+    ["translateY(0px)", "translateY(50%)"]
+  );
+
+  const opacity = useTransform(scrollY, [0, windowHeight * 2], ["1", "0"]);
+
+  useEffect(() => {
+    setWindowHeight(window.innerHeight);
+
+    const timer = setTimeout(() => {
+      setWindowHeight(window.innerHeight);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [router.asPath]);
+
   return (
-    <StudioHeroWrapper>
+    <StudioHeroWrapper ref={ref}>
       <LayoutWrapper>
-        <Inner>
+        <Inner style={{ opacity, transform, filter: blur }}>
           {data?.heroDescription && (
             <Title
               dangerouslySetInnerHTML={{

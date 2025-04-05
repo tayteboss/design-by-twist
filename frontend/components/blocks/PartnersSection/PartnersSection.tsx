@@ -76,10 +76,15 @@ const Partner = styled.div<{ $activeIndex: boolean }>`
   line-height: ${pxToRem(56)};
   opacity: ${(props) => (props.$activeIndex ? "1" : "0.2")};
   transform: translateX(${(props) => (props.$activeIndex ? "20px" : "0px")});
+  position: relative;
+
   transition:
     opacity 50ms var(--transition-ease),
     transform 150ms var(--transition-ease);
-  position: relative;
+
+  &:hover {
+    color: var(--colour-foreground);
+  }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(30)};

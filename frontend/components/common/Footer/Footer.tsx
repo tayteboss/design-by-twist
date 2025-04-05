@@ -10,9 +10,9 @@ import FooterSocials from "../../blocks/FooterSocials";
 import pxToRem from "../../../utils/pxToRem";
 import LogoIcon from "../../svgs/LogoIcon";
 import { motion, useScroll, useTransform } from "framer-motion";
-import router from "next/router";
 import { useRef, useState, useEffect } from "react";
 import useViewportWidth from "../../../hooks/useViewportWidth";
+import { useRouter } from "next/router";
 
 const FooterWrapper = styled.footer`
   position: relative;
@@ -80,6 +80,8 @@ const Footer = (props: Props) => {
   const [windowHeight, setWindowHeight] = useState(0);
   const [distanceToTop, setDistanceToTop] = useState(0);
 
+  const router = useRouter();
+
   const viewport = useViewportWidth();
   const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
 
@@ -131,7 +133,7 @@ const Footer = (props: Props) => {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [distanceToTop, router]);
+  }, [distanceToTop, router.asPath]);
 
   return (
     <FooterWrapper ref={ref}>

@@ -32,7 +32,7 @@ const MenuWrapper = styled.div`
 const Main = styled.div`
   display: flex;
   gap: ${pxToRem(32)};
-  background: rgba(255, 255, 255, 0.25);
+  background: rgba(206, 206, 206, 0.25);
   backdrop-filter: blur(20px);
   padding: ${pxToRem(16)} ${pxToRem(32)};
   border-radius: 100px;
@@ -125,7 +125,7 @@ const Menu = () => {
             {(hoveredIndex === "work" || activePage === "work") && (
               <HoverCloud
                 layoutId="underline"
-                // initial={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
@@ -140,7 +140,7 @@ const Menu = () => {
             {(hoveredIndex === "studio" || activePage === "studio") && (
               <HoverCloud
                 layoutId="underline"
-                // initial={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
@@ -155,7 +155,7 @@ const Menu = () => {
             {hoveredIndex === "contact" && (
               <HoverCloud
                 layoutId="underline"
-                // initial={{ opacity: 0 }}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
