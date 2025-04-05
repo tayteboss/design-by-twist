@@ -66,20 +66,23 @@ const ContactCta = (props: Props) => {
   }, [data]);
 
   return (
-    <ContactCtaWrapper>
+    <ContactCtaWrapper
+      className="cursor-floating-button"
+      data-cursor-title="Let's work"
+    >
       <LayoutWrapper>
-        <Inner>
-          <Title>
-            <AnimateTextLayout>{title || ""}</AnimateTextLayout>
-          </Title>
-          <ButtonWrapper>
-            <Link href={`mailto${newBusinessEmail}`}>
+        <Link href={`mailto:${newBusinessEmail}`}>
+          <Inner>
+            <Title>
+              <AnimateTextLayout>{title || ""}</AnimateTextLayout>
+            </Title>
+            <ButtonWrapper>
               <PrimaryButtonLayout useLightTheme={true}>
                 Let's work
               </PrimaryButtonLayout>
-            </Link>
-          </ButtonWrapper>
-        </Inner>
+            </ButtonWrapper>
+          </Inner>
+        </Link>
       </LayoutWrapper>
     </ContactCtaWrapper>
   );
