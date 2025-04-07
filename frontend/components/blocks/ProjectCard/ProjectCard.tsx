@@ -155,7 +155,10 @@ const ProjectCard = (props: Props) => {
           }`}
         >
           <ImageWrapper $isPortrait={activeData.thumbnailRatio === "portrait"}>
-            <MediaStack data={activeData?.thumbnail} />
+            <MediaStack
+              data={activeData?.thumbnail}
+              sizes="(max-width: 768px) 50vw, 33vw"
+            />
           </ImageWrapper>
           <ContentWrapper>
             {activeData.tagline && <PortableText value={activeData.tagline} />}

@@ -43,6 +43,7 @@ const FooterTop = styled.div`
 const FooterBottom = styled(motion.div)`
   position: sticky;
   bottom: 0px;
+  pointer-events: none;
 
   svg {
     width: 100%;

@@ -106,6 +106,13 @@ export default {
       },
     },
     {
+      title: 'Hero Media',
+      name: 'heroMedia',
+      type: 'object',
+      fields: mediaBlock,
+      description: 'This is used on the internal project page',
+    },
+    {
       title: 'Default Thumbnail',
       name: 'defaultThumbnail',
       type: 'object',

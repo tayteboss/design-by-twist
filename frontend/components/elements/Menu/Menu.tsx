@@ -113,10 +113,12 @@ const Menu = (props: Props) => {
 
   const router = useRouter();
 
+  console.log("router", router);
+
   useEffect(() => {
     if (router.asPath === "/") {
       setActivePage(false);
-    } else if (router.asPath === "/work") {
+    } else if (router.asPath.includes("/work")) {
       setActivePage("work");
     } else if (router.asPath === "/studio") {
       setActivePage("studio");

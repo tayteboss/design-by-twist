@@ -78,10 +78,11 @@ type Props = {
   isPriority: boolean;
   inView: boolean;
   noAnimation?: boolean;
+  sizes: undefined | string;
 };
 
 const ImageComponent = (props: Props) => {
-  const { data, isPriority, inView, noAnimation } = props;
+  const { data, isPriority, inView, noAnimation, sizes } = props;
 
   const imageUrl = data?.media?.image?.asset?.url;
   const blurDataURL = data?.media?.image?.asset?.metadata?.lqip;
@@ -130,6 +131,7 @@ const ImageComponent = (props: Props) => {
             style={{
               objectFit: "cover",
             }}
+            sizes={sizes}
           />
         )}
       </Inner>

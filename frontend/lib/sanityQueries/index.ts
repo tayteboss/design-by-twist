@@ -127,34 +127,41 @@ export const studioPageQueryString = `
 	}
 `;
 
-export const projectsQueryString = `
-	*[_type == 'project'] | order(orderRank) [0...100] {
+export const projectFields = `
+	title,
+	slug,
+	categoryMediaAndTagline[] {
+		...,
+		category,
+		thumbnail {
+			${mediaString}
+		},
+		thumbnailRatio,
+	},
+	heroMedia {
+		${mediaString}
+	},
+	defaultThumbnail {
+		${mediaString}
+	},
+	defaultThumbnailRatio,
+	defaultTagline,
+	featuredTagline,
+	featuredDescription,
+	featuredColour,
+	informationTitle,
+	informationDescription,
+	relatedProjects[]-> {
 		title,
 		slug,
-		categoryMediaAndTagline[] {
-			...,
-			category,
-			thumbnail {
-				${mediaString}
-			},
-			thumbnailRatio,
-		},
 		defaultThumbnail {
 			${mediaString}
 		},
-		defaultThumbnailRatio,
-		defaultTagline,
-		featuredTagline,
-		featuredDescription,
-		featuredColour,
-		informationTitle,
-		informationDescription,
-		relatedProjects[]-> {
-			title,
-			slug,
-			defaultThumbnail {
-				${mediaString}
-			},
-		}
+	}
+`;
+
+export const projectsQueryString = `
+	*[_type == 'project'] | order(orderRank) [0...100] {
+		${projectFields}
 	}
 `;

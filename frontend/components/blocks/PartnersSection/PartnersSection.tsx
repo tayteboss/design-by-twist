@@ -255,6 +255,7 @@ const PartnersSection = (props: Props) => {
                   <MediaStack
                     data={data?.partnersList[activeIndex]?.media}
                     noAnimation
+                    sizes="50vw"
                   />
                 )}
               </ImageMotion>
