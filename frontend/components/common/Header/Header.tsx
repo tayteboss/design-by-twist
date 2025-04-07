@@ -5,6 +5,7 @@ import pxToRem from "../../../utils/pxToRem";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Menu from "../../elements/Menu";
+import { ProjectType } from "../../../shared/types/types";
 
 const HeaderWrapper = styled.header`
   position: fixed;
@@ -40,7 +41,13 @@ const LogoWrapper = styled.div<{ $visible: boolean }>`
   }
 `;
 
-const Header = () => {
+type Props = {
+  projects: ProjectType[];
+};
+
+const Header = (props: Props) => {
+  const { projects } = props;
+
   const [isVisible, setIsVisible] = useState(true);
   const [windowHeight, setWindowHeight] = useState(0);
   const [contactIsActive, setContactIsActive] = useState(false);
@@ -101,6 +108,7 @@ const Header = () => {
       <Menu
         contactIsActive={contactIsActive}
         setContactIsActive={setContactIsActive}
+        projects={projects}
       />
     </HeaderWrapper>
   );

@@ -48,8 +48,6 @@ const Page = (props: Props) => {
     }
   }, [activeTag, projects]);
 
-  console.log("filteredProjects", filteredProjects);
-
   return (
     <PageWrapper
       variants={pageTransitionVariants}

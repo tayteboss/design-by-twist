@@ -3,9 +3,10 @@ import Header from "../common/Header";
 import Footer from "../common/Footer";
 import { ReactNode } from "react";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
-import { SiteSettingsType } from "../../shared/types/types";
+import { ProjectType, SiteSettingsType } from "../../shared/types/types";
 
 const siteSettings: SiteSettingsType = require("../../json/siteSettings.json");
+const projects: ProjectType[] = require("../../json/projectData.json");
 
 const Main = styled.main``;
 
@@ -20,7 +21,7 @@ const Layout = (props: Props) => {
 
   return (
     <>
-      <Header />
+      <Header projects={projects} />
       <ReactLenis root>
         <Main>{children}</Main>
       </ReactLenis>

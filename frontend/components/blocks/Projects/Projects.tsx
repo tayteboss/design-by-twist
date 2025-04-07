@@ -56,8 +56,6 @@ const Projects = (props: Props) => {
 
   const hasProjects = projects?.length > 0;
 
-  console.log("projects", projects);
-
   return (
     <ProjectsWrapper>
       <LayoutWrapper>

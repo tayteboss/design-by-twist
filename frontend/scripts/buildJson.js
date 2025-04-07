@@ -4,6 +4,7 @@ const api = require('./api');
 
 const buildSiteData = async () => {
 	await api.getSiteData();
+	await api.getProjectData();
 };
 
 buildSiteData();

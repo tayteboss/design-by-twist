@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { NextSeo } from "next-seo";
 import { projectFields } from "../../lib/sanityQueries";
 import ProjectHero from "../../components/blocks/ProjectHero";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 type Props = {
   data: ProjectType;
@@ -16,7 +18,19 @@ const PageWrapper = styled(motion.div)``;
 const Page = (props: Props) => {
   const { data, pageTransitionVariants } = props;
 
-  console.log("data", data);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname === "/work/[...slug]") {
+      document.body.setAttribute("data-project-title", data?.title);
+      const timer = setTimeout(() => {
+        document.body.setAttribute("data-project-title", data?.title);
+      }, 500);
+      return () => clearTimeout(timer);
+    } else {
+      document.body.removeAttribute("data-project-title");
+    }
+  }, [data, router]);
 
   return (
     <PageWrapper

@@ -32,6 +32,52 @@ const getSiteData = async () => {
     }
 };
 
+const getProjectData = async () => {
+    const query = `
+        *[_type == 'project'] | order(orderRank) [0...100] {
+            title,
+            slug,
+            defaultThumbnail {
+                media {
+                    ...,
+                    mediaType,
+                    image {
+                        asset-> {
+                            url,
+                            metadata {
+                                lqip
+                            }
+                        },
+                        alt
+                    },
+                    video {
+                        asset-> {
+                            playbackId,
+                        },
+                    },
+                }
+            }
+        }
+    `;
+
+    try {
+        const data = await client.fetch(query);
+        const path = 'json';
+        const file = 'projectData.json';
+        const jsonData = JSON.stringify(data);
+
+        fs.writeFile(`${path}/${file}`, jsonData, 'utf8', () => {
+            console.log(`Wrote ${file} file.`);
+        });
+
+        return data;
+    } catch (error) {
+        console.error('Error fetching site data:', error);
+        return [];
+    }
+};
+
 module.exports = {
     getSiteData,
+    getProjectData,
 };

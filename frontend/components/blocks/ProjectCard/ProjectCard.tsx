@@ -14,7 +14,7 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
   page-break-inside: avoid;
   break-inside: avoid;
   margin-bottom: ${pxToRem(40)};
-  filter: ${(props) => props.$isHovered && "blur(5px)"};
+  filter: ${(props) => props.$isHovered && "blur(2px)"};
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 
