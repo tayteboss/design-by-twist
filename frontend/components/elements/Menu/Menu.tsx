@@ -100,7 +100,14 @@ const CloudInner = styled.div`
   transition: all var(--transition-speed-default) var(--transition-ease);
 `;
 
-const Menu = () => {
+type Props = {
+  contactIsActive: boolean;
+  setContactIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Menu = (props: Props) => {
+  const { contactIsActive, setContactIsActive } = props;
+
   const [hoveredIndex, setHoveredIndex] = useState<null | string>(null);
   const [activePage, setActivePage] = useState<string | false>(false);
 
@@ -150,9 +157,9 @@ const Menu = () => {
           </AnimatePresence>
         </MainItem>
         <MainItem onMouseEnter={() => setHoveredIndex("contact")}>
-          <Button>Contact</Button>
+          <Button onClick={() => setContactIsActive(true)}>Contact</Button>
           <AnimatePresence>
-            {hoveredIndex === "contact" && (
+            {(hoveredIndex === "contact" || contactIsActive) && (
               <HoverCloud
                 layoutId="underline"
                 initial={{ opacity: 0 }}

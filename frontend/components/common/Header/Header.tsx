@@ -43,6 +43,7 @@ const LogoWrapper = styled.div<{ $visible: boolean }>`
 const Header = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [windowHeight, setWindowHeight] = useState(0);
+  const [contactIsActive, setContactIsActive] = useState(false);
 
   const { pathname } = useRouter();
 
@@ -97,7 +98,10 @@ const Header = () => {
           <LogoIcon />
         </Link>
       </LogoWrapper>
-      <Menu />
+      <Menu
+        contactIsActive={contactIsActive}
+        setContactIsActive={setContactIsActive}
+      />
     </HeaderWrapper>
   );
 };
