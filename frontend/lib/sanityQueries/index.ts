@@ -132,12 +132,12 @@ export const projectsQueryString = `
 		title,
 		slug,
 		categoryMediaAndTagline[] {
+			...,
 			category,
 			thumbnail {
 				${mediaString}
 			},
 			thumbnailRatio,
-			tagline
 		},
 		defaultThumbnail {
 			${mediaString}

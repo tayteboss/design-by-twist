@@ -55,10 +55,6 @@ const Header = () => {
   }, [pathname]);
 
   const handleScroll = () => {
-    console.log("document.body.scrollHeight", document.body.scrollHeight);
-    console.log("windowHeight * 2", windowHeight * 2);
-    console.log("window.scrollY", window.scrollY);
-
     if (pathname === "/") {
       if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
         setIsVisible(false);

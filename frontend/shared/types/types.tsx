@@ -76,7 +76,7 @@ export type ProjectType = {
       | "art-direction";
     thumbnail: MediaType;
     thumbnailRatio: "portrait" | "landscape";
-    tagline: any[];
+    Tagline: any[];
   }>;
   defaultThumbnail: MediaType;
   defaultThumbnailRatio: "portrait" | "landscape";

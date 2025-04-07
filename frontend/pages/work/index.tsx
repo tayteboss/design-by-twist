@@ -15,7 +15,7 @@ import pxToRem from "../../utils/pxToRem";
 import PageBuilder from "../../components/common/PageBuilder";
 import FilterBar from "../../components/blocks/FilterBar";
 import Projects from "../../components/blocks/Projects";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PageWrapper = styled(motion.div)`
   background: var(--colour-white);
@@ -31,9 +31,24 @@ const Page = (props: Props) => {
   const { data, projects, pageTransitionVariants } = props;
 
   const [activeTag, setActiveTag] = useState<string>("all");
+  const [filteredProjects, setFilteredProjects] = useState(projects);
 
-  console.log("data", data);
-  console.log("projects", projects);
+  useEffect(() => {
+    if (activeTag === "all") {
+      setFilteredProjects(projects);
+    } else {
+      const filteredProjectsList = projects.filter((project) => {
+        if (!project.categoryMediaAndTagline) return false;
+        return project.categoryMediaAndTagline.some(
+          (categoryMediaAndTagline) =>
+            categoryMediaAndTagline.category === activeTag
+        );
+      });
+      setFilteredProjects(filteredProjectsList);
+    }
+  }, [activeTag, projects]);
+
+  console.log("filteredProjects", filteredProjects);
 
   return (
     <PageWrapper
@@ -47,7 +62,7 @@ const Page = (props: Props) => {
         description={data?.seoDescription || ""}
       />
       <FilterBar setActiveTag={setActiveTag} activeTag={activeTag} />
-      <Projects projects={projects} />
+      <Projects projects={filteredProjects} activeTag={activeTag} />
     </PageWrapper>
   );
 };

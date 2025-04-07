@@ -252,8 +252,6 @@ const FeaturedProjects = (props: Props) => {
     findEmblaHeight();
   }, [emblaApi]);
 
-  console.log("featuredProjects", featuredProjects);
-
   return (
     <FeaturedProjectsWrapper
       $bg={

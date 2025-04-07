@@ -40,7 +40,7 @@ const Main = styled.div`
   transition: all var(--transition-speed-default) var(--transition-ease);
 
   &:hover {
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(206, 206, 206, 0.5);
   }
 `;
 

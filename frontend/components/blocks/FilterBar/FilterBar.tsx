@@ -57,7 +57,7 @@ const FilterBar = (props: Props) => {
     "campaign",
     "packaging",
     "motion",
-    "art direction",
+    "art-direction",
   ];
 
   return (
@@ -70,7 +70,7 @@ const FilterBar = (props: Props) => {
               $isActive={tag === activeTag}
               onClick={() => setActiveTag(tag)}
             >
-              {tag}
+              {tag.replace(/-/g, " ")}
               {tag === activeTag && (
                 <Underline
                   layoutId="filter-bar-underline"
