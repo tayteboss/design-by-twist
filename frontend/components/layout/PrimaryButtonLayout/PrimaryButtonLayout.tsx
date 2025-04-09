@@ -23,6 +23,7 @@ const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
 
   &:hover {
     box-shadow: 0 0 27px rgba(255, 107, 241, 0.75);
+    transform: scale(1.01);
   }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {

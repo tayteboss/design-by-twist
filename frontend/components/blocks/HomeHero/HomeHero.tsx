@@ -11,6 +11,8 @@ import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
   background-color: ${(props) => props.$bg};
+  position: relative;
+  margin-bottom: 100lvh;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     margin-bottom: ${(props) => pxToRem(props.$mediaHeight)};
@@ -67,9 +69,16 @@ const Word = styled(motion.span)`
 `;
 
 const MediaWrapper = styled(motion.div)`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    position: relative;
+    top: unset;
+    left: unset;
     padding-top: 56.25%;
-    width: 100%;
   }
 `;
 
@@ -78,6 +87,8 @@ const MediaInner = styled(motion.div)`
   width: 80vw;
   transform: translateY(-25%);
   margin: 0 auto;
+  overflow: hidden;
+  border-radius: 5px;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     height: 100%;
@@ -161,7 +172,7 @@ const HomeHero = (props: Props) => {
     scrollY,
     [0, windowHeight],
     [
-      isMobile ? "translateY(-25%)" : "translateY(-25%)",
+      isMobile ? "translateY(-50%)" : "translateY(-25%)",
       isMobile ? "translateY(50%)" : "translateY(0%)",
     ]
   );
@@ -169,7 +180,7 @@ const HomeHero = (props: Props) => {
   const contentTransform = useTransform(
     scrollY,
     [0, windowHeight],
-    ["translateY(0%)", "translateY(100%)"]
+    ["translateY(0%)", "translateY(200%)"]
   );
 
   const blur = useTransform(

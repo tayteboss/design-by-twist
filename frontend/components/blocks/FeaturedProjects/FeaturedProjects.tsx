@@ -15,7 +15,9 @@ const FeaturedProjectsWrapper = styled.section<{ $bg: string }>`
   transition: all var(--transition-speed-slow) var(--transition-ease);
 `;
 
-const ContentBar = styled.div``;
+const ContentBar = styled.div`
+  pointer-events: none;
+`;
 
 const ContentInner = styled.div`
   width: 100%;
@@ -81,7 +83,7 @@ const EmblaSlide = styled.div<{ $isActive: boolean }>`
   min-width: 0;
   position: relative;
   transform-origin: center center;
-  flex: 0 0 35vw;
+  flex: 0 0 32vw;
   transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 `;
 
@@ -92,6 +94,15 @@ const MediaWrapper = styled.div<{ $isActive: boolean }>`
   border-radius: ${pxToRem(8)};
   transform-origin: center center;
   transition: padding-top 1s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &:hover {
+    img,
+    video {
+      transform: scale(1.05);
+
+      transition: all var(--transition-speed-default) var(--transition-ease);
+    }
+  }
 
   & > *,
   a,
@@ -125,7 +136,7 @@ const FeaturedProjects = (props: Props) => {
 
   const hasData = featuredProjects && featuredProjects.length > 0;
 
-  const startIndex = 1;
+  const startIndex = Math.floor(featuredProjects.length / 2);
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -288,7 +299,7 @@ const FeaturedProjects = (props: Props) => {
               </ContentInner>
             </LayoutWrapper>
           </ContentBar>
-          <FeaturedGalleryWrapper>
+          <FeaturedGalleryWrapper className="cursor-gallery">
             <Embla className="embla" ref={emblaRef}>
               <EmblaContainer
                 className="embla__container"
@@ -296,7 +307,8 @@ const FeaturedProjects = (props: Props) => {
               >
                 {featuredProjects.map((project, i) => (
                   <EmblaSlide
-                    className="embla__slide"
+                    className="embla__slide cursor-gallery__slide"
+                    data-cursor-title={project?.title || ""}
                     key={i}
                     $isActive={i === activeIndex}
                   >

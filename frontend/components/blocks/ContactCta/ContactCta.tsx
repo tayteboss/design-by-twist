@@ -2,16 +2,22 @@ import styled from "styled-components";
 import { SiteSettingsType } from "../../../shared/types/types";
 import pxToRem from "../../../utils/pxToRem";
 import LayoutWrapper from "../../layout/LayoutWrapper";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 import Link from "next/link";
 import AnimateTextLayout from "../../layout/AnimateTextLayout";
+import { motion, useScroll, useTransform } from "framer-motion";
+import router, { useRouter } from "next/router";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const ContactCtaWrapper = styled.section`
   background: var(--colour-black);
+  position: sticky;
+  top: 0;
+  z-index: 1;
 `;
 
-const Inner = styled.div`
+const Inner = styled(motion.div)`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -58,6 +64,8 @@ type Props = {
 const ContactCta = (props: Props) => {
   const { data, newBusinessEmail } = props;
 
+  const ref = useRef<HTMLDivElement>(null);
+
   const [title, setTitle] = useState("");
 
   useEffect(() => {
@@ -65,14 +73,50 @@ const ContactCta = (props: Props) => {
     setTitle(title);
   }, [data]);
 
+  const { scrollY } = useScroll();
+
+  const [windowHeight, setWindowHeight] = useState(0);
+  const [distanceToTop, setDistanceToTop] = useState(0);
+
+  const router = useRouter();
+
+  const opacity = useTransform(
+    scrollY,
+    [distanceToTop, distanceToTop + windowHeight / 2],
+    ["1", "0"]
+  );
+
+  useEffect(() => {
+    if (ref?.current) {
+      setDistanceToTop(
+        window.pageYOffset + ref.current.getBoundingClientRect().top
+      );
+    }
+
+    setWindowHeight(window.innerHeight);
+
+    const timer = setTimeout(() => {
+      if (ref?.current) {
+        setDistanceToTop(
+          window.pageYOffset + ref.current.getBoundingClientRect().top
+        );
+      }
+
+      setWindowHeight(window.innerHeight);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [distanceToTop, router.asPath]);
+
   return (
     <ContactCtaWrapper
       className="cursor-floating-button"
       data-cursor-title="Let's work"
+      ref={ref}
     >
       <LayoutWrapper>
         <Link href={`mailto:${newBusinessEmail}`}>
-          <Inner>
+          <Inner style={{ opacity }}>
             <Title>
               <AnimateTextLayout>{title || ""}</AnimateTextLayout>
             </Title>

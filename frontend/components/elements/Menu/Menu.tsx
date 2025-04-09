@@ -6,8 +6,10 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { ProjectType } from "../../../shared/types/types";
 import MediaStack from "../../common/MediaStack";
+import throttle from "lodash.throttle";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
-const MenuWrapper = styled.div`
+const MenuWrapper = styled.div<{ $isActive: boolean }>`
   position: absolute;
   bottom: ${pxToRem(32)};
   left: 50%;
@@ -15,6 +17,7 @@ const MenuWrapper = styled.div`
   z-index: 1;
   pointer-events: all;
   transform-origin: center bottom;
+  opacity: ${(props) => (props.$isActive ? "1" : "0")};
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 
@@ -28,6 +31,10 @@ const MenuWrapper = styled.div`
 
   .cloud-inner {
     opacity: 0.75;
+  }
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    bottom: ${pxToRem(24)};
   }
 `;
 
@@ -142,12 +149,45 @@ const ProjectItem = styled(motion.button)`
   }
 `;
 
-const ProjectItemTitle = styled.div`
-  font-size: ${pxToRem(18)};
-  line-height: 1;
-  font-family: var(--font-acid-grotesk-regular);
+const ProjectItemTitleWrapper = styled.div`
   position: relative;
   z-index: 5;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: flex;
+    align-items: center;
+    gap: ${pxToRem(16)};
+  }
+`;
+
+const ProjectItemTitle = styled.div`
+  font-size: ${pxToRem(18)};
+  line-height: 1.1;
+  font-family: var(--font-acid-grotesk-regular);
+  max-width: ${pxToRem(100)};
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
+const MobileHamburgerWrapper = styled.div`
+  display: none;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 14px;
+    height: 10px;
+    position: relative;
+    z-index: 5;
+    top: 1px;
+
+    img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
+  }
 `;
 
 const ProjectList = styled(motion.div)`
@@ -195,6 +235,10 @@ const ProjectThumbnailWrapper = styled(motion.div)`
   .media-wrapper {
     height: 15vw;
     width: 15vw;
+  }
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: none;
   }
 `;
 
@@ -295,6 +339,7 @@ type Props = {
 const Menu = (props: Props) => {
   const { contactIsActive, projects, setContactIsActive } = props;
 
+  const [isActive, setIsActive] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<null | string>(null);
   const [activePage, setActivePage] = useState<string | false>(false);
   const [activeProject, setActiveProject] = useState<false | string>("");
@@ -305,18 +350,51 @@ const Menu = (props: Props) => {
   const [filteredProjects, setFilteredProjects] = useState(projects);
 
   const router = useRouter();
+  const viewport = useViewportWidth();
+
+  const formatSmallTitle = (title: string) => {
+    if (viewport === "mobile" && title.length > 8) {
+      return `${title.slice(0, 8)}...`;
+    }
+
+    return title;
+  };
+
+  useEffect(() => {
+    if (router.asPath !== "/") {
+      setIsActive(false);
+    } else {
+      const handleScroll = throttle(() => {
+        if (window.scrollY < 100) {
+          setIsActive(false);
+        } else {
+          setIsActive(true);
+        }
+      }, 100);
+
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [router.asPath]);
 
   useEffect(() => {
     if (router.asPath === "/") {
       setActivePage(false);
+      setIsActive(false);
     } else if (router.asPath === "/work") {
+      setIsActive(true);
       setActivePage("work");
     } else if (router.asPath === "/studio") {
+      setIsActive(true);
       setActivePage("studio");
     } else if (router.pathname === "/work/[...slug]") {
+      setIsActive(true);
       setActivePage("project");
+    } else {
+      setIsActive(true);
     }
   }, [router.asPath, router.pathname]);
+
   useEffect(() => {
     const handleRouteChangeComplete = () => {
       if (router.pathname === "/work/[...slug]") {
@@ -360,8 +438,9 @@ const Menu = (props: Props) => {
   }, [projects, router.asPath, activeProject]);
 
   return (
-    <MenuWrapper>
+    <MenuWrapper $isActive={isActive}>
       <MenuInner layout>
+        {/* BACK BUTTON */}
         <AnimatePresence mode="wait">
           {activePage === "project" && (
             <Back
@@ -378,6 +457,7 @@ const Menu = (props: Props) => {
           )}
         </AnimatePresence>
 
+        {/* MAIN */}
         <Main onMouseLeave={() => setHoveredIndex(null)} layout>
           <MainItem onMouseEnter={() => setHoveredIndex("work")}>
             <Link href="/work">Work</Link>
@@ -453,6 +533,7 @@ const Menu = (props: Props) => {
           </AnimatePresence>
         </Main>
 
+        {/* PROJECT DESKTOP ITEMS */}
         <AnimatePresence mode="wait">
           {activePage === "project" && activeProject && (
             <ProjectItem
@@ -464,7 +545,34 @@ const Menu = (props: Props) => {
               onMouseOver={() => setIsHoveringProjectItems(true)}
               layout
             >
-              <ProjectItemTitle>{activeProject}</ProjectItemTitle>
+              <ProjectItemTitleWrapper>
+                <ProjectItemTitle>
+                  {formatSmallTitle(activeProject)}
+                </ProjectItemTitle>
+                <MobileHamburgerWrapper>
+                  <svg
+                    width="14"
+                    height="10"
+                    viewBox="0 0 14 10"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect width="14" height="0.666667" fill="black" />
+                    <rect
+                      y="4.66699"
+                      width="14"
+                      height="0.666667"
+                      fill="black"
+                    />
+                    <rect
+                      y="9.33301"
+                      width="14"
+                      height="0.666667"
+                      fill="black"
+                    />
+                  </svg>
+                </MobileHamburgerWrapper>
+              </ProjectItemTitleWrapper>
               <HoverCloud
                 layoutId="underline"
                 initial={{ opacity: 0 }}

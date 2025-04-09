@@ -16,6 +16,13 @@ import { useRouter } from "next/router";
 
 const FooterWrapper = styled.footer`
   position: relative;
+  z-index: 200;
+  background: var(--colour-white);
+`;
+
+const Outer = styled.div`
+  background: var(--colour-white);
+  position: relative;
   z-index: 5;
 `;
 
@@ -142,40 +149,42 @@ const Footer = (props: Props) => {
         data={footerContactCtas}
         newBusinessEmail={newBusinessEmail}
       />
-      <LayoutWrapper>
-        <Inner>
-          <FooterTop>
-            <LayoutGrid>
-              <FooterSocials
-                instagramUrl={instagramUrl}
-                linkedInUrl={linkedInUrl}
-                behanceUrl={behanceUrl}
-                desktopSize={true}
-              />
-              <FooterEmails
-                newBusinessEmail={newBusinessEmail}
-                careersEmail={careersEmail}
-                instagramUrl={instagramUrl}
-                linkedInUrl={linkedInUrl}
-                behanceUrl={behanceUrl}
-              />
-              <FooterNewsletter newsletterCta={newsletterCta} />
-              <FooterAddress
-                officeAddress={officeAddress}
-                officeGoogleMapsLink={officeGoogleMapsLink}
-                instagramUrl={instagramUrl}
-                linkedInUrl={linkedInUrl}
-                behanceUrl={behanceUrl}
-              />
-            </LayoutGrid>
-          </FooterTop>
-          <FooterBottom style={{ filter: blur, opacity }}>
-            <FooterBottomInner>
-              <LogoIcon />
-            </FooterBottomInner>
-          </FooterBottom>
-        </Inner>
-      </LayoutWrapper>
+      <Outer>
+        <LayoutWrapper>
+          <Inner>
+            <FooterTop>
+              <LayoutGrid>
+                <FooterSocials
+                  instagramUrl={instagramUrl}
+                  linkedInUrl={linkedInUrl}
+                  behanceUrl={behanceUrl}
+                  desktopSize={true}
+                />
+                <FooterEmails
+                  newBusinessEmail={newBusinessEmail}
+                  careersEmail={careersEmail}
+                  instagramUrl={instagramUrl}
+                  linkedInUrl={linkedInUrl}
+                  behanceUrl={behanceUrl}
+                />
+                <FooterNewsletter newsletterCta={newsletterCta} />
+                <FooterAddress
+                  officeAddress={officeAddress}
+                  officeGoogleMapsLink={officeGoogleMapsLink}
+                  instagramUrl={instagramUrl}
+                  linkedInUrl={linkedInUrl}
+                  behanceUrl={behanceUrl}
+                />
+              </LayoutGrid>
+            </FooterTop>
+            <FooterBottom style={{ filter: blur, opacity }}>
+              <FooterBottomInner>
+                <LogoIcon />
+              </FooterBottomInner>
+            </FooterBottom>
+          </Inner>
+        </LayoutWrapper>
+      </Outer>
     </FooterWrapper>
   );
 };

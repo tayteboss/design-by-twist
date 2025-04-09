@@ -31,8 +31,8 @@ const CursorFloatingButton = styled(motion.div)<StyledProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  top: 15px;
-  left: 30px;
+  top: 24px;
+  left: 75px;
   height: 48px;
   width: 150px;
   pointer-events: none;
@@ -54,6 +54,72 @@ const CursorFloatingButton = styled(motion.div)<StyledProps>`
     height 500ms ease,
     width 500ms ease,
     opacity 300ms ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 105, 180, 0.5) 0%,
+      rgba(255, 0, 110, 0.5) 100%
+    );
+    filter: blur(50px);
+    border-radius: 100px;
+    opacity: 1;
+    z-index: -1;
+  }
+`;
+
+const CursorGalleryButton = styled(motion.div)<StyledProps>`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 16px;
+  left: 60px;
+  height: 32px;
+  width: 120px;
+  pointer-events: none;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--colour-foreground);
+  border-radius: 100px;
+  color: var(--colour-black);
+  opacity: ${(props) => (props.$isActive ? "1" : "0")};
+  font-family: var(--font-holise-extra-light);
+  font-size: ${pxToRem(22)};
+  line-height: 1;
+  white-space: nowrap;
+  transform-origin: center left;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 105, 180, 0.5) 0%,
+      rgba(255, 0, 110, 0.5) 100%
+    );
+    filter: blur(20px);
+    border-radius: 100px;
+    opacity: 1;
+    z-index: -1;
+  }
+
+  transition:
+    top 500ms ease,
+    left 500ms ease,
+    height 500ms ease,
+    width 500ms ease,
+    opacity 300ms ease;
 `;
 
 const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
@@ -64,6 +130,10 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
   const [cursorText, setCursorText] = useState("");
   const [isOnDevice, setIsOnDevice] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [isGrabbing, setIsGrabbing] = useState(false);
+  const [isCursorGallery, setIsCursorGallery] = useState(false);
+  const [isHoveringGallerySlide, setIsHoveringGallerySlide] = useState(false);
+
   const previousPosition = useRef({ x: 0, y: 0 });
   const isMoving = useRef(false);
   const rotationTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -135,6 +205,19 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
         ease: "linear",
       },
     },
+    hidden: {
+      x: mouseXPosition,
+      y: mouseYPosition,
+      transition: {
+        type: "spring",
+        mass: 0.01,
+        stiffness: 200,
+        damping: 10,
+        overshootClamping: false,
+        restDelta: 0.01,
+        ease: "linear",
+      },
+    },
   };
 
   const clearCursor = () => {
@@ -145,6 +228,7 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
   const findActions = () => {
     const aLinks = document.querySelectorAll("a");
     const cursorLinks = document.querySelectorAll(".cursor-link");
+    const cursorGallery = document.querySelectorAll(".cursor-gallery");
     const floatingButtons = document.querySelectorAll(
       ".cursor-floating-button"
     );
@@ -167,6 +251,21 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
         setIsHoveringFloatingButton(false);
         setCursorText("");
         setRotation(0); // Reset rotation on mouse up
+      });
+    });
+
+    cursorGallery.forEach((link) => {
+      link.addEventListener("mouseenter", () => {
+        setIsCursorGallery(true);
+      });
+      link.addEventListener("mouseleave", () => {
+        setIsCursorGallery(false);
+      });
+      link.addEventListener("mouseDown", () => {
+        setIsCursorGallery(false);
+      });
+      link.addEventListener("mouseup", () => {
+        setIsCursorGallery(false);
       });
     });
 
@@ -241,6 +340,20 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
         >
           {cursorText || ""}
         </CursorFloatingButton>
+        <CursorGalleryButton
+          $isActive={isCursorGallery}
+          variants={variantsWrapper}
+          animate={isCursorGallery ? "visible" : "hidden"}
+          initial="hidden"
+          exit="hidden"
+          layout
+        >
+          {isGrabbing
+            ? ""
+            : isHoveringGallerySlide
+              ? "See project"
+              : "Drag to scroll"}
+        </CursorGalleryButton>
       </CursorWrapper>
     </>
   );

@@ -8,6 +8,10 @@ import { AnimatePresence, motion } from "framer-motion";
 
 const ProjectsWrapper = styled.section`
   padding: ${pxToRem(24)} 0 ${pxToRem(180)};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    padding: ${pxToRem(24)} 0 ${pxToRem(100)};
+  }
 `;
 
 const Inner = styled(motion.div)`
