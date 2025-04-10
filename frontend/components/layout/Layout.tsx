@@ -12,10 +12,11 @@ const Main = styled.main``;
 
 type Props = {
   children: ReactNode;
+  cursorRefresh: () => void;
 };
 
 const Layout = (props: Props) => {
-  const { children } = props;
+  const { children, cursorRefresh } = props;
 
   const lenis = useLenis(({ scroll }) => {});
 
@@ -25,7 +26,7 @@ const Layout = (props: Props) => {
       <ReactLenis root>
         <Main>{children}</Main>
       </ReactLenis>
-      <Footer siteSettings={siteSettings} />
+      <Footer siteSettings={siteSettings} cursorRefresh={cursorRefresh} />
     </>
   );
 };

@@ -13,6 +13,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 import { useRouter } from "next/router";
+import NewProjectModal from "../../blocks/NewProjectModal";
+import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 
 const FooterWrapper = styled.footer`
   position: relative;
@@ -63,11 +65,13 @@ const FooterBottomInner = styled(motion.div)`
 `;
 
 type Props = {
+  cursorRefresh: () => void;
   siteSettings: SiteSettingsType;
 };
 
 const Footer = (props: Props) => {
   const {
+    cursorRefresh,
     siteSettings: {
       instagramUrl,
       linkedInUrl,
@@ -87,8 +91,10 @@ const Footer = (props: Props) => {
 
   const [windowHeight, setWindowHeight] = useState(0);
   const [distanceToTop, setDistanceToTop] = useState(0);
+  const [newProjectModalIsActive, setNewProjectModalIsActive] = useState(false);
 
   const router = useRouter();
+  const lenis = useLenis(({ scroll }) => {});
 
   const viewport = useViewportWidth();
   const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
@@ -115,12 +121,6 @@ const Footer = (props: Props) => {
     ["0", "1"]
   );
 
-  // const transform = useTransform(
-  //   scrollY,
-  //   [distanceToTop, distanceToTop + windowHeight],
-  //   ["translateY(300px)", "translateY(0px)"]
-  // );
-
   useEffect(() => {
     if (ref?.current) {
       setDistanceToTop(
@@ -143,49 +143,65 @@ const Footer = (props: Props) => {
     return () => clearTimeout(timer);
   }, [distanceToTop, router.asPath]);
 
+  useEffect(() => {
+    cursorRefresh();
+
+    if (lenis) {
+      lenis[newProjectModalIsActive ? "stop" : "start"]();
+    }
+  }, [newProjectModalIsActive, lenis]);
+
   return (
-    <FooterWrapper ref={ref}>
-      <ContactCta
-        data={footerContactCtas}
-        newBusinessEmail={newBusinessEmail}
+    <>
+      <FooterWrapper ref={ref}>
+        <ContactCta
+          data={footerContactCtas}
+          newBusinessEmail={newBusinessEmail}
+          setNewProjectModalIsActive={setNewProjectModalIsActive}
+        />
+        <Outer>
+          <LayoutWrapper>
+            <Inner>
+              <FooterTop>
+                <LayoutGrid>
+                  <FooterSocials
+                    instagramUrl={instagramUrl}
+                    linkedInUrl={linkedInUrl}
+                    behanceUrl={behanceUrl}
+                    desktopSize={true}
+                  />
+                  <FooterEmails
+                    newBusinessEmail={newBusinessEmail}
+                    careersEmail={careersEmail}
+                    instagramUrl={instagramUrl}
+                    linkedInUrl={linkedInUrl}
+                    behanceUrl={behanceUrl}
+                  />
+                  <FooterNewsletter newsletterCta={newsletterCta} />
+                  <FooterAddress
+                    officeAddress={officeAddress}
+                    officeGoogleMapsLink={officeGoogleMapsLink}
+                    instagramUrl={instagramUrl}
+                    linkedInUrl={linkedInUrl}
+                    behanceUrl={behanceUrl}
+                  />
+                </LayoutGrid>
+              </FooterTop>
+              <FooterBottom style={{ filter: blur, opacity }}>
+                <FooterBottomInner>
+                  <LogoIcon />
+                </FooterBottomInner>
+              </FooterBottom>
+            </Inner>
+          </LayoutWrapper>
+        </Outer>
+      </FooterWrapper>
+      <NewProjectModal
+        isActive={newProjectModalIsActive}
+        setNewProjectModalIsActive={setNewProjectModalIsActive}
+        cursorRefresh={cursorRefresh}
       />
-      <Outer>
-        <LayoutWrapper>
-          <Inner>
-            <FooterTop>
-              <LayoutGrid>
-                <FooterSocials
-                  instagramUrl={instagramUrl}
-                  linkedInUrl={linkedInUrl}
-                  behanceUrl={behanceUrl}
-                  desktopSize={true}
-                />
-                <FooterEmails
-                  newBusinessEmail={newBusinessEmail}
-                  careersEmail={careersEmail}
-                  instagramUrl={instagramUrl}
-                  linkedInUrl={linkedInUrl}
-                  behanceUrl={behanceUrl}
-                />
-                <FooterNewsletter newsletterCta={newsletterCta} />
-                <FooterAddress
-                  officeAddress={officeAddress}
-                  officeGoogleMapsLink={officeGoogleMapsLink}
-                  instagramUrl={instagramUrl}
-                  linkedInUrl={linkedInUrl}
-                  behanceUrl={behanceUrl}
-                />
-              </LayoutGrid>
-            </FooterTop>
-            <FooterBottom style={{ filter: blur, opacity }}>
-              <FooterBottomInner>
-                <LogoIcon />
-              </FooterBottomInner>
-            </FooterBottom>
-          </Inner>
-        </LayoutWrapper>
-      </Outer>
-    </FooterWrapper>
+    </>
   );
 };
 

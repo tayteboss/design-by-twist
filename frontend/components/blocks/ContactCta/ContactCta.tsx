@@ -4,11 +4,9 @@ import pxToRem from "../../../utils/pxToRem";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import { useEffect, useRef, useState } from "react";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
-import Link from "next/link";
 import AnimateTextLayout from "../../layout/AnimateTextLayout";
 import { motion, useScroll, useTransform } from "framer-motion";
-import router, { useRouter } from "next/router";
-import useViewportWidth from "../../../hooks/useViewportWidth";
+import { useRouter } from "next/router";
 
 const ContactCtaWrapper = styled.section`
   background: var(--colour-black);
@@ -17,13 +15,15 @@ const ContactCtaWrapper = styled.section`
   z-index: 1;
 `;
 
-const Inner = styled(motion.div)`
+const Inner = styled(motion.button)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: ${pxToRem(40)};
   padding: ${pxToRem(240)} ${pxToRem(10)};
+  text-align: center;
+  margin: 0 auto;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     padding: ${pxToRem(180)} 0;
@@ -59,10 +59,11 @@ const ButtonWrapper = styled.div`
 type Props = {
   data: SiteSettingsType["footerContactCtas"];
   newBusinessEmail: SiteSettingsType["newBusinessEmail"];
+  setNewProjectModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ContactCta = (props: Props) => {
-  const { data, newBusinessEmail } = props;
+  const { data, newBusinessEmail, setNewProjectModalIsActive } = props;
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -115,18 +116,21 @@ const ContactCta = (props: Props) => {
       ref={ref}
     >
       <LayoutWrapper>
-        <Link href={`mailto:${newBusinessEmail}`}>
-          <Inner style={{ opacity }}>
-            <Title>
-              <AnimateTextLayout>{title || ""}</AnimateTextLayout>
-            </Title>
-            <ButtonWrapper>
-              <PrimaryButtonLayout useLightTheme={true}>
-                Let's work
-              </PrimaryButtonLayout>
-            </ButtonWrapper>
-          </Inner>
-        </Link>
+        <Inner
+          style={{ opacity }}
+          onClick={() => {
+            setNewProjectModalIsActive(true);
+          }}
+        >
+          <Title>
+            <AnimateTextLayout>{title || ""}</AnimateTextLayout>
+          </Title>
+          <ButtonWrapper>
+            <PrimaryButtonLayout useLightTheme={true}>
+              Let's work
+            </PrimaryButtonLayout>
+          </ButtonWrapper>
+        </Inner>
       </LayoutWrapper>
     </ContactCtaWrapper>
   );

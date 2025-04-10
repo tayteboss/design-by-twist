@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import pxToRem from "../../../utils/pxToRem";
 
-const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
+const PrimaryButtonLayoutWrapper = styled.div<{
+  $useLightTheme: boolean;
+  $isActive?: boolean;
+}>`
   min-width: ${pxToRem(300)};
   padding: 0 ${pxToRem(64)};
   height: ${pxToRem(48)};
@@ -18,6 +21,9 @@ const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
   font-size: ${pxToRem(30)};
   line-height: 1;
   white-space: nowrap;
+  box-shadow: ${(props) =>
+    props.$isActive ? "0 0 27px rgba(255, 107, 241, 0.75)" : "none"};
+  background: ${(props) => props.$isActive && "var(--colour-white)"};
 
   transition: all 200ms var(--transition-ease);
 
@@ -35,13 +41,18 @@ const PrimaryButtonLayoutWrapper = styled.div<{ $useLightTheme: boolean }>`
 type Props = {
   children: React.ReactNode;
   useLightTheme?: boolean;
+  isActive?: boolean;
 };
 
 const PrimaryButtonLayout = (props: Props) => {
-  const { children, useLightTheme = false } = props;
+  const { children, useLightTheme = false, isActive } = props;
 
   return (
-    <PrimaryButtonLayoutWrapper $useLightTheme={useLightTheme}>
+    <PrimaryButtonLayoutWrapper
+      $isActive={isActive}
+      $useLightTheme={useLightTheme}
+      className="primary-button-layout"
+    >
       {children}
     </PrimaryButtonLayoutWrapper>
   );

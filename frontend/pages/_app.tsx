@@ -62,7 +62,7 @@ const App = (props: Props) => {
     <>
       <GlobalStyles />
       <ThemeProvider theme={theme}>
-        <Layout>
+        <Layout cursorRefresh={() => setAppCursorRefresh(appCursorRefresh + 1)}>
           <AnimatePresence
             mode="wait"
             onExitComplete={() => handleExitComplete()}
