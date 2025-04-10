@@ -121,7 +121,8 @@ export const studioPageQueryString = `
 				title,
 				media {
 					${mediaString}
-				}
+				},
+				link
 			}
 		}
 	}
@@ -151,6 +152,23 @@ export const projectFields = `
 	featuredColour,
 	informationTitle,
 	informationDescription,
+	pageBuilder[] {
+			component,
+			fullMedia {
+				isFullBleed,	
+				media {
+					${mediaString}
+				}
+			},
+			twoColumnMedia {
+					leftColumn[] {
+							${mediaString}
+					},
+					rightColumn[] {
+							${mediaString}
+					}
+			}
+	},
 	relatedProjects[]-> {
 		title,
 		slug,

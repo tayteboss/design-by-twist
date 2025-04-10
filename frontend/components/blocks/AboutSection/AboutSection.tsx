@@ -11,6 +11,9 @@ import { motion } from "framer-motion";
 
 const AboutSectionWrapper = styled.section`
   padding: ${pxToRem(80)} 0;
+  position: relative;
+  z-index: 5;
+  background: var(--colour-white);
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     padding: ${pxToRem(24)} 0 ${pxToRem(64)};
@@ -46,6 +49,12 @@ const DescriptionWrapper = styled(motion.div)`
   flex-direction: column;
   align-items: flex-start;
   gap: ${pxToRem(40)};
+
+  @media ${(props) => props.theme.mediaBreakpoints.mobile} {
+    a {
+      width: 100%;
+    }
+  }
 `;
 
 const Description = styled.p`

@@ -9,6 +9,8 @@ import { useRef, useState, useEffect } from "react";
 
 const StudioHeroWrapper = styled.section`
   background: var(--colour-black);
+  position: relative;
+  z-index: 5;
 `;
 
 const Inner = styled(motion.div)`

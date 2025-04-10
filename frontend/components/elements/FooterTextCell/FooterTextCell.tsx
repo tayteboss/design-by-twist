@@ -49,8 +49,17 @@ const NewsletterButtonWrapper = styled.div`
   padding-top: ${pxToRem(16)};
   max-width: 200px;
 
+  @media ${(props) => props.theme.mediaBreakpoints.mobile} {
+    max-width: unset;
+  }
+
   a {
     text-decoration: none;
+
+    @media ${(props) => props.theme.mediaBreakpoints.mobile} {
+      width: 100%;
+      display: block;
+    }
 
     &:hover {
       opacity: 1;

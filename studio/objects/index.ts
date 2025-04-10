@@ -101,4 +101,100 @@ const mediaBlock = [
   },
 ]
 
-export {multiTypeBlock, mediaBlock, imageObject, videoObject, selectMediaTypeObject, seoObject}
+const fullMedia = {
+  name: 'fullMedia',
+  title: 'Full Media',
+  type: 'object',
+  fields: [
+    {
+      title: 'Use Full Bleed Image',
+      name: 'isFullBleed',
+      type: 'boolean',
+    },
+    {
+      title: 'Media',
+      name: 'media',
+      type: 'object',
+      fields: [
+        selectMediaTypeObject,
+        {
+          ...imageObject,
+          hidden: ({parent}: any) => parent?.mediaType !== 'image',
+        },
+        {
+          ...videoObject,
+          hidden: ({parent}: any) => parent?.mediaType !== 'video',
+        },
+      ],
+    },
+  ],
+  hidden: ({parent}: {parent: any}) => parent?.component !== 'fullMedia',
+}
+
+const twoColumnMedia = {
+  name: 'twoColumnMedia',
+  title: 'Two Column Media',
+  type: 'object',
+  fields: [
+    {
+      title: 'Left Column',
+      name: 'leftColumn',
+      type: 'array',
+      of: [
+        {
+          title: 'Media',
+          name: 'media',
+          type: 'object',
+          fields: [
+            selectMediaTypeObject,
+            {
+              ...imageObject,
+              hidden: ({parent}: any) => parent?.mediaType !== 'image',
+            },
+            {
+              ...videoObject,
+              hidden: ({parent}: any) => parent?.mediaType !== 'video',
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.max(2),
+    },
+    {
+      title: 'Right Column',
+      name: 'rightColumn',
+      type: 'array',
+      of: [
+        {
+          title: 'Media',
+          name: 'media',
+          type: 'object',
+          fields: [
+            selectMediaTypeObject,
+            {
+              ...imageObject,
+              hidden: ({parent}: any) => parent?.mediaType !== 'image',
+            },
+            {
+              ...videoObject,
+              hidden: ({parent}: any) => parent?.mediaType !== 'video',
+            },
+          ],
+        },
+      ],
+      validation: (Rule) => Rule.max(2),
+    },
+  ],
+  hidden: ({parent}: {parent: any}) => parent?.component !== 'twoColumnMedia',
+}
+
+export {
+  multiTypeBlock,
+  mediaBlock,
+  imageObject,
+  videoObject,
+  selectMediaTypeObject,
+  seoObject,
+  fullMedia,
+  twoColumnMedia,
+}

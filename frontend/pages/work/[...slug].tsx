@@ -7,6 +7,8 @@ import { projectFields } from "../../lib/sanityQueries";
 import ProjectHero from "../../components/blocks/ProjectHero";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
+import PageBuilder from "../../components/common/PageBuilder";
+import ProjectInformation from "../../components/blocks/ProjectInformation";
 
 type Props = {
   data: ProjectType;
@@ -32,6 +34,8 @@ const Page = (props: Props) => {
     }
   }, [data, router]);
 
+  console.log("data", data);
+
   return (
     <PageWrapper
       variants={pageTransitionVariants}
@@ -44,6 +48,11 @@ const Page = (props: Props) => {
         description={data?.featuredDescription || ""}
       />
       <ProjectHero data={data?.heroMedia} />
+      <ProjectInformation
+        title={data?.informationTitle}
+        description={data?.informationDescription}
+      />
+      <PageBuilder data={data?.pageBuilder} />
     </PageWrapper>
   );
 };

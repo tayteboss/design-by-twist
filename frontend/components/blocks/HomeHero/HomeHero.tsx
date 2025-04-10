@@ -15,13 +15,17 @@ const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
   margin-bottom: 100lvh;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    margin-bottom: ${(props) => pxToRem(props.$mediaHeight)};
+    margin-bottom: ${(props) => pxToRem(props.$mediaHeight / 2)};
   }
 `;
 
 const Inner = styled.div`
   height: 100lvh;
   max-width: 1170px;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    height: 100svh;
+  }
 `;
 
 const LogoWrapper = styled.span`
@@ -130,21 +134,17 @@ const childVariants = {
     opacity: 0,
     x: -3,
     filter: "blur(5px)",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
+    // Removed transition from here
   },
   visible: {
     opacity: 1,
     x: 0,
     filter: "blur(0px)",
     transition: {
-      duration: 0.03,
-      ease: "easeInOut",
-      type: "spring",
-      stiffness: 200,
-      bounce: 0.9,
+      duration: 0.5, // Increased duration for a more noticeable effect
+      ease: "easeOut", // easeOut often feels good for entrances
+      type: "tween", // Explicitly tween
+      // Removed stiffness and bounce as they don't apply to tween
     },
   },
 };

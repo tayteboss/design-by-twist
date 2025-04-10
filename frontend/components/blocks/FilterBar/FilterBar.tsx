@@ -128,7 +128,7 @@ const FilterBar = (props: Props) => {
         <Embla className="embla" ref={emblaRef}>
           <EmblaContainer className="embla__container">
             {tags.map((tag) => (
-              <EmblaSlide className="embla__slide">
+              <EmblaSlide className="embla__slide" key={tag}>
                 <Tag
                   key={tag}
                   $isActive={tag === activeTag}

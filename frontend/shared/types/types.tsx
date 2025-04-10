@@ -149,6 +149,7 @@ export type StudioPageType = {
     partnersList: Array<{
       title: string;
       media: MediaType;
+      link?: string;
     }>;
   };
 };

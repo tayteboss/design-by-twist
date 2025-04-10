@@ -11,8 +11,6 @@ import {
   projectsQueryString,
   workPageQueryString,
 } from "../../lib/sanityQueries";
-import pxToRem from "../../utils/pxToRem";
-import PageBuilder from "../../components/common/PageBuilder";
 import FilterBar from "../../components/blocks/FilterBar";
 import Projects from "../../components/blocks/Projects";
 import { useEffect, useState } from "react";

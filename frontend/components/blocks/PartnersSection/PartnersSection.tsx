@@ -6,8 +6,11 @@ import pxToRem from "../../../utils/pxToRem";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import MediaStack from "../../common/MediaStack";
+// NEW: Import necessary hooks and throttle function
 import { useState, useRef, useEffect, useCallback } from "react";
+import { throttle } from "lodash"; // Or your preferred throttle/debounce library
 
+// Styled Components (remain unchanged)
 const PartnersSectionWrapper = styled.section`
   padding: ${pxToRem(80)} 0;
 
@@ -69,6 +72,20 @@ const PartnersScroller = styled.div`
 
 const PartnerOuter = styled.div<{ $activeIndex: boolean }>`
   z-index: ${(props) => props.$activeIndex && "2"};
+
+  a {
+    transition: all 150ms var(--transition-ease);
+
+    &:hover {
+      color: var(--colour-foreground);
+
+      & > div {
+        // Target the Partner component inside the link
+        opacity: 1;
+        color: var(--colour-foreground);
+      }
+    }
+  }
 `;
 
 const Partner = styled.div<{ $activeIndex: boolean }>`
@@ -77,14 +94,12 @@ const Partner = styled.div<{ $activeIndex: boolean }>`
   opacity: ${(props) => (props.$activeIndex ? "1" : "0.2")};
   transform: translateX(${(props) => (props.$activeIndex ? "20px" : "0px")});
   position: relative;
+  cursor: pointer; // Add pointer cursor if it's linkable or interactive
 
   transition:
     opacity 50ms var(--transition-ease),
+    color 50ms var(--transition-ease),
     transform 150ms var(--transition-ease);
-
-  &:hover {
-    color: var(--colour-foreground);
-  }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(30)};
@@ -133,6 +148,7 @@ const ImageMotion = styled(motion.div)`
   overflow: hidden;
   border-radius: 5px;
 `;
+// End Styled Components
 
 type Props = {
   data: StudioPageType["partnersSection"];
@@ -142,9 +158,11 @@ const PartnersSection = (props: Props) => {
   const { data } = props;
 
   const [activeIndex, setActiveIndex] = useState(-1);
-  const partnerRefs = useRef<HTMLElement[]>([]);
+  // NEW: Initialize partnerRefs correctly
+  const partnerRefs = useRef<(HTMLElement | null)[]>([]);
 
-  const { ref, inView } = useInView({
+  // UseInView hook for the title/description animation (no changes needed here)
+  const { ref: contentWrapperRef, inView: contentInView } = useInView({
     triggerOnce: true,
     threshold: 0.01,
     rootMargin: "-50px",
@@ -152,16 +170,27 @@ const PartnersSection = (props: Props) => {
 
   const hasList = data?.partnersList && data.partnersList.length > 0;
 
+  // Effect to ensure the refs array size matches the list size
   useEffect(() => {
-    partnerRefs.current = partnerRefs.current.slice(
-      0,
-      data?.partnersList?.length || 0
-    );
+    if (data?.partnersList) {
+      partnerRefs.current = partnerRefs.current.slice(
+        0,
+        data.partnersList.length
+      );
+      // Initialize null entries if needed, though the ref callback handles assignment
+      while (partnerRefs.current.length < data.partnersList.length) {
+        partnerRefs.current.push(null);
+      }
+    } else {
+      partnerRefs.current = [];
+    }
   }, [data?.partnersList]);
 
+  // NEW: Memoize the scroll handler function using useCallback
   const handleScroll = useCallback(() => {
-    if (!hasList) {
-      setActiveIndex(-1);
+    // Early exit if no list or refs array isn't ready (e.g., during unmount)
+    if (!hasList || !partnerRefs.current || partnerRefs.current.length === 0) {
+      if (activeIndex !== -1) setActiveIndex(-1); // Reset if currently active
       return;
     }
 
@@ -170,53 +199,86 @@ const PartnersSection = (props: Props) => {
     const center = window.innerHeight / 2;
 
     partnerRefs.current.forEach((element, index) => {
+      // Check if the ref element actually exists
       if (element) {
-        const rect = element.getBoundingClientRect();
-        const elementCenter = rect.top + rect.height / 2;
-        const distance = Math.abs(elementCenter - center);
+        try {
+          const rect = element.getBoundingClientRect();
+          // Check if element is visible vertically before calculating center
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            const elementCenter = rect.top + rect.height / 2;
+            const distance = Math.abs(elementCenter - center);
 
-        if (distance <= 200 && distance < minDistance) {
-          minDistance = distance;
-          newActiveIndex = index;
+            // Threshold distance (e.g., 200px) to consider an item "active"
+            if (distance <= 200 && distance < minDistance) {
+              minDistance = distance;
+              newActiveIndex = index;
+            }
+          }
+        } catch (e) {
+          // Safety net in case getBoundingClientRect fails during weird unmount timing
+          console.warn(
+            "Error accessing element dimensions, likely during unmount:",
+            e
+          );
         }
       }
     });
 
-    setActiveIndex(newActiveIndex);
-  }, [hasList]);
+    // Only update state if the active index has actually changed
+    if (newActiveIndex !== activeIndex) {
+      setActiveIndex(newActiveIndex);
+    }
+    // Dependencies for useCallback: Recalculate only if these change.
+  }, [hasList, activeIndex]); // Include activeIndex because we read it
 
+  // NEW: Create a throttled version of the scroll handler
+  // Adjust throttle time (e.g., 100ms) as needed for performance vs responsiveness
+  const throttledScrollHandler = useRef(throttle(handleScroll, 100)).current;
+
+  // NEW: Effect to add and remove the throttled scroll listener
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
+    if (hasList) {
+      window.addEventListener("scroll", throttledScrollHandler);
+      // Run the handler once immediately on mount (or when list appears) without throttle
+      handleScroll();
+    }
 
+    // Cleanup function: This runs when the component unmounts OR dependencies change
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", throttledScrollHandler);
+      // Crucial: Cancel any pending throttled execution when unmounting
+      throttledScrollHandler.cancel();
     };
-  }, [handleScroll]);
+    // Dependencies: Effect runs if hasList, handleScroll, or throttledScrollHandler changes.
+    // handleScroll is memoized, throttledScrollHandler is stable via useRef.
+  }, [hasList, handleScroll, throttledScrollHandler]);
 
   return (
     <PartnersSectionWrapper>
       <LayoutWrapper>
-        <ContentWrapper ref={ref}>
+        {/* Use the specific ref for the content animation */}
+        <ContentWrapper ref={contentWrapperRef}>
           <Title
             initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
             animate={
-              inView
+              contentInView // Use the correct inView variable
                 ? { opacity: 1, x: 0, filter: "blur(0px)" }
                 : { opacity: 0, x: -5, filter: "blur(3px)" }
             }
-            transition={inView ? { duration: 0.5 } : undefined}
+            transition={contentInView ? { duration: 0.5 } : undefined}
           >
             Partners
           </Title>
           <DescriptionWrapper
             initial={{ filter: "blur(10px)", opacity: 0 }}
             animate={
-              inView
+              contentInView // Use the correct inView variable
                 ? { filter: "blur(0px)", opacity: 1 }
                 : { filter: "blur(10px)" }
             }
-            transition={inView ? { duration: 0.5, delay: 0.5 } : undefined}
+            transition={
+              contentInView ? { duration: 0.5, delay: 0.5 } : undefined
+            }
           >
             {data?.partnersDescription && (
               <Description>{data.partnersDescription}</Description>
@@ -227,20 +289,39 @@ const PartnersSection = (props: Props) => {
           {hasList &&
             data?.partnersList.map((partner, i) => (
               <PartnerOuter key={i} $activeIndex={activeIndex === i}>
-                <Link href="/tooooobeeeefilllleded">
+                {partner?.link ? (
+                  <Link href={partner.link} passHref legacyBehavior>
+                    {/* Apply the ref inside the Link */}
+                    <Partner
+                      as="a" // Render the Partner styled component as an 'a' tag for the Link
+                      $activeIndex={activeIndex === i}
+                      // NEW: Re-enable the ref assignment using the callback pattern
+                      ref={(el: HTMLElement | null) => {
+                        partnerRefs.current[i] = el;
+                      }}
+                    >
+                      {partner?.title || ""}
+                    </Partner>
+                  </Link>
+                ) : (
                   <Partner
                     $activeIndex={activeIndex === i}
-                    ref={(el) => (partnerRefs.current[i] = el as HTMLElement)}
+                    // NEW: Re-enable the ref assignment using the callback pattern
+                    ref={(el: HTMLElement | null) => {
+                      partnerRefs.current[i] = el;
+                    }}
                   >
                     {partner?.title || ""}
                   </Partner>
-                </Link>
+                )}
               </PartnerOuter>
             ))}
           <PartnerMediaWrapper>
             <ImageInner>
+              {/* AnimatePresence for image transition - needs to be inside the list map or handled differently if it wraps the image */}
+              {/* Assuming the key change on ImageMotion handles the transition */}
               <ImageMotion
-                key={activeIndex}
+                key={activeIndex} // Change key to trigger animation when activeIndex changes
                 initial={{
                   opacity: 0,
                   y: -20,
@@ -251,13 +332,16 @@ const PartnersSection = (props: Props) => {
                 exit={{ opacity: 0, y: 20, scale: 0.99, filter: "blur(3px)" }}
                 transition={{ duration: 0.3 }}
               >
-                {activeIndex >= 0 && data?.partnersList[activeIndex]?.media && (
-                  <MediaStack
-                    data={data?.partnersList[activeIndex]?.media}
-                    noAnimation
-                    sizes="50vw"
-                  />
-                )}
+                {/* Render only when an item is active and data exists */}
+                {activeIndex >= 0 &&
+                  activeIndex < (data?.partnersList?.length || 0) &&
+                  data?.partnersList[activeIndex]?.media && (
+                    <MediaStack
+                      data={data.partnersList[activeIndex].media}
+                      noAnimation // Assuming MediaStack internal animations aren't needed here
+                      sizes="50vw"
+                    />
+                  )}
               </ImageMotion>
             </ImageInner>
           </PartnerMediaWrapper>

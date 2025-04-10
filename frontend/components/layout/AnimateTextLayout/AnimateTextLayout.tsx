@@ -22,10 +22,11 @@ const wordVariants = {
     filter: "blur(0px)",
     transition: {
       delay: i * 0.1,
-      duration: 0.2,
-      stiffness: 100,
-      type: "spring",
-      bounce: 0.5,
+      duration: 0.5, // Adjust duration as needed
+      // stiffness: 100, // Not needed for tween
+      type: "tween", // <--- Change type to tween
+      // bounce: 0.5, // Not applicable to tween
+      ease: "easeOut", // Optional: Add an easing function
     },
   }),
 };

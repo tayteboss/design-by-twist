@@ -112,6 +112,12 @@ export default {
                   type: 'object',
                   fields: mediaBlock,
                 },
+                {
+                  title: 'Link',
+                  name: 'link',
+                  type: 'url',
+                  description: 'Optional link',
+                },
               ],
             },
           ],

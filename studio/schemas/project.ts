@@ -1,4 +1,4 @@
-import {mediaBlock} from '../objects'
+import {fullMedia, mediaBlock, twoColumnMedia} from '../objects'
 
 export default {
   title: 'Project',
@@ -179,7 +179,52 @@ export default {
       type: 'text',
     },
 
-    // Page builder will be here
+    {
+      title: 'Page Builder',
+      name: 'pageBuilder',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          preview: {
+            select: {
+              component: 'component',
+            },
+            prepare: ({component}: any) => {
+              let componentName = ''
+
+              if (component === 'fullMedia') {
+                componentName = 'Full Media'
+              } else if (component === 'twoColumnMedia') {
+                componentName = 'Two Column Media'
+              } else {
+                componentName = 'Unknown'
+              }
+
+              return {
+                title: componentName,
+              }
+            },
+          },
+          fields: [
+            {
+              title: 'Select Media Component',
+              name: 'component',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'Full Media', value: 'fullMedia'},
+                  {title: 'Two Column Media', value: 'twoColumnMedia'},
+                ],
+                layout: 'dropdown',
+              },
+            },
+            fullMedia,
+            twoColumnMedia,
+          ],
+        },
+      ],
+    },
 
     {
       title: 'Related Projects',
