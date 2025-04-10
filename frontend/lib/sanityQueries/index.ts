@@ -155,12 +155,12 @@ export const projectFields = `
 	pageBuilder[] {
 			component,
 			fullMedia {
+				useSmallMb,
 				isFullBleed,	
-				media {
-					${mediaString}
-				}
+				${mediaString}
 			},
 			twoColumnMedia {
+					useSmallMb,
 					leftColumn[] {
 							${mediaString}
 					},

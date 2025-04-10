@@ -107,6 +107,11 @@ const fullMedia = {
   type: 'object',
   fields: [
     {
+      title: 'Use small margin bottom',
+      name: 'useSmallMb',
+      type: 'boolean',
+    },
+    {
       title: 'Use Full Bleed Image',
       name: 'isFullBleed',
       type: 'boolean',
@@ -136,6 +141,11 @@ const twoColumnMedia = {
   title: 'Two Column Media',
   type: 'object',
   fields: [
+    {
+      title: 'Use small margin bottom',
+      name: 'useSmallMb',
+      type: 'boolean',
+    },
     {
       title: 'Left Column',
       name: 'leftColumn',
