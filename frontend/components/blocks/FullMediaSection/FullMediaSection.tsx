@@ -7,11 +7,13 @@ const FullMediaSectionWrapper = styled.section<{ $useSmallMb: boolean }>`
   margin-bottom: ${(props) => (props.$useSmallMb ? "20px" : "120px")};
 `;
 
-const MediaWrapper = styled.div`
+const MediaWrapper = styled.div<{ $isFullBleed?: boolean }>`
   width: 100%;
 
   .media-wrapper {
     padding-top: 56.25%;
+    overflow: hidden;
+    border-radius: ${(props) => (props.$isFullBleed ? "0px" : "5px;")};
   }
 `;
 
@@ -39,7 +41,9 @@ const FullMediaSection = (props: Props) => {
         </LayoutWrapper>
       )}
       {isFullBleed && (
-        <MediaWrapper>{media && <MediaStack data={media} />}</MediaWrapper>
+        <MediaWrapper $isFullBleed={true}>
+          {media && <MediaStack data={media} />}
+        </MediaWrapper>
       )}
     </FullMediaSectionWrapper>
   );

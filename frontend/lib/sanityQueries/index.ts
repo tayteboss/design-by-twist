@@ -160,12 +160,44 @@ export const projectFields = `
 				${mediaString}
 			},
 			twoColumnMedia {
+					...,
 					useSmallMb,
 					leftColumn[] {
-							${mediaString}
+						...,
+						mediaType,
+						image {
+							asset-> {
+								url,
+								metadata {
+									lqip
+								}
+							},
+							alt
+						},
+						video {
+							asset-> {
+								playbackId,
+							},
+						},
 					},
 					rightColumn[] {
-							${mediaString}
+						...,
+						mediaType,
+						image {
+							asset-> {
+								url,
+								metadata {
+									lqip
+								}
+							},
+							alt
+						},
+						video {
+							asset-> {
+								playbackId,
+							},
+						},
+						${mediaString}
 					}
 			}
 	},

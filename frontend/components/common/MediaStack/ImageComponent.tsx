@@ -87,9 +87,6 @@ const ImageComponent = (props: Props) => {
   const imageUrl = data?.media?.image?.asset?.url;
   const blurDataURL = data?.media?.image?.asset?.metadata?.lqip;
 
-  console.log("data", data);
-  console.log("imageUrl", imageUrl);
-
   return (
     <ImageComponentWrapper className="media-wrapper">
       {!noAnimation && (
