@@ -5,6 +5,10 @@ import MediaStack from "../../common/MediaStack";
 
 const FullMediaSectionWrapper = styled.section<{ $useSmallMb: boolean }>`
   margin-bottom: ${(props) => (props.$useSmallMb ? "20px" : "120px")};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    margin-bottom: ${(props) => (props.$useSmallMb ? "12px" : "32px")};
+  }
 `;
 
 const MediaWrapper = styled.div<{ $isFullBleed?: boolean }>`

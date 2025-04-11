@@ -154,11 +154,11 @@ const Footer = (props: Props) => {
   return (
     <>
       <FooterWrapper ref={ref}>
-        {/* <ContactCta
+        <ContactCta
           data={footerContactCtas}
           newBusinessEmail={newBusinessEmail}
           setNewProjectModalIsActive={setNewProjectModalIsActive}
-        /> */}
+        />
         <Outer>
           <LayoutWrapper>
             <Inner>

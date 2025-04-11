@@ -99,19 +99,16 @@ const CloudInner = styled.div`
   transform: translateX(-50%) translateY(-50%);
   width: 100%;
   height: 100%;
-
-  &::after {
-    content: "";
-    background: var(--colour-foreground);
-    border-radius: 100px;
-    filter: blur(10px);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-  }
+  background: var(--colour-foreground);
+  border-radius: 100px;
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-100%, -100%);
+  width: 100%;
+  height: 100%;
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 `;
@@ -205,8 +202,7 @@ const ProjectList = styled(motion.div)`
 const ProjectItemLink = styled(motion.div)`
   position: relative;
   z-index: 5;
-  background: rgba(206, 206, 206, 0.5);
-  backdrop-filter: blur(20px);
+  background: rgba(206, 206, 206, 0.7);
   border-radius: 100px;
   padding: 0 ${pxToRem(32)};
   height: 50px;
@@ -476,61 +472,61 @@ const Menu = (props: Props) => {
             </AnimatePresence>
           </MainItem>
 
-          <AnimatePresence mode="wait">
-            {activePage !== "project" && (
-              <>
-                <MainItem
-                  key="studio-button"
-                  onMouseEnter={() => setHoveredIndex("studio")}
-                  variants={itemEnterExitVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <Link href="/studio">Studio</Link>
-                  <AnimatePresence>
-                    {(hoveredIndex === "studio" || activePage === "studio") && (
-                      <HoverCloud
-                        layoutId="underline"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.75 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <CloudInner className="cloud-inner" />
-                      </HoverCloud>
-                    )}
-                  </AnimatePresence>
-                </MainItem>
+          {/* <AnimatePresence mode="wait"> */}
+          {activePage !== "project" && (
+            <>
+              <MainItem
+                key="studio-button"
+                onMouseEnter={() => setHoveredIndex("studio")}
+                variants={itemEnterExitVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Link href="/studio">Studio</Link>
+                <AnimatePresence>
+                  {(hoveredIndex === "studio" || activePage === "studio") && (
+                    <HoverCloud
+                      layoutId="underline"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.75 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <CloudInner className="cloud-inner" />
+                    </HoverCloud>
+                  )}
+                </AnimatePresence>
+              </MainItem>
 
-                <MainItem
-                  key="contact-button"
-                  onMouseEnter={() => setHoveredIndex("contact")}
-                  variants={itemEnterExitVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <Button onClick={() => setContactIsActive(true)}>
-                    Contact
-                  </Button>
-                  <AnimatePresence>
-                    {(hoveredIndex === "contact" || contactIsActive) && (
-                      <HoverCloud
-                        layoutId="underline"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 0.75 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <CloudInner className="cloud-inner" />
-                      </HoverCloud>
-                    )}
-                  </AnimatePresence>
-                </MainItem>
-              </>
-            )}
-          </AnimatePresence>
+              <MainItem
+                key="contact-button"
+                onMouseEnter={() => setHoveredIndex("contact")}
+                variants={itemEnterExitVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <Button onClick={() => setContactIsActive(true)}>
+                  Contact
+                </Button>
+                <AnimatePresence>
+                  {(hoveredIndex === "contact" || contactIsActive) && (
+                    <HoverCloud
+                      layoutId="underline"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 0.75 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <CloudInner className="cloud-inner" />
+                    </HoverCloud>
+                  )}
+                </AnimatePresence>
+              </MainItem>
+            </>
+          )}
+          {/* </AnimatePresence> */}
         </Main>
 
         {/* PROJECT DESKTOP ITEMS */}

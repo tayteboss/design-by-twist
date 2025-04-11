@@ -40,8 +40,6 @@ type Props = {
 const ProjectColumn = (props: Props) => {
   const { data } = props;
 
-  console.log("data", data);
-
   const hasData = data?.length > 0;
   const isMulti = data?.length > 1;
 

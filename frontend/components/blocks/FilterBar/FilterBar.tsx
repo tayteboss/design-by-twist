@@ -114,7 +114,7 @@ const FilterBar = (props: Props) => {
                 {tag.replace(/-/g, " ")}
                 {tag === activeTag && (
                   <Underline
-                    layoutId="filter-bar-underline"
+                    layoutId="filter-bar-underline-desktop"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   />
@@ -137,7 +137,7 @@ const FilterBar = (props: Props) => {
                   {tag.replace(/-/g, " ")}
                   {tag === activeTag && (
                     <Underline
-                      layoutId="filter-bar-underline"
+                      layoutId="filter-bar-underline-mobile"
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                     />
