@@ -33,7 +33,7 @@ const CursorFloatingButton = styled(motion.div)<StyledProps>`
   align-items: center;
   justify-content: center;
   top: 24px;
-  left: 75px;
+  left: ${(props) => (props.$autoWidth ? "10px" : "75px")};
   height: 48px;
   width: ${(props) => (props.$autoWidth ? "auto" : "150px")};
   padding: 0 ${pxToRem(24)};

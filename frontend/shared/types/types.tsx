@@ -88,6 +88,7 @@ export type ProjectType = {
   featuredColour: {
     hex: string;
   };
+  useWhiteFeaturedLogo: boolean;
   informationTitle: string;
   informationDescription: string;
   pageBuilder: any;
@@ -141,9 +142,22 @@ export type StudioPageType = {
     };
   };
   servicesSection: {
-    servicesDescription: string;
-    servicesList: ServiceType[];
-    backgroundColour: string;
+    servicesTitle: string;
+    backgroundColour: {
+      hex: string;
+    };
+    services: {
+      title: string;
+      description: string;
+      images: {
+        image: {
+          asset: {
+            url: string;
+          };
+        };
+        caption: string;
+      }[];
+    }[];
   };
   partnersSection: {
     partnersDescription: string;

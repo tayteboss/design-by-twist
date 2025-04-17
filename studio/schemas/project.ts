@@ -169,6 +169,11 @@ export default {
       type: 'color',
     },
     {
+      title: 'Use White Featured Logo',
+      name: 'useWhiteFeaturedLogo',
+      type: 'boolean',
+    },
+    {
       title: 'Information Title',
       name: 'informationTitle',
       type: 'string',

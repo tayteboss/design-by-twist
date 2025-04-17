@@ -71,6 +71,7 @@ const App = (props: Props) => {
               {...pageProps}
               key={router.asPath}
               pageTransitionVariants={pageTransitionVariants}
+              cursorRefresh={() => setAppCursorRefresh(appCursorRefresh + 1)}
             />
           </AnimatePresence>
         </Layout>

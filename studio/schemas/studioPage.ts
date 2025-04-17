@@ -66,20 +66,64 @@ export default {
       type: 'object',
       fields: [
         {
-          title: 'Services description',
-          name: 'servicesDescription',
+          title: 'Services Title',
+          name: 'servicesTitle',
           type: 'text',
-        },
-        {
-          title: 'Services List',
-          name: 'servicesList',
-          type: 'array',
-          of: [{type: 'reference', to: [{type: 'service'}]}],
+          rows: 2,
         },
         {
           title: 'Background Colour',
           name: 'backgroundColour',
           type: 'color',
+        },
+        {
+          title: 'Services',
+          name: 'services',
+          type: 'array',
+          of: [
+            {
+              title: 'Service',
+              name: 'service',
+              type: 'object',
+              fields: [
+                {
+                  title: 'Title',
+                  name: 'title',
+                  type: 'string',
+                },
+                {
+                  title: 'Description',
+                  name: 'description',
+                  type: 'text',
+                  rows: 2,
+                },
+                {
+                  title: 'Images',
+                  name: 'images',
+                  type: 'array',
+                  of: [
+                    {
+                      title: 'Image',
+                      name: 'image',
+                      type: 'object',
+                      fields: [
+                        {
+                          title: 'Image',
+                          name: 'image',
+                          type: 'image',
+                        },
+                        {
+                          title: 'Caption',
+                          name: 'caption',
+                          type: 'string',
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
         },
       ],
     },

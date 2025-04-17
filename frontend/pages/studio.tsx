@@ -13,11 +13,14 @@ const PageWrapper = styled(motion.div)``;
 
 type Props = {
   data: StudioPageType;
+  cursorRefresh: () => void;
   pageTransitionVariants: TransitionsType;
 };
 
 const Page = (props: Props) => {
-  const { data, pageTransitionVariants } = props;
+  const { data, pageTransitionVariants, cursorRefresh } = props;
+
+  console.log("data", data);
 
   return (
     <PageWrapper
@@ -32,7 +35,10 @@ const Page = (props: Props) => {
       />
       <StudioHero data={data?.heroSection} />
       <AboutSection data={data?.aboutSection} />
-      <ServicesSection />
+      <ServicesSection
+        data={data?.servicesSection}
+        cursorRefresh={cursorRefresh}
+      />
       <PartnersSection data={data?.partnersSection} />
     </PageWrapper>
   );

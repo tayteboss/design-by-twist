@@ -22,6 +22,7 @@ const PartnersSectionWrapper = styled.section`
 const ContentWrapper = styled.div`
   grid-column: span 6;
   position: relative;
+  z-index: 10;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     grid-column: 1 / -1;

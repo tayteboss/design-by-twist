@@ -73,6 +73,7 @@ export const homePageQueryString = `
 				featuredTagline,
 				featuredDescription,
 				featuredColour,
+				useWhiteFeaturedLogo
 			},
 		},
 	}
@@ -106,14 +107,22 @@ export const studioPageQueryString = `
 			}
 		},
 		servicesSection {
-			servicesDescription,
-			servicesList[]-> {
-				title,
-				description
-			},
+			servicesTitle,
 			backgroundColour {
 				hex
 			},
+			services[] {
+				title,
+				description,
+				images[] {
+					image {
+						asset -> {
+							url
+						}
+					},
+					caption
+				}
+			}
 		},
 		partnersSection {
 			partnersDescription,
