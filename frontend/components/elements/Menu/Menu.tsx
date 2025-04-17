@@ -4,10 +4,11 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { ProjectType } from "../../../shared/types/types";
+import { ProjectType, SiteSettingsType } from "../../../shared/types/types";
 import MediaStack from "../../common/MediaStack";
 import throttle from "lodash.throttle";
 import useViewportWidth from "../../../hooks/useViewportWidth";
+import ContactModal from "../../blocks/ContactModal";
 
 const MenuWrapper = styled.div<{ $isActive: boolean }>`
   position: absolute;
@@ -329,11 +330,12 @@ const projectThumbnailVariants = {
 type Props = {
   contactIsActive: boolean;
   projects: ProjectType[];
+  siteSettings: SiteSettingsType;
   setContactIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Menu = (props: Props) => {
-  const { contactIsActive, projects, setContactIsActive } = props;
+  const { contactIsActive, projects, siteSettings, setContactIsActive } = props;
 
   const [isActive, setIsActive] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<null | string>(null);
@@ -393,6 +395,8 @@ const Menu = (props: Props) => {
 
   useEffect(() => {
     const handleRouteChangeComplete = () => {
+      setContactIsActive(false);
+
       if (router.pathname === "/work/[...slug]") {
         setActiveProject(
           document.body.getAttribute("data-project-title") || ""
@@ -435,6 +439,12 @@ const Menu = (props: Props) => {
 
   return (
     <MenuWrapper $isActive={isActive}>
+      <ContactModal
+        isActive={contactIsActive}
+        setContactIsActive={setContactIsActive}
+        contactEmail={siteSettings?.contactEmail}
+      />
+
       <MenuInner layout>
         {/* BACK BUTTON */}
         <AnimatePresence mode="wait">
@@ -511,7 +521,7 @@ const Menu = (props: Props) => {
                   Contact
                 </Button>
                 <AnimatePresence>
-                  {(hoveredIndex === "contact" || contactIsActive) && (
+                  {hoveredIndex === "contact" && (
                     <HoverCloud
                       layoutId="underline"
                       initial={{ opacity: 0 }}

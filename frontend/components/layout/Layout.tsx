@@ -22,7 +22,7 @@ const Layout = (props: Props) => {
 
   return (
     <>
-      <Header projects={projects} />
+      <Header projects={projects} siteSettings={siteSettings} />
       <ReactLenis root>
         <Main>{children}</Main>
       </ReactLenis>

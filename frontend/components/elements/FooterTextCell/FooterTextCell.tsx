@@ -13,7 +13,7 @@ const FooterTextCellWrapper = styled.div`
     text-decoration: underline;
     font-size: ${pxToRem(20)};
     line-height: 1.2;
-    display: inline-block
+    display: inline-block;
 
     transition: all var(--transition-speed-default) var(--transition-ease);
 
