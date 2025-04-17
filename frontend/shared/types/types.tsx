@@ -85,7 +85,7 @@ export type ProjectType = {
   defaultThumbnailRatio: "portrait" | "landscape";
   defaultTagline: any[];
   featuredTagline: string;
-  featuredDescription: string;
+  featuredDescription: any[];
   featuredColour: {
     hex: string;
   };

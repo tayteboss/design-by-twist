@@ -4,12 +4,18 @@ import pxToRem from "../../../utils/pxToRem";
 import { useState } from "react";
 import formatHTML from "../../../utils/formatHTML";
 import { AnimatePresence, motion } from "framer-motion";
+import { PortableText } from "@portabletext/react";
 
 const ProjectInformationWrapper = styled.section`
-  padding: ${pxToRem(40)} 0;
+  padding: ${pxToRem(40)} 0 ${pxToRem(110)};
 `;
 
-const Inner = styled.div``;
+const Inner = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+`;
 
 const Title = styled.h1`
   font-size: ${pxToRem(60)};
@@ -34,7 +40,7 @@ const Trigger = styled.button`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(20)};
-    line-height: ${pxToRem(35)};
+    line-height: ${pxToRem(25)};
   }
 
   &:hover {
@@ -42,10 +48,41 @@ const Trigger = styled.button`
   }
 `;
 
-const DescriptionWrapper = styled(motion.div)``;
+const DescriptionWrapper = styled(motion.div)`
+  background: rgba(206, 206, 206, 0.25);
+  backdrop-filter: blur(20px);
+  border-radius: 26px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: ${pxToRem(12)} ${pxToRem(16)};
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 2;
+`;
+
+const DescriptionOuter = styled(motion.div)`
+  max-width: ${pxToRem(640)};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    width: 100%;
+  }
+`;
 
 const Description = styled(motion.div)`
-  padding-bottom: ${pxToRem(40)};
+  padding: ${pxToRem(24)} 0;
+
+  * {
+    font-size: ${pxToRem(25)};
+    line-height: ${pxToRem(30)};
+    font-family: var(--font-acid-grotesk-regular);
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      font-size: ${pxToRem(20)};
+      line-height: ${pxToRem(25)};
+    }
+  }
 `;
 
 const wrapperVariants = {
@@ -63,6 +100,27 @@ const wrapperVariants = {
     height: "auto",
     transition: {
       duration: 0.3,
+      ease: "easeInOut",
+      when: "beforeChildren",
+    },
+  },
+};
+
+const outerVariants = {
+  hidden: {
+    height: 0,
+    width: 0,
+    transition: {
+      duration: 1,
+      ease: "easeInOut",
+      when: "afterChildren",
+    },
+  },
+  visible: {
+    height: "auto",
+    width: "100%",
+    transition: {
+      duration: 1,
       ease: "easeInOut",
       when: "beforeChildren",
     },
@@ -88,7 +146,7 @@ const childVariants = {
 
 type Props = {
   title?: string;
-  description?: string;
+  description?: any[];
 };
 
 const ProjectInformation = (props: Props) => {
@@ -101,28 +159,34 @@ const ProjectInformation = (props: Props) => {
       <LayoutWrapper>
         <Inner>
           <Title>{title || ""}</Title>
-          <AnimatePresence>
-            {isActive && (
-              <DescriptionWrapper
-                variants={wrapperVariants}
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-              >
-                {description && (
-                  <Description
-                    variants={childVariants}
-                    dangerouslySetInnerHTML={{
-                      __html: formatHTML(description),
-                    }}
-                  />
-                )}
-              </DescriptionWrapper>
-            )}
-          </AnimatePresence>
-          <Trigger onClick={() => setIsActive(!isActive)}>
-            {isActive ? "-close" : "+info"}
-          </Trigger>
+          <DescriptionWrapper
+            variants={wrapperVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+          >
+            <Trigger onClick={() => setIsActive(!isActive)}>
+              {isActive ? "↑ close" : "↓ info"}
+            </Trigger>
+            <AnimatePresence>
+              {isActive && (
+                <>
+                  {description && (
+                    <DescriptionOuter
+                      variants={outerVariants}
+                      initial="hidden"
+                      animate="visible"
+                      exit="hidden"
+                    >
+                      <Description variants={childVariants}>
+                        <PortableText value={description} />
+                      </Description>
+                    </DescriptionOuter>
+                  )}
+                </>
+              )}
+            </AnimatePresence>
+          </DescriptionWrapper>
         </Inner>
       </LayoutWrapper>
     </ProjectInformationWrapper>
