@@ -35,6 +35,11 @@ export default {
       type: 'string',
     },
     {
+      title: 'Contact Email',
+      name: 'contactEmail',
+      type: 'string',
+    },
+    {
       title: 'Office Address',
       name: 'officeAddress',
       type: 'string',

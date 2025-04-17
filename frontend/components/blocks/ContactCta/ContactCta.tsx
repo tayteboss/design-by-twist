@@ -58,12 +58,11 @@ const ButtonWrapper = styled.div`
 
 type Props = {
   data: SiteSettingsType["footerContactCtas"];
-  newBusinessEmail: SiteSettingsType["newBusinessEmail"];
   setNewProjectModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ContactCta = (props: Props) => {
-  const { data, newBusinessEmail, setNewProjectModalIsActive } = props;
+  const { data, setNewProjectModalIsActive } = props;
 
   const ref = useRef<HTMLDivElement>(null);
 

@@ -14,6 +14,7 @@ type StyledProps = {
   $isActive?: boolean;
   $isOnDevice?: boolean;
   $rotation?: number;
+  $autoWidth?: boolean;
 };
 
 const CursorWrapper = styled.div<StyledProps>`
@@ -34,7 +35,8 @@ const CursorFloatingButton = styled(motion.div)<StyledProps>`
   top: 24px;
   left: 75px;
   height: 48px;
-  width: 150px;
+  width: ${(props) => (props.$autoWidth ? "auto" : "150px")};
+  padding: 0 ${pxToRem(24)};
   pointer-events: none;
   border-radius: 50%;
   transform: translate(-50%, -50%);
@@ -232,6 +234,7 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
     const floatingButtons = document.querySelectorAll(
       ".cursor-floating-button"
     );
+    const cursorSlides = document.querySelectorAll(".cursor-gallery__slide");
 
     floatingButtons.forEach((button) => {
       const buttonCursorTitle = button.getAttribute("data-cursor-title");
@@ -266,6 +269,28 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
       });
       link.addEventListener("mouseup", () => {
         setIsCursorGallery(false);
+      });
+    });
+
+    cursorSlides.forEach((link) => {
+      const buttonCursorTitle = link.getAttribute("data-cursor-title");
+
+      link.addEventListener("mouseenter", () => {
+        setIsHoveringFloatingButton(true);
+        setIsCursorGallery(false);
+        if (buttonCursorTitle) {
+          setCursorText(buttonCursorTitle);
+        }
+      });
+      link.addEventListener("mouseleave", () => {
+        setIsHoveringFloatingButton(false);
+        setCursorText("");
+        setRotation(0); // Reset rotation on leave
+      });
+      link.addEventListener("mouseup", () => {
+        setIsHoveringFloatingButton(false);
+        setCursorText("");
+        setRotation(0); // Reset rotation on mouse up
       });
     });
 
@@ -334,6 +359,7 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
       <CursorWrapper $isOnDevice={isOnDevice} className="cursor-wrapper">
         <CursorFloatingButton
           $isActive={isHoveringFloatingButton}
+          $autoWidth={!!cursorText}
           variants={variantsWrapper}
           animate="visible"
           layout

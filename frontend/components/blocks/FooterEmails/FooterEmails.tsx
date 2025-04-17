@@ -23,33 +23,22 @@ const FooterEmailsWrapper = styled.div`
 `;
 
 type Props = {
-  newBusinessEmail: string;
-  careersEmail: string;
+  contactEmail: string;
   instagramUrl: string;
   linkedInUrl: string;
   behanceUrl: string;
 };
 
 const FooterEmails = (props: Props) => {
-  const {
-    newBusinessEmail,
-    careersEmail,
-    instagramUrl,
-    linkedInUrl,
-    behanceUrl,
-  } = props;
+  const { instagramUrl, linkedInUrl, behanceUrl, contactEmail } = props;
 
   return (
     <FooterEmailsWrapper>
       <FooterTextCell
         title="New Business"
-        linkTitle={newBusinessEmail}
-        linkUrl={`mailto:${newBusinessEmail}`}
-      />
-      <FooterTextCell
-        title="Careers"
-        linkTitle={careersEmail}
-        linkUrl={`mailto:${careersEmail}`}
+        linkTitle={contactEmail}
+        linkUrl={`mailto:${contactEmail}`}
+        prependText="Want to start a new project? Say"
       />
       <FooterSocials
         instagramUrl={instagramUrl}

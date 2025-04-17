@@ -144,6 +144,7 @@ const FeaturedProjects = (props: Props) => {
     containScroll: false,
     startIndex: startIndex,
     skipSnaps: true,
+    watchResize: false,
   });
 
   const [activeIndex, setActiveIndex] = useState(startIndex);
@@ -164,34 +165,56 @@ const FeaturedProjects = (props: Props) => {
 
       scaleNodes.current = emblaApi.slideNodes();
 
+      // Iterate over each scroll snap point
       emblaApi.scrollSnapList().forEach((scrollSnap, snapIndex) => {
+        // Calculate the difference between the current scroll position and the
+        // scroll snap point
         const diffToTarget = scrollSnap - scrollProgress;
+        // Calculate the absolute difference (ignoring the sign of the difference)
         const absoluteDiff = Math.abs(diffToTarget);
+
+        // Set up some initial values for the scale, padding top, and flex
         let scale = 0.4;
-
         let paddingTop = 56.25;
+        let flex = 0.15;
 
+        // If the absolute difference is less than 1, we are close to the
+        // scroll snap point. In this case, smoothly interpolate the scale,
+        // padding top, and flex between the values for the scroll snap point
+        // and the current scroll position
         if (absoluteDiff < 1) {
           scale = 1.0 - absoluteDiff * (1.0 - 0.3);
           paddingTop = absoluteDiff < 0.05 ? 125 : 56.25;
-        } else if (absoluteDiff < 2) {
+          flex = 0.4 - absoluteDiff * (0.4 - 0.15);
+        }
+        // If the absolute difference is between 1 and 2, we are between two
+        // scroll snap points. In this case, smoothly interpolate the scale,
+        // padding top, and flex between the values for the two scroll snap points
+        else if (absoluteDiff < 2) {
           scale = 0.3 - (absoluteDiff - 1) * (0.3 - 0.5);
           paddingTop = 56.25;
+          flex = 0.4 - (absoluteDiff - 1) * (0.4 - 0.15);
         }
 
+        // Ensure that the final scale, padding top, and flex are within the
+        // valid range
         const finalScale = numberWithinRange(scale, 0.1, 1.0).toString();
         const finalPaddingTop = numberWithinRange(
           paddingTop,
           56.25,
           125
         ).toString();
+        const finalFlex = numberWithinRange(flex, 0.15, 0.4) * 100;
 
+        // Get the slide node at the current index
         const slideNode = scaleNodes.current[snapIndex];
 
+        // If the slide node exists, update its style
         if (slideNode) {
           window.requestAnimationFrame(() => {
             slideNode.style.transform = `scale(${finalScale})`;
             slideNode.style.zIndex = absoluteDiff < 0.5 ? "1" : "0";
+            // slideNode.style.flex = `0 0 ${finalFlex}vw`;
 
             if (slideNode.firstElementChild) {
               (slideNode.firstElementChild as HTMLElement).style.paddingTop =

@@ -53,6 +53,7 @@ export type SiteSettingsType = {
   behanceUrl: string;
   newBusinessEmail: string;
   careersEmail: string;
+  contactEmail: string;
   officeAddress: string;
   officeGoogleMapsLink: string;
   newsletterCta: string;

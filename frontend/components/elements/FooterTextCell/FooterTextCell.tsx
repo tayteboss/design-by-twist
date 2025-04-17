@@ -13,11 +13,22 @@ const FooterTextCellWrapper = styled.div`
     text-decoration: underline;
     font-size: ${pxToRem(20)};
     line-height: 1.2;
+    display: inline-block
 
     transition: all var(--transition-speed-default) var(--transition-ease);
 
     &:hover {
       opacity: 0.5;
+    }
+  }
+
+  span {
+    font-size: ${pxToRem(20)};
+    line-height: 1.2;
+    font-weight: 200;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      font-size: ${pxToRem(18)};
     }
   }
 `;
@@ -73,6 +84,7 @@ type Props = {
   linkUrl?: string;
   text?: string;
   useNewsletterButton?: boolean;
+  prependText?: string;
 };
 
 const FooterTextCell = (props: Props) => {
@@ -82,15 +94,28 @@ const FooterTextCell = (props: Props) => {
     linkUrl,
     text,
     useNewsletterButton = false,
+    prependText,
   } = props;
 
   return (
     <FooterTextCellWrapper>
       <Title>{title}</Title>
       {linkTitle && linkUrl && (
-        <Link href={linkUrl} target="_blank">
-          {linkTitle}
-        </Link>
+        <>
+          {prependText && (
+            <span>
+              {prependText}{" "}
+              <Link href={linkUrl} target="_blank">
+                {linkTitle}
+              </Link>
+            </span>
+          )}
+          {!prependText && (
+            <Link href={linkUrl} target="_blank">
+              {linkTitle}
+            </Link>
+          )}
+        </>
       )}
       <TextWrapper>
         {text && <Text>{text}</Text>}

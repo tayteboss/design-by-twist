@@ -76,8 +76,7 @@ const Footer = (props: Props) => {
       instagramUrl,
       linkedInUrl,
       behanceUrl,
-      newBusinessEmail,
-      careersEmail,
+      contactEmail,
       officeAddress,
       officeGoogleMapsLink,
       newsletterCta,
@@ -156,7 +155,6 @@ const Footer = (props: Props) => {
       <FooterWrapper ref={ref}>
         <ContactCta
           data={footerContactCtas}
-          newBusinessEmail={newBusinessEmail}
           setNewProjectModalIsActive={setNewProjectModalIsActive}
         />
         <Outer>
@@ -171,8 +169,7 @@ const Footer = (props: Props) => {
                     desktopSize={true}
                   />
                   <FooterEmails
-                    newBusinessEmail={newBusinessEmail}
-                    careersEmail={careersEmail}
+                    contactEmail={contactEmail}
                     instagramUrl={instagramUrl}
                     linkedInUrl={linkedInUrl}
                     behanceUrl={behanceUrl}
