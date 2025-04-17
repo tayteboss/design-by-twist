@@ -58,20 +58,29 @@ const ButtonWrapper = styled.div`
 
 type Props = {
   data: SiteSettingsType["footerContactCtas"];
+  buttonData: SiteSettingsType["footerContactButtonTitle"];
   setNewProjectModalIsActive: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ContactCta = (props: Props) => {
-  const { data, setNewProjectModalIsActive } = props;
+  const { data, buttonData, setNewProjectModalIsActive } = props;
 
   const ref = useRef<HTMLDivElement>(null);
 
   const [title, setTitle] = useState("");
+  const [buttonTitle, setButtonTitle] = useState("");
 
   useEffect(() => {
-    const title = data[Math.floor(Math.random() * data.length)];
+    const title = data?.length
+      ? data[Math.floor(Math.random() * data.length)]
+      : "";
     setTitle(title);
-  }, [data]);
+
+    const buttonTitle = buttonData?.length
+      ? buttonData[Math.floor(Math.random() * buttonData.length)]
+      : "";
+    setButtonTitle(buttonTitle);
+  }, [data, buttonData]);
 
   const { scrollY } = useScroll();
 
@@ -126,7 +135,7 @@ const ContactCta = (props: Props) => {
           </Title>
           <ButtonWrapper>
             <PrimaryButtonLayout useLightTheme={true}>
-              Let's work
+              {buttonTitle || ""}
             </PrimaryButtonLayout>
           </ButtonWrapper>
         </Inner>

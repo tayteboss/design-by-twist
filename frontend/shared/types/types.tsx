@@ -59,6 +59,7 @@ export type SiteSettingsType = {
   newsletterCta: string;
   highlightColour: string;
   footerContactCtas: Array<string>;
+  footerContactButtonTitle: Array<string>;
   newProjectExitPrompt: string;
 };
 

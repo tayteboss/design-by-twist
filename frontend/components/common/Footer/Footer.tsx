@@ -81,6 +81,7 @@ const Footer = (props: Props) => {
       officeGoogleMapsLink,
       newsletterCta,
       footerContactCtas,
+      footerContactButtonTitle,
     },
   } = props;
 
@@ -155,6 +156,7 @@ const Footer = (props: Props) => {
       <FooterWrapper ref={ref}>
         <ContactCta
           data={footerContactCtas}
+          buttonData={footerContactButtonTitle}
           setNewProjectModalIsActive={setNewProjectModalIsActive}
         />
         <Outer>

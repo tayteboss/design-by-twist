@@ -67,6 +67,13 @@ export default {
       description: 'These will get randomised on page transition',
     },
     {
+      title: 'Footer Contact Button Title',
+      name: 'footerContactButtonTitle',
+      type: 'array',
+      of: [{type: 'string'}],
+      description: 'These will get randomised on page transition',
+    },
+    {
       title: 'New Project Exit Prompt',
       name: 'newProjectExitPrompt',
       type: 'string',
