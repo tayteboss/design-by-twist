@@ -34,8 +34,6 @@ const Page = (props: Props) => {
     }
   }, [data, router]);
 
-  console.log("data", data);
-
   return (
     <PageWrapper
       variants={pageTransitionVariants}
@@ -45,7 +43,7 @@ const Page = (props: Props) => {
     >
       <NextSeo
         title={`${data?.title || ""} — Design by Twist`}
-        description={data?.featuredDescription || ""}
+        description={data?.featuredTagline || ""}
       />
       <ProjectHero data={data?.heroMedia} />
       <ProjectInformation

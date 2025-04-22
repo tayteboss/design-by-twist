@@ -20,8 +20,6 @@ type Props = {
 const Page = (props: Props) => {
   const { data, pageTransitionVariants, cursorRefresh } = props;
 
-  console.log("data", data);
-
   return (
     <PageWrapper
       variants={pageTransitionVariants}

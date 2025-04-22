@@ -14,7 +14,7 @@ import { useRef, useState, useEffect } from "react";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 import { useRouter } from "next/router";
 import NewProjectModal from "../../blocks/NewProjectModal";
-import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
+import { useLenis } from "@studio-freight/react-lenis";
 
 const FooterWrapper = styled.footer`
   position: relative;
@@ -26,6 +26,7 @@ const Outer = styled.div`
   background: var(--colour-white);
   position: relative;
   z-index: 5;
+  overflow: hidden;
 `;
 
 const Inner = styled.div`
@@ -103,9 +104,7 @@ const Footer = (props: Props) => {
     scrollY,
     [
       distanceToTop - windowHeight,
-      isMobile
-        ? distanceToTop + (windowHeight - 200)
-        : distanceToTop + windowHeight / 2,
+      isMobile ? distanceToTop + (windowHeight - 200) : distanceToTop,
     ],
     ["blur(100px)", "blur(0px)"]
   );
@@ -114,9 +113,7 @@ const Footer = (props: Props) => {
     scrollY,
     [
       distanceToTop,
-      isMobile
-        ? distanceToTop + (windowHeight - 200)
-        : distanceToTop + windowHeight / 2,
+      isMobile ? distanceToTop + (windowHeight - 200) : distanceToTop,
     ],
     ["0", "1"]
   );
@@ -153,12 +150,12 @@ const Footer = (props: Props) => {
 
   return (
     <>
+      <ContactCta
+        data={footerContactCtas}
+        buttonData={footerContactButtonTitle}
+        setNewProjectModalIsActive={setNewProjectModalIsActive}
+      />
       <FooterWrapper ref={ref}>
-        <ContactCta
-          data={footerContactCtas}
-          buttonData={footerContactButtonTitle}
-          setNewProjectModalIsActive={setNewProjectModalIsActive}
-        />
         <Outer>
           <LayoutWrapper>
             <Inner>

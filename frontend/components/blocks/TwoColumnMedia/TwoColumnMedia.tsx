@@ -52,9 +52,6 @@ const TwoColumnMedia = (props: Props) => {
     rightColumn[0].useFullHeight = true;
   }
 
-  console.log("leftColumn", leftColumn);
-  console.log("rightColumn", rightColumn);
-
   return (
     <TwoColumnMediaWrapper $useSmallMb={useSmallMb}>
       <LayoutWrapper>

@@ -71,7 +71,7 @@ const DescriptionOuter = styled(motion.div)`
 `;
 
 const Description = styled(motion.div)`
-  padding: ${pxToRem(24)} 0;
+  padding: ${pxToRem(40)} 0 ${pxToRem(24)};
 
   * {
     font-size: ${pxToRem(25)};
