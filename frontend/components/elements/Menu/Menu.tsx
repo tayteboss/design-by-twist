@@ -2,13 +2,14 @@ import styled from "styled-components";
 import pxToRem from "../../../utils/pxToRem";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { ProjectType, SiteSettingsType } from "../../../shared/types/types";
 import MediaStack from "../../common/MediaStack";
 import throttle from "lodash.throttle";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 import ContactModal from "../../blocks/ContactModal";
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
 const MenuWrapper = styled.div<{ $isActive: boolean }>`
   position: absolute;
@@ -437,6 +438,12 @@ const Menu = (props: Props) => {
     );
   }, [projects, router.asPath, activeProject]);
 
+  const outsideClickRef = useRef<HTMLDivElement>(null!);
+  useClickOutside(outsideClickRef, () => {
+    setIsHoveringProjectItems(false);
+    setActiveProjectItem(false);
+  });
+
   return (
     <MenuWrapper $isActive={isActive}>
       <ContactModal
@@ -482,7 +489,6 @@ const Menu = (props: Props) => {
             </AnimatePresence>
           </MainItem>
 
-          {/* <AnimatePresence mode="wait"> */}
           {activePage !== "project" && (
             <>
               <MainItem
@@ -536,7 +542,6 @@ const Menu = (props: Props) => {
               </MainItem>
             </>
           )}
-          {/* </AnimatePresence> */}
         </Main>
 
         {/* PROJECT DESKTOP ITEMS */}
@@ -601,17 +606,17 @@ const Menu = (props: Props) => {
                     onMouseLeave={() => {
                       setIsHoveringProjectItems(false);
                       setActiveProjectItem(false);
-                    }} // Use onMouseLeave on the container
+                    }}
+                    ref={outsideClickRef}
                   >
                     {filteredProjects.map((item, i) => (
                       <ProjectItemLink
-                        variants={projectChildVariants} // Your existing variants
-                        key={`project-${item?.slug?.current || i}`} // Ensure key is unique and stable
+                        variants={projectChildVariants}
+                        key={`project-${item?.slug?.current || i}`}
                         onClick={() => setIsHoveringProjectItems(false)}
                         onMouseOver={() =>
                           setActiveProjectItem(item.slug.current)
                         }
-                        // onMouseOut={() => setActiveProjectItem(false)} // Often better handled by parent's onMouseLeave
                       >
                         <Link href={`/work/${item.slug.current}`}>
                           {item.title}
@@ -620,17 +625,17 @@ const Menu = (props: Props) => {
                         <AnimatePresence mode="wait">
                           {activeProjectItem === item.slug.current && (
                             <ProjectThumbnailWrapper
-                              variants={projectThumbnailVariants} // Your existing variants
+                              variants={projectThumbnailVariants}
                               initial="hidden"
                               animate="visible"
                               exit="hidden"
-                              key={`thumbnail-${item.slug.current}`} // Unique key
+                              key={`thumbnail-${item.slug.current}`}
                             >
                               <ProjectThumbnailInner>
                                 <MediaStack
                                   data={item.defaultThumbnail}
                                   sizes="15vw"
-                                  noAnimation={true} // Assuming MediaStack has its own logic
+                                  noAnimation={true}
                                 />
                               </ProjectThumbnailInner>
                             </ProjectThumbnailWrapper>
