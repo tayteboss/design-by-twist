@@ -64,6 +64,7 @@ const Projects = (props: Props) => {
     <ProjectsWrapper>
       <LayoutWrapper>
         <AnimatePresence mode="wait">
+          {!hasProjects && <Title>No projects found</Title>}
           <Inner
             variants={wrapperVariants}
             initial="hidden"
@@ -85,7 +86,6 @@ const Projects = (props: Props) => {
                   key={project.slug.current}
                 />
               ))}
-            {!hasProjects && <Title>No projects found</Title>}
           </Inner>
         </AnimatePresence>
       </LayoutWrapper>

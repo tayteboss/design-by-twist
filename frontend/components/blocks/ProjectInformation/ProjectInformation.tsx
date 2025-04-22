@@ -87,8 +87,8 @@ const Description = styled(motion.div)`
 
 const wrapperVariants = {
   hidden: {
-    opacity: 0,
-    height: 0,
+    opacity: 1,
+    height: "auto",
     transition: {
       duration: 0.3,
       ease: "easeInOut",
@@ -109,9 +109,9 @@ const wrapperVariants = {
 const outerVariants = {
   hidden: {
     height: 0,
-    width: 0,
+    width: "87px",
     transition: {
-      duration: 1,
+      duration: 0.4,
       ease: "easeInOut",
       when: "afterChildren",
     },
@@ -120,7 +120,7 @@ const outerVariants = {
     height: "auto",
     width: "100%",
     transition: {
-      duration: 1,
+      duration: 0.4,
       ease: "easeInOut",
       when: "beforeChildren",
     },

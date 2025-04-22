@@ -102,19 +102,13 @@ const Footer = (props: Props) => {
 
   const blur = useTransform(
     scrollY,
-    [
-      distanceToTop - windowHeight,
-      isMobile ? distanceToTop + (windowHeight - 200) : distanceToTop,
-    ],
+    [distanceToTop - windowHeight, isMobile ? distanceToTop : distanceToTop],
     ["blur(100px)", "blur(0px)"]
   );
 
   const opacity = useTransform(
     scrollY,
-    [
-      distanceToTop,
-      isMobile ? distanceToTop + (windowHeight - 200) : distanceToTop,
-    ],
+    [distanceToTop, isMobile ? distanceToTop : distanceToTop],
     ["0", "1"]
   );
 
