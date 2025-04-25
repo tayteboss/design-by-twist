@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { HomePageType } from "../../../shared/types/types";
 import { motion, useScroll, useTransform } from "framer-motion";
 import LayoutWrapper from "../../layout/LayoutWrapper";
@@ -13,6 +13,7 @@ const HomeHeroWrapper = styled.section<{ $bg: string; $mediaHeight: number }>`
   background-color: ${(props) => props.$bg};
   position: relative;
   margin-bottom: 100lvh;
+  z-index: 1;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     margin-bottom: ${(props) => pxToRem(props.$mediaHeight / 2)};
@@ -34,13 +35,14 @@ const LogoWrapper = styled.span`
   justify-content: center;
   margin-right: ${pxToRem(24)};
   position: relative;
+  opacity: 0;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     margin-right: ${pxToRem(8)};
     top: 2px;
 
     svg {
-      width: 104px;
+      width: 250px;
       height: auto;
     }
   }
@@ -180,7 +182,7 @@ const HomeHero = (props: Props) => {
   const contentTransform = useTransform(
     scrollY,
     [0, windowHeight],
-    ["translateY(0%)", "translateY(200%)"]
+    ["translateY(0%)", "translateY(250%)"]
   );
 
   const blur = useTransform(

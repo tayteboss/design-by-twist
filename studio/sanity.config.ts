@@ -38,6 +38,7 @@ export default defineConfig({
               .title('Work Page')
               .icon(DocumentIcon)
               .child(S.editor().schemaType('workPage').documentId('workPage')),
+            S.divider(),
             S.listItem()
               .title('Project')
               .icon(CaseIcon)

@@ -65,13 +65,13 @@ const Header = (props: Props) => {
 
   const handleScroll = () => {
     if (pathname === "/") {
-      if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
-        setIsVisible(false);
-      } else if (window.scrollY > 500) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
+      // if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
+      //   setIsVisible(false);
+      // } else if (window.scrollY > 500) {
+      //   setIsVisible(true);
+      // } else {
+      //   setIsVisible(false);
+      // }
     } else {
       if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
         setIsVisible(false);
@@ -88,7 +88,6 @@ const Header = (props: Props) => {
 
     updateWindowHeight();
     window.addEventListener("resize", updateWindowHeight);
-
     window.addEventListener("scroll", handleScroll);
 
     return () => {

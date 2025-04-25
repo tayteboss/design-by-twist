@@ -9,7 +9,10 @@ import AnimateTextLayout from "../../layout/AnimateTextLayout";
 import Link from "next/link";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 
-const HomeStudioWrapper = styled.section``;
+const HomeStudioWrapper = styled.section`
+  position: relative;
+  z-index: 2;
+`;
 
 const Inner = styled.div`
   padding: ${pxToRem(200)} 0 ${pxToRem(300)};

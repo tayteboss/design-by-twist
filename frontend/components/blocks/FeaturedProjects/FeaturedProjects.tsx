@@ -5,7 +5,7 @@ import LogoIcon from "../../svgs/LogoIcon";
 import { useCallback, useEffect, useRef, useState } from "react";
 import pxToRem from "../../../utils/pxToRem";
 import MediaStack from "../../common/MediaStack";
-import { EmblaCarouselType, EmblaEventType } from "embla-carousel";
+import { EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -14,6 +14,8 @@ import useViewportWidth from "../../../hooks/useViewportWidth";
 const FeaturedProjectsWrapper = styled.section<{ $bg: string }>`
   background-color: ${(props) => props.$bg};
   transition: all var(--transition-speed-slow) var(--transition-ease);
+  position: relative;
+  z-index: 20;
 `;
 
 const ContentBar = styled.div`
