@@ -73,12 +73,11 @@ const ServicesSection = (props: Props) => {
   return (
     <ServicesSectionWrapper ref={ref} $bg={data?.backgroundColour?.hex}>
       <LayoutWrapper>
-        {/* Use the specific ref for the content animation */}
         <ContentWrapper ref={ref}>
           <Title
             initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
             animate={
-              inView // Use the correct inView variable
+              inView
                 ? { opacity: 1, x: 0, filter: "blur(0px)" }
                 : { opacity: 0, x: -5, filter: "blur(3px)" }
             }
@@ -89,7 +88,7 @@ const ServicesSection = (props: Props) => {
           <DescriptionWrapper
             initial={{ filter: "blur(10px)", opacity: 0 }}
             animate={
-              inView // Use the correct inView variable
+              inView
                 ? { filter: "blur(0px)", opacity: 1 }
                 : { filter: "blur(10px)" }
             }

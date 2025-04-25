@@ -65,13 +65,6 @@ const Header = (props: Props) => {
 
   const handleScroll = () => {
     if (pathname === "/") {
-      // if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
-      //   setIsVisible(false);
-      // } else if (window.scrollY > 500) {
-      //   setIsVisible(true);
-      // } else {
-      //   setIsVisible(false);
-      // }
       setIsVisible(false);
     } else {
       if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {

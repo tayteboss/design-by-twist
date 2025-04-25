@@ -154,6 +154,9 @@ export const projectFields = `
 	defaultThumbnail {
 		${mediaString}
 	},
+	mobileMenuThumbnail {
+		${mediaString}
+	},
 	defaultThumbnailRatio,
 	defaultTagline,
 	featuredTagline,

@@ -102,10 +102,6 @@ const EmblaContainer = styled.div`
     cursor: grabbing;
     cursor: -moz-grabbing;
     cursor: -webkit-grabbing;
-
-    img {
-      transform: scale(1.08);
-    }
   }
 
   img {

@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import PageBuilder from "../../components/common/PageBuilder";
 import ProjectInformation from "../../components/blocks/ProjectInformation";
+import BackToTop from "../../components/elements/BackToTop";
 
 type Props = {
   data: ProjectType;
@@ -51,6 +52,7 @@ const Page = (props: Props) => {
         description={data?.informationDescription}
       />
       <PageBuilder data={data?.pageBuilder} />
+      <BackToTop />
     </PageWrapper>
   );
 };

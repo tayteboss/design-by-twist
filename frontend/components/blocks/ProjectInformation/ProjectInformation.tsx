@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import pxToRem from "../../../utils/pxToRem";
-import { useState } from "react";
-import formatHTML from "../../../utils/formatHTML";
+import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
+import { useClickOutside } from "../../../hooks/useClickOutside";
 
 const ProjectInformationWrapper = styled.section`
   padding: ${pxToRem(40)} 0 ${pxToRem(110)};
@@ -154,6 +154,11 @@ const ProjectInformation = (props: Props) => {
 
   const [isActive, setIsActive] = useState(false);
 
+  const ref = useRef<HTMLDivElement>(null!);
+  useClickOutside(ref, () => {
+    setIsActive(false);
+  });
+
   return (
     <ProjectInformationWrapper>
       <LayoutWrapper>
@@ -164,6 +169,7 @@ const ProjectInformation = (props: Props) => {
             initial="hidden"
             animate="visible"
             exit="hidden"
+            ref={ref}
           >
             <Trigger onClick={() => setIsActive(!isActive)}>
               {isActive ? "↑ close" : "↓ info"}

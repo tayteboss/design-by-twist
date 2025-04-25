@@ -42,7 +42,7 @@ const LogoWrapper = styled.span`
     top: 2px;
 
     svg {
-      width: 250px;
+      width: 110px;
       height: auto;
     }
   }
@@ -182,7 +182,7 @@ const HomeHero = (props: Props) => {
   const contentTransform = useTransform(
     scrollY,
     [0, windowHeight],
-    ["translateY(0%)", "translateY(250%)"]
+    ["translateY(0%)", "translateY(200%)"]
   );
 
   const blur = useTransform(

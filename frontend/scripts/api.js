@@ -37,7 +37,7 @@ const getProjectData = async () => {
         *[_type == 'project'] | order(orderRank) [0...100] {
             title,
             slug,
-            defaultThumbnail {
+            mobileMenuThumbnail {
                 media {
                     ...,
                     mediaType,

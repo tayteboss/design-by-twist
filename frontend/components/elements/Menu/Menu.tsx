@@ -633,7 +633,7 @@ const Menu = (props: Props) => {
                             >
                               <ProjectThumbnailInner>
                                 <MediaStack
-                                  data={item.defaultThumbnail}
+                                  data={item.mobileMenuThumbnail}
                                   sizes="15vw"
                                   noAnimation={true}
                                 />

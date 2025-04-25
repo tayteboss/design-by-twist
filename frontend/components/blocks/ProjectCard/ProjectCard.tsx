@@ -14,12 +14,14 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
   page-break-inside: avoid;
   break-inside: avoid;
   margin-bottom: ${pxToRem(40)};
-  filter: ${(props) => props.$isHovered && "blur(2px)"};
+  filter: ${(props) => props.$isHovered && "blur(10px)"};
+  opacity: ${(props) => props.$isHovered && 0.9};
 
   transition: filter var(--transition-speed-default) var(--transition-ease);
 
   &:hover {
     filter: blur(0px) !important;
+    opacity: 1 !important;
 
     img,
     mux-player {

@@ -164,6 +164,13 @@ export default {
       description: 'This appers on the home page',
     },
     {
+      title: 'Mobile Menu Thumbnail',
+      name: 'mobileMenuThumbnail',
+      type: 'object',
+      fields: mediaBlock,
+      description: 'Use square ratio images or videos for best results',
+    },
+    {
       title: 'Featured Colour',
       name: 'featuredColour',
       type: 'color',
@@ -255,7 +262,6 @@ export default {
         },
       ],
     },
-
     {
       title: 'Related Projects',
       name: 'relatedProjects',

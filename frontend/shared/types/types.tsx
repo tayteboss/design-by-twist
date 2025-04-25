@@ -83,6 +83,7 @@ export type ProjectType = {
   heroMedia: MediaType;
   defaultThumbnail: MediaType;
   defaultThumbnailRatio: "portrait" | "landscape";
+  mobileMenuThumbnail: MediaType;
   defaultTagline: any[];
   featuredTagline: string;
   featuredDescription: any[];
@@ -91,7 +92,7 @@ export type ProjectType = {
   };
   useWhiteFeaturedLogo: boolean;
   informationTitle: string;
-  informationDescription: string;
+  informationDescription: any[];
   pageBuilder: any;
   relatedProjects: ProjectType[];
 };

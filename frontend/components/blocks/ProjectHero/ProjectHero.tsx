@@ -7,6 +7,8 @@ import { useRef, useState, useEffect } from "react";
 
 const ProjectHeroWrapper = styled.section`
   overflow: hidden;
+  position: relative;
+  z-index: 2;
 
   .media-wrapper {
     height: 100lvh;
@@ -39,7 +41,7 @@ const ProjectHero = (props: Props) => {
   const transform = useTransform(
     scrollY,
     [0, windowHeight * 2],
-    ["translateY(0px)", "translateY(50%)"]
+    ["translateY(0px) scale(1)", "translateY(50%) scale(1.2)"]
   );
 
   useEffect(() => {

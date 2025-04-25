@@ -25,7 +25,6 @@ const FooterWrapper = styled.footer`
 const Outer = styled.div`
   background: var(--colour-white);
   position: relative;
-  z-index: 5;
   overflow: hidden;
 `;
 

@@ -4,6 +4,7 @@ import pxToRem from "../../../utils/pxToRem";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const HomeLogoWrapper = styled.div`
   pointer-events: all;
@@ -22,7 +23,7 @@ const HomeLogoWrapper = styled.div`
     height: auto;
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      width: ${pxToRem(76)};
+      width: ${pxToRem(120)};
     }
   }
 `;
@@ -33,12 +34,19 @@ const HomeLogo = () => {
   const [windowHeight, setWindowHeight] = useState(0);
 
   const router = useRouter();
+  const viewport = useViewportWidth();
 
-  const width = useTransform(scrollY, [0, windowHeight], ["250px", "120px"]);
+  const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
+
+  const width = useTransform(
+    scrollY,
+    [0, windowHeight],
+    [isMobile ? "110px" : "250px", isMobile ? "110px" : "120px"]
+  );
   const transform = useTransform(
     scrollY,
     [0, windowHeight],
-    ["translateY(0px)", "translateY(-24px)"]
+    ["translateY(0px)", isMobile ? "translateY(0px)" : "translateY(-24px)"]
   );
 
   useEffect(() => {

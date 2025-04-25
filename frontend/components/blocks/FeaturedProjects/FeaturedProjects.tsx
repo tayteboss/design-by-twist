@@ -57,6 +57,7 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
     position: relative;
     top: 4px;
     width: ${pxToRem(120)};
+    max-width: ${pxToRem(120)};
     height: auto;
 
     path,
@@ -70,7 +71,9 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
     }
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      width: ${pxToRem(93)};
+      width: ${pxToRem(110)};
+      max-width: ${pxToRem(110)};
+      min-width: ${pxToRem(110)};
     }
   }
 `;
