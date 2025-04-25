@@ -117,7 +117,7 @@ const EmblaSlide = styled.div<{ $isActive: boolean }>`
   min-width: 0;
   position: relative;
   transform-origin: center center;
-  flex: 0 0 32vw;
+  flex: 0 0 39vw;
   transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {

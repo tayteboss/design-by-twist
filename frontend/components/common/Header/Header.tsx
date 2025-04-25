@@ -72,6 +72,7 @@ const Header = (props: Props) => {
       // } else {
       //   setIsVisible(false);
       // }
+      setIsVisible(false);
     } else {
       if (window.scrollY > document.body.scrollHeight - windowHeight * 2) {
         setIsVisible(false);
