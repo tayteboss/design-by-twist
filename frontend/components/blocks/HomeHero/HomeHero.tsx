@@ -42,7 +42,7 @@ const LogoWrapper = styled.span`
     top: 2px;
 
     svg {
-      width: 110px;
+      width: 120px;
       height: auto;
     }
   }

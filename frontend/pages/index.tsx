@@ -43,7 +43,10 @@ const Page = (props: Props) => {
       <HomeLogo />
       <HomeHero data={data?.heroSection} />
       <HomeStudio data={data?.studioSection} />
-      <FeaturedProjects data={data?.featuredProjectsSection} />
+      <FeaturedProjects
+        data={data?.featuredProjectsSection}
+        heroBgColour={data?.heroSection?.heroBackgroundColour}
+      />
     </PageWrapper>
   );
 };

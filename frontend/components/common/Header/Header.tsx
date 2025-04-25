@@ -36,7 +36,7 @@ const LogoWrapper = styled.div<{ $visible: boolean }>`
     height: auto;
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      width: ${pxToRem(76)};
+      width: ${pxToRem(95)};
     }
   }
 `;

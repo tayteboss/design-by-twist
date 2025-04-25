@@ -10,7 +10,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import useViewportWidth from "../../../hooks/useViewportWidth";
+import FeaturedFinalSlide from "../../elements/FeaturedFinalSlide";
 
+// --- Styled Components (Original) ---
 const FeaturedProjectsWrapper = styled.section<{ $bg: string }>`
   background-color: ${(props) => props.$bg};
   transition: all var(--transition-speed-slow) var(--transition-ease);
@@ -71,9 +73,9 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
     }
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      width: ${pxToRem(110)};
-      max-width: ${pxToRem(110)};
-      min-width: ${pxToRem(110)};
+      width: ${pxToRem(95)};
+      max-width: ${pxToRem(95)};
+      min-width: ${pxToRem(95)};
     }
   }
 `;
@@ -110,13 +112,14 @@ const EmblaContainer = styled.div<{ $height: number }>`
   display: flex;
   align-items: center;
   height: ${(props) => props.$height}px;
+  gap: ${pxToRem(24)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     align-items: flex-end;
   }
 `;
 
-const EmblaSlide = styled.div<{ $isActive: boolean }>`
+const EmblaSlide = styled.div`
   min-width: 0;
   position: relative;
   transform-origin: center center;
@@ -125,10 +128,20 @@ const EmblaSlide = styled.div<{ $isActive: boolean }>`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     transform-origin: center bottom;
+    flex: 0 0 50vw;
   }
 
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    flex: 0 0 50vw;
+  /* --- ADDED: Style override for the last slide --- */
+  &:last-child {
+    display: flex;
+    justify-content: center;
+
+    transform: scale(1) !important;
+    z-index: 0 !important;
+    /* Ensure padding-top potentially added to child is reset */
+    & > div {
+      padding-top: 0 !important;
+    }
   }
 `;
 
@@ -170,18 +183,23 @@ const MediaWrapper = styled.div<{ $isActive: boolean }>`
   }
 `;
 
+// --- Component Logic (Original with modifications to tweenScale) ---
+
 type Props = {
+  heroBgColour: HomePageType["heroSection"]["heroBackgroundColour"];
   data: HomePageType["featuredProjectsSection"];
 };
 
 const FeaturedProjects = (props: Props) => {
   const {
+    heroBgColour,
     data: { featuredProjects },
   } = props;
 
   const hasData = featuredProjects && featuredProjects.length > 0;
+  const projectCount = featuredProjects?.length || 0; // Get the count of actual projects
 
-  const startIndex = Math.floor(featuredProjects.length / 2);
+  const startIndex = projectCount > 0 ? Math.floor(projectCount / 2) : 0;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -203,76 +221,78 @@ const FeaturedProjects = (props: Props) => {
     max: number
   ): number => Math.min(Math.max(number, min), max);
 
+  // scaleNodes ref is unused in original code, kept for consistency
   const scaleNodes = useRef<HTMLElement[]>([]);
 
   const tweenScale = useCallback(
-    // Removed unused 'eventName' parameter
     (emblaApi: EmblaCarouselType) => {
       const scrollProgress = emblaApi.scrollProgress();
-      const slideNodes = emblaApi.slideNodes(); // Get nodes directly
+      const slideNodes = emblaApi.slideNodes();
       const scrollSnaps = emblaApi.scrollSnapList();
-
-      // Determine viewport state (assuming 'viewport' is available in the outer scope)
       const isMobile = viewport === "mobile";
 
-      // Define configuration values based on viewport *once* per call
       const config = {
-        // Scale values
         peakScale: 1.0,
-        nearScaleTarget: isMobile ? 0.6 : 0.3, // Target scale at diff = 1
-        midScaleTarget: 0.5, // Target scale at diff = 2 (from original interpolation)
-        baseScale: isMobile ? 0.6 : 0.4, // Default scale for diff >= 2
-        minScale: isMobile ? 0.6 : 0.1, // Minimum clamped scale
-
-        // Padding values
+        nearScaleTarget: isMobile ? 0.6 : 0.3,
+        midScaleTarget: 0.5,
+        baseScale: isMobile ? 0.6 : 0.4,
+        minScale: isMobile ? 0.6 : 0.1,
         peakPaddingTop: 125,
         basePaddingTop: isMobile ? 62 : 56.25,
-
-        // Flex values (as fractions)
         minFlex: 0.15,
         maxFlex: 0.4,
       };
 
       scrollSnaps.forEach((scrollSnap, snapIndex) => {
+        // --- MODIFICATION START ---
+        // Check if the current index is the index of the final slide
+        // The final slide's index will be equal to the number of projects
+        if (snapIndex >= projectCount) {
+          // If it's the final slide, ensure it has default styles and skip effects
+          const slideNode = slideNodes[snapIndex];
+          if (slideNode) {
+            window.requestAnimationFrame(() => {
+              slideNode.style.transform = "scale(1)";
+              slideNode.style.zIndex = "0";
+              // slideNode.style.flex = ''; // Reset flex if it was potentially set
+              const firstChild = slideNode.firstElementChild;
+              if (firstChild instanceof HTMLElement) {
+                firstChild.style.paddingTop = "0"; // Ensure no padding is applied
+              }
+            });
+          }
+          return; // Skip applying tween effects to this slide
+        }
+        // --- MODIFICATION END ---
+
+        // --- Original tween logic for project slides ---
         const diffToTarget = scrollSnap - scrollProgress;
         const absoluteDiff = Math.abs(diffToTarget);
-
         let scale: number;
         let paddingTop: number;
         let flex: number;
 
-        // Calculate styles based on proximity (absoluteDiff)
         if (absoluteDiff < 1) {
-          // Interpolate scale between peak (1.0) and near target
           scale =
             config.peakScale -
             absoluteDiff * (config.peakScale - config.nearScaleTarget);
-          // Set padding (peak only when very close)
           paddingTop =
             absoluteDiff < 0.05 ? config.peakPaddingTop : config.basePaddingTop;
-          // Interpolate flex between max (0.4) and min (0.15)
-          // Note: Original logic repeated the same formula; adjusted for clarity.
-          // This makes flex max (0.4) at diff 0, min (0.15) at diff 1.
           flex =
             config.maxFlex - absoluteDiff * (config.maxFlex - config.minFlex);
         } else if (absoluteDiff < 2) {
-          // Interpolate scale between near target and mid target (0.5)
           scale =
             config.nearScaleTarget -
             (absoluteDiff - 1) *
               (config.nearScaleTarget - config.midScaleTarget);
-          // Use base padding
           paddingTop = config.basePaddingTop;
-          // Use minimum flex
-          flex = config.minFlex; // Assign minFlex directly for diff >= 1
+          flex = config.minFlex;
         } else {
-          // Default values for slides further away
           scale = config.baseScale;
           paddingTop = config.basePaddingTop;
           flex = config.minFlex;
         }
 
-        // Clamp final values using the helper function
         const finalScale = numberWithinRange(
           scale,
           config.minScale,
@@ -280,63 +300,71 @@ const FeaturedProjects = (props: Props) => {
         ).toString();
         const finalPaddingTop = numberWithinRange(
           paddingTop,
-          config.basePaddingTop, // Use base as minimum for clamping padding
+          config.basePaddingTop,
           config.peakPaddingTop
         ).toString();
-        // Clamp flex and convert fraction to a percentage value for potential CSS use
         const finalFlexPercent =
           numberWithinRange(flex, config.minFlex, config.maxFlex) * 100;
 
-        // Get the specific slide node
         const slideNode = slideNodes[snapIndex];
-
-        // Apply styles within requestAnimationFrame
         if (slideNode) {
           window.requestAnimationFrame(() => {
             slideNode.style.transform = `scale(${finalScale})`;
             slideNode.style.zIndex = absoluteDiff < 0.5 ? "1" : "0";
-
-            // Original flex style was commented out, keeping it commented.
-            // If needed, use finalFlexPercent: e.g., `0 0 ${finalFlexPercent}%`
-            // slideNode.style.flex = `0 0 ${finalFlexPercent}%`;
-
-            // Safely target the first child for padding adjustment
+            // slideNode.style.flex = `0 0 ${finalFlexPercent}%`; // Original commented line
             const firstChild = slideNode.firstElementChild;
             if (firstChild instanceof HTMLElement) {
-              // Safer check
               firstChild.style.paddingTop = `${finalPaddingTop}%`;
             }
           });
         }
+        // --- End of original tween logic ---
       });
     },
-    // Dependencies MUST include variables from the outer scope used inside
-    [numberWithinRange, viewport]
+    // --- MODIFICATION: Added projectCount to dependency array ---
+    [numberWithinRange, viewport, projectCount]
   );
 
   const onSelect = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      const activeIndex = emblaApi.selectedScrollSnap();
-      setActiveIndex(activeIndex);
-      tweenScale(emblaApi, "select");
+      const selectedIndex = emblaApi.selectedScrollSnap();
+      // Only update activeIndex if it's a project slide
+      setActiveIndex(selectedIndex);
+      // Always call tweenScale to update visuals based on scroll position
+      tweenScale(emblaApi);
     },
-    [featuredProjects, tweenScale]
+    // --- MODIFICATION: Use projectCount instead of featuredProjects ---
+    [projectCount, tweenScale] // Only depends on projectCount and tweenScale now
   );
 
+  // --- Original findEmblaHeight ---
   const findEmblaHeight = () => {
     const timer = setTimeout(() => {
       const emblaSlides = document.querySelectorAll(".embla__slide");
       const heights: number[] = [];
-      emblaSlides.forEach((slide) => {
-        heights.push(slide.getBoundingClientRect().height);
+      // Only measure project slides for height calculation
+      emblaSlides.forEach((slide, index) => {
+        if (index < projectCount) {
+          // Check index against project count
+          heights.push(slide.getBoundingClientRect().height);
+        }
       });
 
-      setEmblaHeight(Math.max(...heights));
+      if (heights.length > 0) {
+        setEmblaHeight(Math.max(...heights));
+      } else {
+        // Fallback height if no project slides or calculation fails
+        const finalSlide = emblaSlides[projectCount];
+        setEmblaHeight(
+          finalSlide ? finalSlide.getBoundingClientRect().height : 300
+        );
+      }
     }, 1000);
 
     return () => clearTimeout(timer);
   };
 
+  // --- Original Grab Cursor Logic ---
   const addGrabCursor = () => {
     const emblaContainer = document.querySelector(".embla");
     emblaContainer?.classList.add("grabbing");
@@ -347,10 +375,11 @@ const FeaturedProjects = (props: Props) => {
     emblaContainer?.classList.remove("grabbing");
   };
 
+  // --- Original useEffect Hooks ---
   useEffect(() => {
     if (!emblaApi) return;
 
-    tweenScale(emblaApi);
+    tweenScale(emblaApi); // Apply initial scale
 
     emblaApi
       .on("select", onSelect)
@@ -367,18 +396,24 @@ const FeaturedProjects = (props: Props) => {
         .off("pointerDown", addGrabCursor)
         .off("pointerUp", removeGrabCursor);
     };
-  }, [emblaApi, tweenScale, onSelect]);
+  }, [emblaApi, tweenScale, onSelect]); // Dependencies from original code
 
   useEffect(() => {
-    findEmblaHeight();
-  }, [emblaApi]);
+    // Height calculation effect depends on emblaApi and projectCount
+    if (emblaApi) {
+      findEmblaHeight();
+    }
+    // Adding projectCount ensures height is recalculated if the number of projects changes
+  }, [emblaApi, projectCount]);
+
+  // --- Original Render Logic ---
+  const currentProject = hasData ? featuredProjects[activeIndex] : null;
+
+  console.log("featuredProjects[activeIndex]", featuredProjects[activeIndex]);
 
   return (
     <FeaturedProjectsWrapper
-      $bg={
-        featuredProjects[activeIndex]?.featuredColour?.hex ||
-        "var(--colour-foreground)"
-      }
+      $bg={currentProject?.featuredColour?.hex || heroBgColour?.hex}
     >
       {hasData && (
         <>
@@ -387,28 +422,28 @@ const FeaturedProjects = (props: Props) => {
               <ContentInner>
                 <Title
                   $useWhiteLogo={
-                    featuredProjects[activeIndex]?.useWhiteFeaturedLogo
+                    !!currentProject?.useWhiteFeaturedLogo || !currentProject
                   }
                 >
                   <LogoIcon />
                   <motion.div
-                    key={activeIndex}
+                    key={activeIndex} // Use activeIndex here for text animation trigger
                     initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
                     animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
                     transition={{ duration: 0.5 }}
                   >
-                    {featuredProjects[activeIndex]?.featuredTagline || ""}
+                    {currentProject?.featuredTagline || ""}
                   </motion.div>
                 </Title>
                 <Description
-                  key={activeIndex}
+                  key={activeIndex} // Use activeIndex here for text animation trigger
                   initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
                   transition={{ duration: 0.5 }}
                 >
-                  {featuredProjects[activeIndex]?.featuredDescription || ""}
+                  {currentProject?.featuredDescription || ""}
                 </Description>
               </ContentInner>
             </LayoutWrapper>
@@ -423,25 +458,41 @@ const FeaturedProjects = (props: Props) => {
                   <EmblaSlide
                     className="embla__slide cursor-gallery__slide"
                     data-cursor-title={project?.title || ""}
-                    key={i}
-                    $isActive={i === activeIndex}
+                    // Use a stable key like slug if available, otherwise index
+                    key={project?.slug?.current || `project-${i}`}
                   >
                     <MediaWrapper
                       $isActive={i === activeIndex}
                       className="embla__media-wrapper"
                     >
-                      <Link href={`/work/${project?.slug?.current}`}>
+                      <Link
+                        href={`/work/${project?.slug?.current}`}
+                        legacyBehavior={false}
+                      >
                         <MediaStack
                           data={project?.defaultThumbnail}
                           isPriority={
                             i >= activeIndex - 1 && i <= activeIndex + 1
                           }
                           noAnimation
+                          // It's good practice to add an alt tag
+                          alt={project?.title || "Featured project thumbnail"}
                         />
                       </Link>
                     </MediaWrapper>
                   </EmblaSlide>
                 ))}
+                {/* Final Slide - Rendered after the map */}
+                <EmblaSlide
+                  className="embla__slide embla__slide--final"
+                  key="final-slide"
+                >
+                  {/* Wrap in a div to ensure structure consistency if needed */}
+                  {/* This slide will now be skipped by the tweenScale effect */}
+                  <div>
+                    <FeaturedFinalSlide />
+                  </div>
+                </EmblaSlide>
               </EmblaContainer>
             </Embla>
           </FeaturedGalleryWrapper>

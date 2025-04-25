@@ -41,7 +41,7 @@ const HomeLogo = () => {
   const width = useTransform(
     scrollY,
     [0, windowHeight],
-    [isMobile ? "110px" : "250px", isMobile ? "110px" : "120px"]
+    [isMobile ? "95px" : "250px", isMobile ? "95px" : "120px"]
   );
   const transform = useTransform(
     scrollY,
