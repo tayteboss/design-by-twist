@@ -95,7 +95,7 @@ const FeaturedGalleryWrapper = styled.div`
   overflow: hidden;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    padding: ${pxToRem(80)} 0 ${pxToRem(24)};
+    padding: ${pxToRem(140)} 0 ${pxToRem(24)};
   }
 `;
 
@@ -116,6 +116,7 @@ const EmblaContainer = styled.div<{ $height: number }>`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     align-items: flex-end;
+    gap: ${pxToRem(12)};
   }
 `;
 
@@ -128,7 +129,7 @@ const EmblaSlide = styled.div`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     transform-origin: center bottom;
-    flex: 0 0 50vw;
+    flex: 0 0 70vw;
   }
 
   /* --- ADDED: Style override for the last slide --- */

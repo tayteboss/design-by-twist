@@ -101,12 +101,12 @@ const Footer = (props: Props) => {
   const lenis = useLenis(({ scroll }) => {});
 
   const viewport = useViewportWidth();
-  const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
+  const isMobile = viewport === "tabletPortrait" || viewport === "mobile";
 
   const blur = useTransform(
     scrollY,
     [distanceToTop - windowHeight, isMobile ? distanceToTop : distanceToTop],
-    ["blur(100px)", "blur(0px)"]
+    [isMobile ? "blur(0px)" : "blur(100px)", "blur(0px)"]
   );
 
   const opacity = useTransform(

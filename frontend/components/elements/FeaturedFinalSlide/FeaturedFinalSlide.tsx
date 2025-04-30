@@ -22,7 +22,7 @@ const FeaturedFinalSlideWrapper = styled.div`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(30)};
-    padding: ${pxToRem(32)} ${pxToRem(50)};
+    padding: ${pxToRem(24)} ${pxToRem(40)};
     max-width: unset;
     white-space: nowrap;
   }
@@ -30,6 +30,10 @@ const FeaturedFinalSlideWrapper = styled.div`
   &:hover {
     &::after {
       opacity: 1;
+
+      @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+        opacity: 0;
+      }
     }
   }
 
