@@ -14,7 +14,7 @@ const HomeLogoWrapper = styled.div`
   z-index: 10;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    top: ${pxToRem(16)};
+    top: ${pxToRem(17)};
     left: ${pxToRem(16)};
   }
 
@@ -23,7 +23,7 @@ const HomeLogoWrapper = styled.div`
     height: auto;
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      width: ${pxToRem(120)};
+      width: ${pxToRem(100)};
     }
   }
 `;
@@ -36,12 +36,12 @@ const HomeLogo = () => {
   const router = useRouter();
   const viewport = useViewportWidth();
 
-  const isMobile = viewport === "tablet-portrait" || viewport === "mobile";
+  const isMobile = viewport === "tabletPortrait" || viewport === "mobile";
 
   const width = useTransform(
     scrollY,
     [0, windowHeight],
-    [isMobile ? "95px" : "250px", isMobile ? "95px" : "120px"]
+    [isMobile ? "100px" : "250px", isMobile ? "100px" : "120px"]
   );
   const transform = useTransform(
     scrollY,
