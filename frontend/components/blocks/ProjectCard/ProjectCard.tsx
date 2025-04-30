@@ -14,8 +14,7 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
   page-break-inside: avoid;
   break-inside: avoid;
   margin-bottom: ${pxToRem(40)};
-  filter: ${(props) => props.$isHovered && "blur(10px)"};
-  opacity: ${(props) => props.$isHovered && 0.9};
+  filter: ${(props) => props.$isHovered && "blur(15px)"};
 
   transition: filter var(--transition-speed-default) var(--transition-ease);
 
@@ -27,6 +26,16 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
     mux-player {
       transform: scale(1.03);
     }
+
+    a {
+      opacity: 1 !important;
+    }
+  }
+
+  a {
+    opacity: ${(props) => props.$isHovered && "0.7"};
+
+    transition: all var(--transition-speed-default) var(--transition-ease);
   }
 
   img {

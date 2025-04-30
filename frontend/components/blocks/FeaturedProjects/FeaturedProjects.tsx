@@ -409,8 +409,6 @@ const FeaturedProjects = (props: Props) => {
   // --- Original Render Logic ---
   const currentProject = hasData ? featuredProjects[activeIndex] : null;
 
-  console.log("featuredProjects[activeIndex]", featuredProjects[activeIndex]);
-
   return (
     <FeaturedProjectsWrapper
       $bg={currentProject?.featuredColour?.hex || heroBgColour?.hex}

@@ -18,8 +18,12 @@ import { useLenis } from "@studio-freight/react-lenis";
 
 const FooterWrapper = styled.footer`
   position: relative;
-  z-index: 200;
+  z-index: 60;
   background: var(--colour-white);
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    z-index: 200;
+  }
 `;
 
 const Outer = styled.div`

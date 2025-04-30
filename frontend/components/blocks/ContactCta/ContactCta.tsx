@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 
 const ContactCtaWrapper = styled.section`
   background: var(--colour-black);
-  z-index: 200;
+  z-index: 50;
   position: relative;
 `;
 
