@@ -34,10 +34,6 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
     transition: all var(--transition-speed-default) var(--transition-ease);
   }
 
-  img {
-    transition: all 250ms var(--transition-ease);
-  }
-
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     margin-bottom: ${pxToRem(24)};
     filter: none !important;
