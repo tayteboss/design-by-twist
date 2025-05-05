@@ -24,8 +24,6 @@ const MenuWrapper = styled.div<{ $isActive: boolean }>`
   transition: all var(--transition-speed-default) var(--transition-ease);
 
   &:hover {
-    transform: translateX(-50%) scale(1.03);
-
     .cloud-inner {
       opacity: 1;
     }

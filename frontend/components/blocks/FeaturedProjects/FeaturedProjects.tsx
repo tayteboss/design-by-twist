@@ -12,12 +12,10 @@ import Link from "next/link";
 import useViewportWidth from "../../../hooks/useViewportWidth";
 import FeaturedFinalSlide from "../../elements/FeaturedFinalSlide";
 
-// --- Styled Components (Original) ---
 const FeaturedProjectsWrapper = styled.section<{ $bg: string }>`
   background-color: ${(props) => props.$bg};
   transition: all var(--transition-speed-slow) var(--transition-ease);
   position: relative;
-  z-index: 20;
 `;
 
 const ContentBar = styled.div`
@@ -55,7 +53,7 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
     }
   }
 
-  svg {
+  /* svg {
     position: relative;
     top: 4px;
     width: ${pxToRem(120)};
@@ -65,9 +63,7 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
     path,
     rect {
       fill: ${(props) =>
-        props.$useWhiteLogo
-          ? "var(--colour-white)"
-          : "var(--colour-foreground)"};
+    props.$useWhiteLogo ? "var(--colour-white)" : "var(--colour-foreground)"};
 
       transition: all var(--transition-speed-default) var(--transition-ease);
     }
@@ -77,7 +73,7 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
       max-width: ${pxToRem(95)};
       min-width: ${pxToRem(95)};
     }
-  }
+  } */
 `;
 
 const Description = styled(motion.p)`
@@ -189,9 +185,9 @@ const FeaturedProjects = (props: Props) => {
   } = props;
 
   const hasData = featuredProjects && featuredProjects.length > 0;
-  const projectCount = featuredProjects?.length || 0; // Get the count of actual projects
+  const projectCount = featuredProjects?.length || 0;
 
-  const startIndex = projectCount > 0 ? Math.floor(projectCount / 2) : 0;
+  const startIndex = 0;
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
@@ -415,9 +411,9 @@ const FeaturedProjects = (props: Props) => {
                     !!currentProject?.useWhiteFeaturedLogo || !currentProject
                   }
                 >
-                  <LogoIcon />
+                  {/* <LogoIcon /> */}
                   <motion.div
-                    key={activeIndex} // Use activeIndex here for text animation trigger
+                    key={activeIndex}
                     initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
                     animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
@@ -427,7 +423,7 @@ const FeaturedProjects = (props: Props) => {
                   </motion.div>
                 </Title>
                 <Description
-                  key={activeIndex} // Use activeIndex here for text animation trigger
+                  key={activeIndex}
                   initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
@@ -448,7 +444,6 @@ const FeaturedProjects = (props: Props) => {
                   <EmblaSlide
                     className="embla__slide cursor-gallery__slide"
                     data-cursor-title={project?.title || ""}
-                    // Use a stable key like slug if available, otherwise index
                     key={project?.slug?.current || `project-${i}`}
                   >
                     <MediaWrapper
@@ -465,7 +460,6 @@ const FeaturedProjects = (props: Props) => {
                             i >= activeIndex - 1 && i <= activeIndex + 1
                           }
                           noAnimation
-                          // It's good practice to add an alt tag
                           alt={project?.title || "Featured project thumbnail"}
                         />
                       </Link>

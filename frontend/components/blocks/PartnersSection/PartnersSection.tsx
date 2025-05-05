@@ -159,7 +159,8 @@ const PartnersSection = (props: Props) => {
   const { data } = props;
 
   const [activeIndex, setActiveIndex] = useState(-1);
-  // NEW: Initialize partnerRefs correctly
+  const [isHovering, setIsHovering] = useState(false);
+
   const partnerRefs = useRef<(HTMLElement | null)[]>([]);
 
   // UseInView hook for the title/description animation (no changes needed here)
@@ -189,6 +190,13 @@ const PartnersSection = (props: Props) => {
 
   // NEW: Memoize the scroll handler function using useCallback
   const handleScroll = useCallback(() => {
+    if (isHovering) return; // Skip scroll logic while hovering
+
+    if (!hasList || !partnerRefs.current || partnerRefs.current.length === 0) {
+      if (activeIndex !== -1) setActiveIndex(-1);
+      return;
+    }
+
     // Early exit if no list or refs array isn't ready (e.g., during unmount)
     if (!hasList || !partnerRefs.current || partnerRefs.current.length === 0) {
       if (activeIndex !== -1) setActiveIndex(-1); // Reset if currently active
@@ -257,12 +265,11 @@ const PartnersSection = (props: Props) => {
   return (
     <PartnersSectionWrapper>
       <LayoutWrapper>
-        {/* Use the specific ref for the content animation */}
         <ContentWrapper ref={contentWrapperRef}>
           <Title
             initial={{ opacity: 0, x: -5, filter: "blur(3px)" }}
             animate={
-              contentInView // Use the correct inView variable
+              contentInView
                 ? { opacity: 1, x: 0, filter: "blur(0px)" }
                 : { opacity: 0, x: -5, filter: "blur(3px)" }
             }
@@ -273,7 +280,7 @@ const PartnersSection = (props: Props) => {
           <DescriptionWrapper
             initial={{ filter: "blur(10px)", opacity: 0 }}
             animate={
-              contentInView // Use the correct inView variable
+              contentInView
                 ? { filter: "blur(0px)", opacity: 1 }
                 : { filter: "blur(10px)" }
             }
@@ -289,14 +296,23 @@ const PartnersSection = (props: Props) => {
         <PartnersScroller>
           {hasList &&
             data?.partnersList.map((partner, i) => (
-              <PartnerOuter key={i} $activeIndex={activeIndex === i}>
+              <PartnerOuter
+                key={i}
+                $activeIndex={activeIndex === i}
+                onMouseOver={() => {
+                  setIsHovering(true);
+                  setActiveIndex(i);
+                }}
+                onMouseLeave={() => {
+                  setIsHovering(false);
+                  handleScroll(); // Force recalculation based on scroll
+                }}
+              >
                 {partner?.link ? (
                   <Link href={partner.link} passHref legacyBehavior>
-                    {/* Apply the ref inside the Link */}
                     <Partner
-                      as="a" // Render the Partner styled component as an 'a' tag for the Link
+                      as="a"
                       $activeIndex={activeIndex === i}
-                      // NEW: Re-enable the ref assignment using the callback pattern
                       ref={(el: HTMLElement | null) => {
                         partnerRefs.current[i] = el;
                       }}
@@ -307,7 +323,6 @@ const PartnersSection = (props: Props) => {
                 ) : (
                   <Partner
                     $activeIndex={activeIndex === i}
-                    // NEW: Re-enable the ref assignment using the callback pattern
                     ref={(el: HTMLElement | null) => {
                       partnerRefs.current[i] = el;
                     }}
@@ -319,10 +334,8 @@ const PartnersSection = (props: Props) => {
             ))}
           <PartnerMediaWrapper>
             <ImageInner>
-              {/* AnimatePresence for image transition - needs to be inside the list map or handled differently if it wraps the image */}
-              {/* Assuming the key change on ImageMotion handles the transition */}
               <ImageMotion
-                key={activeIndex} // Change key to trigger animation when activeIndex changes
+                key={activeIndex}
                 initial={{
                   opacity: 0,
                   y: -20,
@@ -333,13 +346,12 @@ const PartnersSection = (props: Props) => {
                 exit={{ opacity: 0, y: 20, scale: 0.99, filter: "blur(3px)" }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Render only when an item is active and data exists */}
                 {activeIndex >= 0 &&
                   activeIndex < (data?.partnersList?.length || 0) &&
                   data?.partnersList[activeIndex]?.media && (
                     <MediaStack
                       data={data.partnersList[activeIndex].media}
-                      noAnimation // Assuming MediaStack internal animations aren't needed here
+                      noAnimation
                       sizes="50vw"
                     />
                   )}
