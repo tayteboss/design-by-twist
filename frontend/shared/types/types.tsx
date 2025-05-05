@@ -86,6 +86,7 @@ export type ProjectType = {
   defaultThumbnailRatio: "portrait" | "landscape";
   mobileMenuThumbnail: MediaType;
   defaultTagline: any[];
+  featuredThumbnail: MediaType;
   featuredTagline: string;
   featuredDescription: any[];
   featuredColour: {

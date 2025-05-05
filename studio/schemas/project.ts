@@ -160,6 +160,13 @@ export default {
       ],
     },
     {
+      title: 'Featured Thumbnail',
+      name: 'featuredThumbnail',
+      type: 'object',
+      fields: mediaBlock,
+      description: 'Keep in mind this thumbnail transitions between landscape & portrait ratios',
+    },
+    {
       title: 'Featured Tagline',
       name: 'featuredTagline',
       type: 'string',

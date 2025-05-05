@@ -65,7 +65,7 @@ export const homePageQueryString = `
 						...,
 					}
 				},
-				defaultThumbnail {
+				featuredThumbnail {
 					${mediaString}
 				},
 				defaultThumbnailRatio,
@@ -220,6 +220,10 @@ export const projectFields = `
 		defaultThumbnail {
 			${mediaString}
 		},
+		defaultTagline,
+		categoryMediaAndTagline[] {
+			category
+		}
 	}
 `;
 

@@ -91,7 +91,7 @@ const FeaturedGalleryWrapper = styled.div`
   overflow: hidden;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    padding: ${pxToRem(140)} 0 ${pxToRem(24)};
+    padding: ${pxToRem(80)} 0 ${pxToRem(80)};
   }
 `;
 
@@ -111,7 +111,6 @@ const EmblaContainer = styled.div<{ $height: number }>`
   gap: ${pxToRem(24)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    align-items: flex-end;
     gap: ${pxToRem(12)};
   }
 `;
@@ -454,14 +453,16 @@ const FeaturedProjects = (props: Props) => {
                         href={`/work/${project?.slug?.current}`}
                         legacyBehavior={false}
                       >
-                        <MediaStack
-                          data={project?.defaultThumbnail}
-                          isPriority={
-                            i >= activeIndex - 1 && i <= activeIndex + 1
-                          }
-                          noAnimation
-                          alt={project?.title || "Featured project thumbnail"}
-                        />
+                        {project?.featuredThumbnail && (
+                          <MediaStack
+                            data={project?.featuredThumbnail}
+                            isPriority={
+                              i >= activeIndex - 1 && i <= activeIndex + 1
+                            }
+                            noAnimation
+                            alt={project?.title || "Featured project thumbnail"}
+                          />
+                        )}
                       </Link>
                     </MediaWrapper>
                   </EmblaSlide>

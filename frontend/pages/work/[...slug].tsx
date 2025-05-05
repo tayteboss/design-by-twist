@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import PageBuilder from "../../components/common/PageBuilder";
 import ProjectInformation from "../../components/blocks/ProjectInformation";
 import BackToTop from "../../components/elements/BackToTop";
+import RelatedProjects from "../../components/blocks/RelatedProjects";
 
 type Props = {
   data: ProjectType;
@@ -35,6 +36,8 @@ const Page = (props: Props) => {
     }
   }, [data, router]);
 
+  console.log("data", data);
+
   return (
     <PageWrapper
       variants={pageTransitionVariants}
@@ -52,6 +55,7 @@ const Page = (props: Props) => {
         description={data?.informationDescription}
       />
       <PageBuilder data={data?.pageBuilder} />
+      {data?.relatedProjects && <RelatedProjects data={data.relatedProjects} />}
       <BackToTop />
     </PageWrapper>
   );
