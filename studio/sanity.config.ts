@@ -6,6 +6,7 @@ import {muxInput} from 'sanity-plugin-mux-input'
 import {vercelDeployTool} from 'sanity-plugin-vercel-deploy'
 import {EarthGlobeIcon, DocumentIcon, CaseIcon} from '@sanity/icons'
 import {colorInput} from '@sanity/color-input'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 
 export default defineConfig({
   name: 'default',
@@ -49,6 +50,12 @@ export default defineConfig({
                   .filter('_type == "project"'),
               ),
             S.divider(),
+            orderableDocumentListDeskItem({
+              type: 'project',
+              S,
+              context,
+              title: 'Projects (Orderable)',
+            }),
           ])
       },
     }),

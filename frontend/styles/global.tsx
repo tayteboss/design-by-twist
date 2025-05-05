@@ -30,12 +30,13 @@ export const GlobalStyles = createGlobalStyle`
 		outline: none;
 		border-radius: 0;
 		box-shadow: none;
+		font-variant-ligatures: none;
 	}
 
 	-webkit-text-size-adjust: 100%;
 
 	::selection {
-		background-color: var(--colour-pink);
+		background-color: var(--colour-foreground);
 		color: var(--colour-white);
 	}
 

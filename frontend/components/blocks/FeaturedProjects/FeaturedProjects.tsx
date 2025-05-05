@@ -154,15 +154,6 @@ const MediaWrapper = styled.div<{ $isActive: boolean }>`
   transform-origin: center center;
   transition: padding-top 1s cubic-bezier(0.23, 1, 0.32, 1);
 
-  &:hover {
-    img,
-    video {
-      transform: scale(1.05);
-
-      transition: all var(--transition-speed-default) var(--transition-ease);
-    }
-  }
-
   & > *,
   a,
   div {
