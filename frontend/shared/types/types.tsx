@@ -80,6 +80,7 @@ export type ProjectType = {
     thumbnailRatio: "portrait" | "landscape";
     Tagline: any[];
   }>;
+  comingSoon: boolean;
   heroMedia: MediaType;
   defaultThumbnail: MediaType;
   defaultThumbnailRatio: "portrait" | "landscape";

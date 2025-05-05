@@ -25,6 +25,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Coming soon',
+      name: 'comingSoon',
+      type: 'boolean',
+    },
+    {
       title: 'Category Media and Tagline',
       name: 'categoryMediaAndTagline',
       type: 'array',

@@ -16,11 +16,12 @@ const ProjectsWrapper = styled.section`
 
 const Inner = styled(motion.div)`
   columns: 25vw;
-  column-gap: ${pxToRem(16)};
+  column-gap: ${pxToRem(32)};
   min-height: 100vh;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     columns: 40vw;
+    column-gap: ${pxToRem(16)};
   }
 `;
 
@@ -83,6 +84,7 @@ const Projects = (props: Props) => {
                   isHovered={isHovered}
                   setIsHovered={setIsHovered}
                   activeTag={activeTag}
+                  comingSoon={project.comingSoon}
                   key={project.slug.current}
                 />
               ))}

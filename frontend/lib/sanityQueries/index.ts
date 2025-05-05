@@ -140,6 +140,7 @@ export const studioPageQueryString = `
 export const projectFields = `
 	title,
 	slug,
+	comingSoon,
 	categoryMediaAndTagline[] {
 		...,
 		category,

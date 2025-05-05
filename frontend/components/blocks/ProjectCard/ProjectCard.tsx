@@ -15,17 +15,13 @@ const ProjectCardWrapper = styled(motion.div)<{ $isHovered: boolean }>`
   break-inside: avoid;
   margin-bottom: ${pxToRem(40)};
   filter: ${(props) => props.$isHovered && "blur(15px)"};
+  position: relative;
 
   transition: filter var(--transition-speed-default) var(--transition-ease);
 
   &:hover {
     filter: blur(0px) !important;
     opacity: 1 !important;
-
-    img,
-    mux-player {
-      transform: scale(1.03);
-    }
 
     a {
       opacity: 1 !important;
@@ -54,6 +50,7 @@ const ImageWrapper = styled.div<{ $isPortrait: boolean }>`
   margin-bottom: ${pxToRem(12)};
   overflow: hidden;
   border-radius: 5px;
+  position: relative;
 
   .media-wrapper {
     padding-top: ${(props) => (props.$isPortrait ? "110%" : "56%")};
@@ -70,6 +67,20 @@ const ContentWrapper = styled.div`
       line-height: ${pxToRem(16)};
     }
   }
+`;
+
+const ComingSoon = styled.div`
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  z-index: 2;
+  border-radius: 4px;
+  background: var(--colour-foreground);
+  color: var(--colour-black);
+  font-size: ${pxToRem(12)};
+  line-height: 1;
+  padding: ${pxToRem(3)} ${pxToRem(5)};
+  white-space: nowrap;
 `;
 
 const wrapperVariants = {
@@ -95,6 +106,7 @@ type Props = {
   defaultThumbnail: ProjectType["defaultThumbnail"];
   defaultThumbnailRatio: ProjectType["defaultThumbnailRatio"];
   defaultTagline: ProjectType["defaultTagline"];
+  comingSoon: ProjectType["comingSoon"];
   isHovered: boolean;
   activeTag: string;
   setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
@@ -109,6 +121,7 @@ const ProjectCard = (props: Props) => {
     defaultTagline,
     isHovered,
     activeTag,
+    comingSoon,
     setIsHovered,
   } = props;
 
@@ -157,6 +170,8 @@ const ProjectCard = (props: Props) => {
       onMouseOut={() => setIsHovered(false)}
       $isHovered={isHovered}
       variants={wrapperVariants}
+      className={comingSoon ? "cursor-gallery__slide" : ""}
+      data-cursor-title="Coming soon"
     >
       <Link href={`/work/${activeData.slug}`}>
         <Inner
@@ -166,6 +181,7 @@ const ProjectCard = (props: Props) => {
           }`}
         >
           <ImageWrapper $isPortrait={activeData.thumbnailRatio === "portrait"}>
+            {comingSoon && <ComingSoon>Coming soon</ComingSoon>}
             <MediaStack
               data={activeData?.thumbnail}
               sizes="(max-width: 768px) 50vw, 33vw"
