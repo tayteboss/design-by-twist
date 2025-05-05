@@ -49,19 +49,11 @@ type Props = {
 const Header = (props: Props) => {
   const { projects, siteSettings } = props;
 
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [windowHeight, setWindowHeight] = useState(0);
   const [contactIsActive, setContactIsActive] = useState(false);
 
   const { pathname } = useRouter();
-
-  useEffect(() => {
-    if (pathname === "/") {
-      setIsVisible(false);
-    } else {
-      setIsVisible(true);
-    }
-  }, [pathname]);
 
   const handleScroll = () => {
     if (pathname === "/") {
@@ -76,6 +68,12 @@ const Header = (props: Props) => {
   };
 
   useEffect(() => {
+    if (pathname === "/") {
+      setIsVisible(false);
+    } else {
+      setIsVisible(true);
+    }
+
     const updateWindowHeight = () => {
       setWindowHeight(window.innerHeight);
     };
