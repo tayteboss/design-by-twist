@@ -77,6 +77,11 @@ const ComingSoon = styled.div`
   line-height: 1;
   padding: ${pxToRem(3)} ${pxToRem(5)};
   white-space: nowrap;
+  display: none;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: block;
+  }
 `;
 
 const wrapperVariants = {
