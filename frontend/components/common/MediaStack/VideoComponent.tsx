@@ -4,6 +4,8 @@ import { MediaType } from "../../../shared/types/types";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+import UnMuteIcon from "../../svgs/UnMuteIcon";
+import MuteIcon from "../../svgs/MuteIcon";
 
 const VideoComponentWrapper = styled.div`
   position: relative;
@@ -18,6 +20,12 @@ const VideoComponentWrapper = styled.div`
   mux-player,
   img {
     transition: all var(--transition-speed-extra-slow) var(--transition-ease);
+  }
+
+  &:hover {
+    .icon-wrapper {
+      opacity: 1;
+    }
   }
 `;
 
@@ -35,6 +43,40 @@ const Inner = styled.div`
   height: 100%;
   width: 100%;
   z-index: 1;
+`;
+
+const IconWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 48px;
+  width: 48px;
+  opacity: 0;
+  transition: all var(--transition-speed-extra-slow) var(--transition-ease);
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    width: 36px;
+    height: 36px;
+    top: 10px;
+    right: 10px;
+  }
+
+  svg {
+    width: 27px;
+    height: 27px;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      width: 20px;
+      height: 20px;
+    }
+  }
 `;
 
 const wrapperVariants = {
@@ -87,13 +129,17 @@ const VideoComponent = (props: Props) => {
 
   return (
     <VideoComponentWrapper
-      className={`media-wrapper ${showAudioControls ? "cursor-floating-button" : ""}`}
-      data-cursor-title={showAudioControls && isMuted ? "Unmute" : "Mute"}
+      className={`media-wrapper`}
       onClick={() => {
         setIsMuted(!isMuted);
         cursorRefresh?.();
       }}
     >
+      {showAudioControls && (
+        <IconWrapper className="icon-wrapper">
+          {isMuted ? <UnMuteIcon /> : <MuteIcon />}
+        </IconWrapper>
+      )}
       {!noAnimation && posterUrl && (
         <AnimatePresence initial={false}>
           {inView && playbackId && (
