@@ -6,6 +6,7 @@ import RelatedCard from "../RelatedCard";
 import pxToRem from "../../../utils/pxToRem";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 import Link from "next/link";
+import { useState } from "react";
 
 const RelatedProjectsWrapper = styled.section`
   margin-bottom: ${pxToRem(225)};
@@ -54,8 +55,10 @@ type Props = {
 
 const RelatedProjects = (props: Props) => {
   const { data } = props;
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const hasData = data?.length > 0;
+  const anyHovered = hoveredIndex !== null;
 
   return (
     <RelatedProjectsWrapper>
@@ -72,11 +75,16 @@ const RelatedProjects = (props: Props) => {
           {hasData &&
             data.map((item, i) => (
               <RelatedCard
-                title={item?.title}
                 slug={item?.slug}
                 defaultThumbnail={item?.defaultThumbnail}
+                defaultThumbnailRatio={item?.defaultThumbnailRatio}
                 defaultTagline={item?.defaultTagline}
-                categoryMediaAndTagline={item?.categoryMediaAndTagline}
+                comingSoon={item?.comingSoon}
+                isHovered={hoveredIndex === i}
+                anyHovered={anyHovered}
+                setIsHovered={(isHovered) =>
+                  setHoveredIndex(isHovered ? i : null)
+                }
                 key={`related-${i}`}
               />
             ))}

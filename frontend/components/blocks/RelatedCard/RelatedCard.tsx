@@ -4,38 +4,56 @@ import MediaStack from "../../common/MediaStack";
 import pxToRem from "../../../utils/pxToRem";
 import { PortableText } from "@portabletext/react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-const RelatedCardWrapper = styled.div`
+const RelatedCardWrapper = styled(motion.div)<{
+  $isHovered: boolean;
+  $anyHovered: boolean;
+}>`
   grid-column: span 4;
+  width: 100%;
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  margin-bottom: ${pxToRem(40)};
+  filter: ${(props) =>
+    props.$anyHovered && !props.$isHovered ? "blur(15px)" : "none"};
+  position: relative;
+
+  transition: filter var(--transition-speed-default) var(--transition-ease);
+
+  &:hover {
+    filter: blur(0px) !important;
+    opacity: 1 !important;
+
+    a {
+      opacity: 1 !important;
+    }
+  }
+
+  a {
+    opacity: ${(props) =>
+      props.$anyHovered && !props.$isHovered ? "0.7" : "1"};
+    transition: all var(--transition-speed-default) var(--transition-ease);
+  }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     grid-column: 1 / -1;
-  }
-
-  &:hover {
-    .related-card__image-inner {
-      filter: blur(12px);
-    }
-
-    .related-card__title-wrapper {
-      opacity: 1;
-    }
+    margin-bottom: ${pxToRem(24)};
+    filter: none !important;
   }
 `;
 
-const ImageWrapper = styled.div`
-  position: relative;
-  margin-bottom: ${pxToRem(16)};
-`;
+const Inner = styled.div``;
 
-const ImageInner = styled.div`
-  border-radius: 5px;
+const ImageWrapper = styled.div<{ $isPortrait: boolean }>`
+  margin-bottom: ${pxToRem(12)};
   overflow: hidden;
-
-  transition: all var(--transition-speed-default) var(--transition-ease);
+  border-radius: 5px;
+  position: relative;
 
   .media-wrapper {
-    padding-top: 56%;
+    padding-top: ${(props) => (props.$isPortrait ? "110%" : "56%")};
   }
 `;
 
@@ -51,81 +69,88 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const TitleWrapper = styled.div`
+const ComingSoon = styled.div`
   position: absolute;
-  top: 50%;
-  left: ${pxToRem(24)};
-  transform: translateY(-50%);
-  mix-blend-mode: difference;
-  opacity: 0;
-
-  transition: all var(--transition-speed-default) var(--transition-ease);
-`;
-
-const Title = styled.p`
-  color: var(--colour-white);
-  margin-bottom: ${pxToRem(4)};
-`;
-
-const CategoriesWrapper = styled.div`
-  display: flex;
-  gap: ${pxToRem(4)};
-`;
-
-const CategoryCard = styled.div`
-  background: var(--colour-white);
+  bottom: 4px;
+  right: 4px;
+  z-index: 2;
+  border-radius: 4px;
+  background: var(--colour-foreground);
   color: var(--colour-black);
-  font-size: ${pxToRem(11)};
+  font-size: ${pxToRem(12)};
   line-height: 1;
-  padding: ${pxToRem(2)} ${pxToRem(4)};
-  border-radius: ${pxToRem(4)};
-  text-transform: capitalize;
+  padding: ${pxToRem(3)} ${pxToRem(5)};
+  white-space: nowrap;
+  display: none;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: block;
+  }
 `;
+
+const wrapperVariants = {
+  hidden: {
+    opacity: 0,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+  visible: {
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: "easeInOut",
+    },
+  },
+};
 
 type Props = {
-  title: ProjectType["relatedProjects"][number]["title"];
   slug: ProjectType["relatedProjects"][number]["slug"];
   defaultThumbnail: ProjectType["relatedProjects"][number]["defaultThumbnail"];
+  defaultThumbnailRatio: ProjectType["relatedProjects"][number]["defaultThumbnailRatio"];
   defaultTagline: ProjectType["relatedProjects"][number]["defaultTagline"];
-  categoryMediaAndTagline: ProjectType["relatedProjects"][number]["categoryMediaAndTagline"];
+  isHovered: boolean;
+  anyHovered: boolean;
+  comingSoon: ProjectType["relatedProjects"][number]["comingSoon"];
+  setIsHovered: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const RelatedCard = (props: Props) => {
   const {
-    title,
     slug,
     defaultThumbnail,
+    defaultThumbnailRatio,
     defaultTagline,
-    categoryMediaAndTagline,
+    isHovered,
+    anyHovered,
+    comingSoon,
+    setIsHovered,
   } = props;
 
-  const hasCategories = categoryMediaAndTagline?.length > 0;
-
   return (
-    <RelatedCardWrapper>
-      <Link href={`/work/${slug}`}>
-        <ImageWrapper>
-          <ImageInner className="related-card__image-inner">
-            {defaultThumbnail && <MediaStack data={defaultThumbnail} />}
-          </ImageInner>
-          <TitleWrapper className="related-card__title-wrapper">
-            {title && <Title className="type-h2">{title}</Title>}
-            <CategoriesWrapper>
-              {hasCategories &&
-                categoryMediaAndTagline?.map(
-                  (item) =>
-                    item?.category && (
-                      <CategoryCard key={item?.category}>
-                        {item?.category.replace(/-/g, " ")}
-                      </CategoryCard>
-                    )
-                )}
-            </CategoriesWrapper>
-          </TitleWrapper>
-        </ImageWrapper>
-        <ContentWrapper>
-          {defaultTagline && <PortableText value={defaultTagline} />}
-        </ContentWrapper>
+    <RelatedCardWrapper
+      onMouseOver={() => setIsHovered(true)}
+      onMouseOut={() => setIsHovered(false)}
+      $isHovered={isHovered}
+      $anyHovered={anyHovered}
+      variants={wrapperVariants}
+    >
+      <Link href={`/work/${slug?.current}`}>
+        <Inner>
+          <ImageWrapper $isPortrait={defaultThumbnailRatio === "portrait"}>
+            {comingSoon && <ComingSoon>Coming soon</ComingSoon>}
+            {defaultThumbnail && (
+              <MediaStack
+                data={defaultThumbnail}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+            )}
+          </ImageWrapper>
+          <ContentWrapper>
+            {defaultTagline && <PortableText value={defaultTagline} />}
+          </ContentWrapper>
+        </Inner>
       </Link>
     </RelatedCardWrapper>
   );
