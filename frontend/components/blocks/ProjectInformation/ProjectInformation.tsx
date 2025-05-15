@@ -49,7 +49,7 @@ const Trigger = styled.button`
 `;
 
 const DescriptionWrapper = styled(motion.div)`
-  background: rgba(206, 206, 206, 0.25);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(20px);
   border-radius: 26px;
   display: flex;
@@ -74,8 +74,8 @@ const Description = styled(motion.div)`
   padding: ${pxToRem(40)} 0 ${pxToRem(24)};
 
   * {
-    font-size: ${pxToRem(25)};
-    line-height: ${pxToRem(30)};
+    font-size: ${pxToRem(21)};
+    line-height: ${pxToRem(27)};
     font-family: var(--font-acid-grotesk-regular);
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
