@@ -222,7 +222,9 @@ export const projectFields = `
 		defaultTagline,
 		categoryMediaAndTagline[] {
 			category
-		}
+		},
+		comingSoon,
+		defaultThumbnailRatio
 	}
 `;
 

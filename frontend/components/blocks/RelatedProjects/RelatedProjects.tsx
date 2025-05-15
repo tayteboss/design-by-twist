@@ -17,7 +17,7 @@ const RelatedProjectsWrapper = styled.section`
 
   .layout-grid {
     grid-column-gap: ${pxToRem(20)};
-    grid-row-gap: ${pxToRem(24)};
+    grid-row-gap: ${pxToRem(12)};
   }
 `;
 
