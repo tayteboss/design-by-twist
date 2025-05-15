@@ -12,6 +12,11 @@ const ProjectHeroWrapper = styled.section`
 
   .media-wrapper {
     height: 100lvh;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      height: auto;
+      padding-top: 56.25%;
+    }
   }
 `;
 

@@ -187,6 +187,26 @@ const MobileHamburgerWrapper = styled.div`
   }
 `;
 
+const MobileCrossWrapper = styled.div`
+  display: none;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 20px;
+    height: 20px;
+
+    svg {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 20px;
+      width: 20px;
+    }
+  }
+`;
+
 const ProjectList = styled(motion.div)`
   position: absolute;
   bottom: 0;
@@ -205,12 +225,15 @@ const ProjectItemLink = styled(motion.div)`
   background: rgba(206, 206, 206, 0.7);
   border-radius: 100px;
   padding: ${pxToRem(8)} ${pxToRem(16)};
-  /* height: 50px; */
   display: flex;
   justify-content: center;
   align-items: center;
 
   transition: background var(--transition-speed-default) var(--transition-ease);
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    padding: ${pxToRem(7)} ${pxToRem(12)};
+  }
 
   &:hover {
     background: rgba(255, 255, 255, 0.5);
@@ -221,6 +244,10 @@ const ProjectItemLink = styled(motion.div)`
     white-space: nowrap;
     line-height: 1;
     font-family: var(--font-acid-grotesk-regular);
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      font-size: ${pxToRem(15)};
+    }
   }
 `;
 
@@ -567,29 +594,48 @@ const Menu = (props: Props) => {
                 <ProjectItemTitle>
                   {formatSmallTitle(activeProject)}
                 </ProjectItemTitle>
-                <MobileHamburgerWrapper>
-                  <svg
-                    width="14"
-                    height="10"
-                    viewBox="0 0 14 10"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect width="14" height="0.666667" fill="black" />
-                    <rect
-                      y="4.66699"
+                {!isHoveringProjectItems ? (
+                  <MobileHamburgerWrapper>
+                    <svg
                       width="14"
-                      height="0.666667"
-                      fill="black"
-                    />
-                    <rect
-                      y="9.33301"
-                      width="14"
-                      height="0.666667"
-                      fill="black"
-                    />
-                  </svg>
-                </MobileHamburgerWrapper>
+                      height="10"
+                      viewBox="0 0 14 10"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect width="14" height="0.666667" fill="black" />
+                      <rect
+                        y="4.66699"
+                        width="14"
+                        height="0.666667"
+                        fill="black"
+                      />
+                      <rect
+                        y="9.33301"
+                        width="14"
+                        height="0.666667"
+                        fill="black"
+                      />
+                    </svg>
+                  </MobileHamburgerWrapper>
+                ) : (
+                  <MobileCrossWrapper>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M18 6 6 18" />
+                      <path d="m6 6 12 12" />
+                    </svg>
+                  </MobileCrossWrapper>
+                )}
               </ProjectItemTitleWrapper>
               <HoverCloud
                 layoutId="underline"
