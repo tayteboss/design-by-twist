@@ -191,7 +191,7 @@ export default {
       type: 'color',
     },
     {
-      title: 'Use White Featured Logo',
+      title: 'Use White Featured Text',
       name: 'useWhiteFeaturedLogo',
       type: 'boolean',
     },

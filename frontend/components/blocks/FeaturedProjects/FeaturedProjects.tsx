@@ -35,6 +35,8 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
   display: flex;
   align-items: start;
   gap: ${pxToRem(16)};
+  color: ${(props) =>
+    props.$useWhiteLogo ? "var(--colour-white)" : "var(--colour-black)"};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     gap: ${pxToRem(8)};
@@ -76,10 +78,12 @@ const Title = styled.h2<{ $useWhiteLogo: boolean }>`
   } */
 `;
 
-const Description = styled(motion.p)`
+const Description = styled(motion.p)<{ $useWhiteLogo: boolean }>`
   font-size: ${pxToRem(20)};
   line-height: ${pxToRem(17)};
   text-align: right;
+  color: ${(props) =>
+    props.$useWhiteLogo ? "var(--colour-white)" : "var(--colour-black)"};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     display: none;
@@ -427,6 +431,9 @@ const FeaturedProjects = (props: Props) => {
                   animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
                   exit={{ opacity: 0, x: 5, filter: "blur(3px)" }}
                   transition={{ duration: 0.5 }}
+                  $useWhiteLogo={
+                    !!currentProject?.useWhiteFeaturedLogo || !currentProject
+                  }
                 >
                   {currentProject?.featuredDescription || ""}
                 </Description>
