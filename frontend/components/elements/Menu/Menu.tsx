@@ -405,7 +405,15 @@ const Menu = (props: Props) => {
             document.body.getAttribute("data-project-title") || ""
           );
         }, 500);
-        return () => clearTimeout(timer);
+        const timer2 = setTimeout(() => {
+          setActiveProject(
+            document.body.getAttribute("data-project-title") || ""
+          );
+        }, 1000);
+        return () => {
+          clearTimeout(timer);
+          clearTimeout(timer2);
+        };
       } else {
         setActiveProject(false);
       }

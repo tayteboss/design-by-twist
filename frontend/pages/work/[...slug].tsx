@@ -36,8 +36,6 @@ const Page = (props: Props) => {
     }
   }, [data, router]);
 
-  console.log("data", data);
-
   return (
     <PageWrapper
       variants={pageTransitionVariants}
