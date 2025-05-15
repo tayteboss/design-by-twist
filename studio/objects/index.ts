@@ -54,6 +54,7 @@ const videoObject = {
   options: {
     collapsible: false,
     collapsed: false,
+    showAudioControls: true,
   },
 }
 
@@ -130,6 +131,13 @@ const fullMedia = {
           ...videoObject,
           hidden: ({parent}: any) => parent?.mediaType !== 'video',
         },
+        {
+          title: 'Show Audio Controls',
+          name: 'showAudioControls',
+          type: 'boolean',
+          initialValue: false,
+          hidden: ({parent}: any) => parent?.mediaType !== 'video',
+        },
       ],
     },
   ],
@@ -165,6 +173,13 @@ const twoColumnMedia = {
               ...videoObject,
               hidden: ({parent}: any) => parent?.mediaType !== 'video',
             },
+            {
+              title: 'Show Audio Controls',
+              name: 'showAudioControls',
+              type: 'boolean',
+              initialValue: false,
+              hidden: ({parent}: any) => parent?.mediaType !== 'video',
+            },
           ],
         },
       ],
@@ -187,6 +202,13 @@ const twoColumnMedia = {
             },
             {
               ...videoObject,
+              hidden: ({parent}: any) => parent?.mediaType !== 'video',
+            },
+            {
+              title: 'Show Audio Controls',
+              name: 'showAudioControls',
+              type: 'boolean',
+              initialValue: false,
               hidden: ({parent}: any) => parent?.mediaType !== 'video',
             },
           ],

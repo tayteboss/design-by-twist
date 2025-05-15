@@ -13,6 +13,8 @@ type Props = {
   sizes?: undefined | string;
   alt?: string;
   lazyLoad?: boolean;
+  showAudioControls?: boolean;
+  cursorRefresh?: () => void;
 };
 
 const MediaStack = (props: Props) => {
@@ -23,6 +25,8 @@ const MediaStack = (props: Props) => {
     sizes = undefined,
     alt,
     lazyLoad = false,
+    showAudioControls = false,
+    cursorRefresh,
   } = props ?? {};
 
   const useVideo = data?.media?.mediaType === "video";
@@ -42,6 +46,8 @@ const MediaStack = (props: Props) => {
           isPriority={isPriority}
           noAnimation={noAnimation}
           lazyLoad={lazyLoad}
+          showAudioControls={data?.media?.showAudioControls}
+          cursorRefresh={cursorRefresh}
         />
       )}
       {!useVideo && (

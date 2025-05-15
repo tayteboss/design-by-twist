@@ -15,6 +15,7 @@ export type MediaType = {
         playbackId: string;
       };
     };
+    showAudioControls: boolean;
   };
 };
 

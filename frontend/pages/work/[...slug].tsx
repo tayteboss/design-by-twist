@@ -15,12 +15,13 @@ import RelatedProjects from "../../components/blocks/RelatedProjects";
 type Props = {
   data: ProjectType;
   pageTransitionVariants: TransitionsType;
+  cursorRefresh: () => void;
 };
 
 const PageWrapper = styled(motion.div)``;
 
 const Page = (props: Props) => {
-  const { data, pageTransitionVariants } = props;
+  const { data, cursorRefresh, pageTransitionVariants } = props;
 
   const router = useRouter();
 
@@ -52,7 +53,7 @@ const Page = (props: Props) => {
         title={data?.informationTitle}
         description={data?.informationDescription}
       />
-      <PageBuilder data={data?.pageBuilder} />
+      <PageBuilder data={data?.pageBuilder} cursorRefresh={cursorRefresh} />
       {data?.relatedProjects && <RelatedProjects data={data.relatedProjects} />}
       <BackToTop />
     </PageWrapper>

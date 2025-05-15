@@ -27,10 +27,11 @@ type Props = {
     media: MediaType;
     useSmallMb: boolean;
   };
+  cursorRefresh: () => void;
 };
 
 const FullMediaSection = (props: Props) => {
-  const { fullMedia } = props;
+  const { fullMedia, cursorRefresh } = props;
   const { isFullBleed, media: oldMedia, useSmallMb } = fullMedia;
 
   const media = {
@@ -46,7 +47,7 @@ const FullMediaSection = (props: Props) => {
       )}
       {isFullBleed && (
         <MediaWrapper $isFullBleed={true}>
-          {media && <MediaStack data={media} />}
+          {media && <MediaStack data={media} cursorRefresh={cursorRefresh} />}
         </MediaWrapper>
       )}
     </FullMediaSectionWrapper>

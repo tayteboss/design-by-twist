@@ -4,12 +4,13 @@ import FullMediaSection from "../../blocks/FullMediaSection";
 
 type Props = {
   data: any;
+  cursorRefresh: () => void;
 };
 
 const PageBuilderWrapper = styled.div``;
 
 const PageBuilder = (props: Props) => {
-  const { data } = props;
+  const { data, cursorRefresh } = props;
 
   const sections: any = {
     fullMedia: FullMediaSection,
@@ -30,7 +31,11 @@ const PageBuilder = (props: Props) => {
             } else {
               const Component = sections[section.component];
               return (
-                <Component key={`${section.component}-${i}`} {...section} />
+                <Component
+                  key={`${section.component}-${i}`}
+                  {...section}
+                  cursorRefresh={cursorRefresh}
+                />
               );
             }
           }

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { MediaType } from "../../../shared/types/types";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
+import { useState } from "react";
 
 const VideoComponentWrapper = styled.div`
   position: relative;
@@ -64,16 +65,35 @@ type Props = {
   isPriority: boolean;
   noAnimation?: boolean;
   lazyLoad?: boolean;
+  showAudioControls?: boolean;
+  cursorRefresh?: () => void;
 };
 
 const VideoComponent = (props: Props) => {
-  const { data, inView, isPriority, noAnimation, lazyLoad } = props;
+  const {
+    data,
+    inView,
+    isPriority,
+    noAnimation,
+    lazyLoad,
+    showAudioControls,
+    cursorRefresh,
+  } = props;
+
+  const [isMuted, setIsMuted] = useState(true);
 
   const playbackId = data?.media?.video?.asset?.playbackId;
   const posterUrl = `https://image.mux.com/${data?.media?.video?.asset?.playbackId}/thumbnail.png?width=214&height=121&time=1`;
 
   return (
-    <VideoComponentWrapper className="media-wrapper">
+    <VideoComponentWrapper
+      className={`media-wrapper ${showAudioControls ? "cursor-floating-button" : ""}`}
+      data-cursor-title={showAudioControls && isMuted ? "Unmute" : "Mute"}
+      onClick={() => {
+        setIsMuted(!isMuted);
+        cursorRefresh?.();
+      }}
+    >
       {!noAnimation && posterUrl && (
         <AnimatePresence initial={false}>
           {inView && playbackId && (
@@ -104,7 +124,7 @@ const VideoComponent = (props: Props) => {
             thumbnailTime={1}
             loading={lazyLoad ? "viewport" : "page"}
             preload="auto"
-            muted
+            muted={isMuted}
             playsInline={true}
             poster={`${posterUrl}`}
             minResolution="2160p"

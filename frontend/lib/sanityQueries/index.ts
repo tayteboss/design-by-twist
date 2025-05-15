@@ -210,7 +210,6 @@ export const projectFields = `
 								playbackId,
 							},
 						},
-						${mediaString}
 					}
 			}
 	},
