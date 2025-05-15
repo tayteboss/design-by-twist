@@ -161,7 +161,7 @@ const ProjectItemTitle = styled.div`
   font-size: ${pxToRem(18)};
   line-height: 1.1;
   font-family: var(--font-acid-grotesk-regular);
-  max-width: ${pxToRem(100)};
+  /* max-width: ${pxToRem(100)}; */
   white-space: nowrap;
   overflow: hidden;
 `;
@@ -204,8 +204,8 @@ const ProjectItemLink = styled(motion.div)`
   z-index: 5;
   background: rgba(206, 206, 206, 0.7);
   border-radius: 100px;
-  padding: 0 ${pxToRem(32)};
-  height: 50px;
+  padding: ${pxToRem(8)} ${pxToRem(16)};
+  /* height: 50px; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -218,6 +218,7 @@ const ProjectItemLink = styled(motion.div)`
 
   a {
     font-size: ${pxToRem(18)};
+    white-space: nowrap;
     line-height: 1;
     font-family: var(--font-acid-grotesk-regular);
   }
@@ -229,8 +230,8 @@ const ProjectThumbnailWrapper = styled(motion.div)`
   right: calc(100% + 4px);
 
   .media-wrapper {
-    height: 15vw;
-    width: 15vw;
+    height: 12vw;
+    width: 12vw;
   }
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
@@ -640,7 +641,7 @@ const Menu = (props: Props) => {
                               <ProjectThumbnailInner>
                                 <MediaStack
                                   data={item.mobileMenuThumbnail}
-                                  sizes="15vw"
+                                  sizes="12vw"
                                   noAnimation={true}
                                 />
                               </ProjectThumbnailInner>
