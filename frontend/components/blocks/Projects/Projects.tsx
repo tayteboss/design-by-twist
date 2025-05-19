@@ -5,6 +5,7 @@ import LayoutWrapper from "../../layout/LayoutWrapper";
 import pxToRem from "../../../utils/pxToRem";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 const ProjectsWrapper = styled.section`
   padding: ${pxToRem(24)} 0 ${pxToRem(180)};
@@ -15,13 +16,16 @@ const ProjectsWrapper = styled.section`
 `;
 
 const Inner = styled(motion.div)`
-  columns: 25vw;
-  column-gap: ${pxToRem(32)};
   min-height: 100vh;
 
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    columns: 40vw;
-    column-gap: ${pxToRem(16)};
+  & > div {
+    & > div {
+      gap: ${pxToRem(32)} !important;
+
+      @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+        gap: ${pxToRem(16)} !important;
+      }
+    }
   }
 `;
 
@@ -73,21 +77,28 @@ const Projects = (props: Props) => {
             exit="hidden"
             key={activeTag}
           >
-            {hasProjects &&
-              projects.map((project, i) => (
-                <ProjectCard
-                  slug={project.slug}
-                  categoryMediaAndTagline={project.categoryMediaAndTagline}
-                  defaultThumbnail={project.defaultThumbnail}
-                  defaultThumbnailRatio={project.defaultThumbnailRatio}
-                  defaultTagline={project.defaultTagline}
-                  isHovered={isHovered}
-                  setIsHovered={setIsHovered}
-                  activeTag={activeTag}
-                  comingSoon={project.comingSoon}
-                  key={project.slug.current}
-                />
-              ))}
+            <ResponsiveMasonry
+              columnsCountBreakPoints={{ 750: 2, 900: 3 }}
+              gutterBreakPoints={{ 750: "20px", 900: "40px" }}
+            >
+              <Masonry>
+                {hasProjects &&
+                  projects.map((project, i) => (
+                    <ProjectCard
+                      slug={project.slug}
+                      categoryMediaAndTagline={project.categoryMediaAndTagline}
+                      defaultThumbnail={project.defaultThumbnail}
+                      defaultThumbnailRatio={project.defaultThumbnailRatio}
+                      defaultTagline={project.defaultTagline}
+                      isHovered={isHovered}
+                      setIsHovered={setIsHovered}
+                      activeTag={activeTag}
+                      comingSoon={project.comingSoon}
+                      key={project.slug.current}
+                    />
+                  ))}
+              </Masonry>
+            </ResponsiveMasonry>
           </Inner>
         </AnimatePresence>
       </LayoutWrapper>
