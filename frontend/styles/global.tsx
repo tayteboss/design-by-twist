@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
 		--colour-black: ${theme.colours.black};
 		--colour-foreground: ${theme.colours.pink};
 		--font-acid-grotesk-bold: ${theme.fonts.acidGroteskBold};
-		--font-acid-grotesk-regular: ${theme.fonts.acidGroteskRegular};
+		--font-acid-grotesk-book: ${theme.fonts.acidGroteskBook};
 		--font-holise-extra-light: ${theme.fonts.holiseExtraLight};
 		--transition-speed-default: ${theme.transitionSpeed.default};
 		--transition-speed-fast: ${theme.transitionSpeed.fast};
@@ -63,7 +63,7 @@ export const GlobalStyles = createGlobalStyle`
 	button,
 	label,
 	body {
-		font-family: var(--font-acid-grotesk-regular);
+		font-family: var(--font-acid-grotesk-book);
 		color: var(--colour-black);
 		line-height: normal;
 	}
@@ -145,7 +145,7 @@ export const GlobalStyles = createGlobalStyle`
 	div {
 		font-size: ${pxToRem(30)};
 		line-height: ${pxToRem(35)};
-		font-family: var(--font-acid-grotesk-regular);
+		font-family: var(--font-acid-grotesk-book);
 
 		@media ${theme.mediaBreakpoints.tabletPortrait} {
 			font-size: ${pxToRem(20)};

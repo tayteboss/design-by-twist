@@ -61,7 +61,7 @@ const Main = styled(motion.div)`
 const MainItem = styled(motion.div)`
   font-size: ${pxToRem(18)};
   line-height: 1;
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   position: relative;
   padding: 0 ${pxToRem(16)};
 
@@ -73,7 +73,7 @@ const MainItem = styled(motion.div)`
   * {
     font-size: ${pxToRem(18)};
     line-height: 1;
-    font-family: var(--font-acid-grotesk-regular);
+    font-family: var(--font-acid-grotesk-book);
   }
 `;
 
@@ -160,7 +160,7 @@ const ProjectItemTitleWrapper = styled.div`
 const ProjectItemTitle = styled.div`
   font-size: ${pxToRem(18)};
   line-height: 1.1;
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   /* max-width: ${pxToRem(100)}; */
   white-space: nowrap;
   overflow: hidden;
@@ -243,7 +243,7 @@ const ProjectItemLink = styled(motion.div)`
     font-size: ${pxToRem(18)};
     white-space: nowrap;
     line-height: 1;
-    font-family: var(--font-acid-grotesk-regular);
+    font-family: var(--font-acid-grotesk-book);
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
       font-size: ${pxToRem(15)};

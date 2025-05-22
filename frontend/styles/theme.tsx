@@ -6,7 +6,7 @@ export const theme = {
   },
   fonts: {
     acidGroteskBold: "Acid Grotesk Bold",
-    acidGroteskRegular: "Acid Grotesk Regular",
+    acidGroteskBook: "Acid Grotesk Book",
     holiseExtraLight: "Holise Extra Light",
   },
   mediaBreakpoints: {

@@ -17,7 +17,7 @@ const TopBar = styled.div`
 
 const Title = styled.h3<{ $number: string; $isActive: boolean }>`
   font-size: 12vw;
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   line-height: 1;
   position: relative;
   text-transform: uppercase;
@@ -57,7 +57,7 @@ const Title = styled.h3<{ $number: string; $isActive: boolean }>`
 const Description = styled(motion.p)<{ $isActive: boolean }>`
   font-size: ${pxToRem(20)};
   line-height: ${pxToRem(25)};
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   max-width: ${pxToRem(550)};
   margin-bottom: ${pxToRem(64)};
   margin-left: 5vw;
@@ -157,7 +157,7 @@ const ImageCaption = styled.p`
   padding-top: ${pxToRem(4)};
   font-size: ${pxToRem(15)};
   line-height: ${pxToRem(20)};
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   text-transform: uppercase;
 `;
 

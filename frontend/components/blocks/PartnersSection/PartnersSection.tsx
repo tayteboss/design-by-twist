@@ -36,7 +36,7 @@ const Title = styled(motion.h2)`
   left: 0;
   font-size: ${pxToRem(15)};
   line-height: 1;
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
   text-transform: uppercase;
 `;
 

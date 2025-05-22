@@ -34,7 +34,7 @@ const Title = styled.h1`
 const Trigger = styled.button`
   font-size: ${pxToRem(25)};
   line-height: ${pxToRem(30)};
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 
@@ -76,7 +76,7 @@ const Description = styled(motion.div)`
   * {
     font-size: ${pxToRem(21)};
     line-height: ${pxToRem(27)};
-    font-family: var(--font-acid-grotesk-regular);
+    font-family: var(--font-acid-grotesk-book);
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
       font-size: ${pxToRem(20)};

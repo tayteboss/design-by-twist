@@ -14,7 +14,7 @@ const Title = styled.h4`
   margin-bottom: ${pxToRem(16)};
   font-size: ${pxToRem(25)};
   line-height: ${pxToRem(35)};
-  font-family: var(--font-acid-grotesk-regular);
+  font-family: var(--font-acid-grotesk-book);
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(22)};
