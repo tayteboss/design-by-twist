@@ -4,8 +4,8 @@ import pxToRem from "../../../utils/pxToRem";
 import LayoutWrapper from "../../layout/LayoutWrapper";
 import { AnimatePresence, motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
-import Image from "next/image";
 import { useInView } from "react-intersection-observer";
+import MediaStack from "../../common/MediaStack";
 
 const ServiceCellWrapper = styled.div``;
 
@@ -151,6 +151,11 @@ const ImageInner = styled.div`
   width: 100%;
   overflow: hidden;
   border-radius: 5px;
+
+  * {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const ImageCaption = styled.p`
@@ -229,6 +234,8 @@ type Props = {
 const ServiceCell = (props: Props) => {
   const { title, description, images, isActive, setIndexActive, index } = props;
 
+  console.log("images", images);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "start",
@@ -278,15 +285,7 @@ const ServiceCell = (props: Props) => {
                     <EmblaSlide className="embla__slide" key={i}>
                       <ImageRatio variants={imageVariants}>
                         <ImageInner>
-                          <Image
-                            src={image?.image?.asset?.url}
-                            alt={image?.caption || ""}
-                            fill
-                            style={{
-                              objectFit: "cover",
-                            }}
-                            sizes={"20vw"}
-                          />
+                          <MediaStack data={image?.media} sizes={"20vw"} />
                         </ImageInner>
                       </ImageRatio>
                       {image?.caption && (

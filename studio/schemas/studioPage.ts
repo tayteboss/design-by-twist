@@ -108,9 +108,10 @@ export default {
                       type: 'object',
                       fields: [
                         {
-                          title: 'Image',
-                          name: 'image',
-                          type: 'image',
+                          title: 'Media',
+                          name: 'media',
+                          type: 'object',
+                          fields: mediaBlock,
                         },
                         {
                           title: 'Caption',

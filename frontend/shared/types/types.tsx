@@ -155,11 +155,7 @@ export type StudioPageType = {
       title: string;
       description: string;
       images: {
-        image: {
-          asset: {
-            url: string;
-          };
-        };
+        media: MediaType;
         caption: string;
       }[];
     }[];

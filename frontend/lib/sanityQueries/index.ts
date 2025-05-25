@@ -115,10 +115,8 @@ export const studioPageQueryString = `
 				title,
 				description,
 				images[] {
-					image {
-						asset -> {
-							url
-						}
+					media {
+						${mediaString}
 					},
 					caption
 				}
