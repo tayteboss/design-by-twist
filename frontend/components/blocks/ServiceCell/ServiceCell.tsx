@@ -234,8 +234,6 @@ type Props = {
 const ServiceCell = (props: Props) => {
   const { title, description, images, isActive, setIndexActive, index } = props;
 
-  console.log("images", images);
-
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: false,
     align: "start",
@@ -250,6 +248,8 @@ const ServiceCell = (props: Props) => {
     threshold: 0.01,
     rootMargin: "-50px",
   });
+
+  const hasImages = images && images.length > 0;
 
   return (
     <ServiceCellWrapper
@@ -281,18 +281,19 @@ const ServiceCell = (props: Props) => {
               </LayoutWrapper>
               <Embla className="embla" ref={emblaRef}>
                 <EmblaContainer className="embla__container cursor-gallery">
-                  {images.map((image, i) => (
-                    <EmblaSlide className="embla__slide" key={i}>
-                      <ImageRatio variants={imageVariants}>
-                        <ImageInner>
-                          <MediaStack data={image?.media} sizes={"20vw"} />
-                        </ImageInner>
-                      </ImageRatio>
-                      {image?.caption && (
-                        <ImageCaption>{image?.caption}</ImageCaption>
-                      )}
-                    </EmblaSlide>
-                  ))}
+                  {hasImages &&
+                    images.map((image, i) => (
+                      <EmblaSlide className="embla__slide" key={i}>
+                        <ImageRatio variants={imageVariants}>
+                          <ImageInner>
+                            <MediaStack data={image?.media} sizes={"20vw"} />
+                          </ImageInner>
+                        </ImageRatio>
+                        {image?.caption && (
+                          <ImageCaption>{image?.caption}</ImageCaption>
+                        )}
+                      </EmblaSlide>
+                    ))}
                 </EmblaContainer>
               </Embla>
             </BottomInner>
