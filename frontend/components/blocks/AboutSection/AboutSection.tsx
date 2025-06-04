@@ -8,6 +8,7 @@ import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 import { motion } from "framer-motion";
+import formatHTML from "../../../utils/formatHTML";
 
 const AboutSectionWrapper = styled.section`
   padding: ${pxToRem(80)} 0;
@@ -57,7 +58,7 @@ const DescriptionWrapper = styled(motion.div)`
   }
 `;
 
-const Description = styled.p`
+const Description = styled.div`
   text-indent: ${pxToRem(140)};
   font-size: ${pxToRem(50)};
   line-height: ${pxToRem(56)};
@@ -68,6 +69,20 @@ const Description = styled.p`
     text-indent: ${pxToRem(100)};
     font-size: ${pxToRem(30)};
     line-height: ${pxToRem(35)};
+  }
+
+  * {
+    text-indent: ${pxToRem(140)};
+    font-size: ${pxToRem(50)};
+    line-height: ${pxToRem(56)};
+    font-family: var(--font-holise-extra-light);
+    font-weight: 200;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
+      text-indent: ${pxToRem(100)};
+      font-size: ${pxToRem(30)};
+      line-height: ${pxToRem(35)};
+    }
   }
 `;
 
@@ -153,7 +168,11 @@ const AboutSection = (props: Props) => {
               transition={inView ? { duration: 0.5, delay: 0.5 } : undefined}
             >
               {data?.aboutDescription && (
-                <Description>{data.aboutDescription}</Description>
+                <Description
+                  dangerouslySetInnerHTML={{
+                    __html: formatHTML(data.aboutDescription),
+                  }}
+                />
               )}
               {data?.aboutButtonTitle && data?.aboutButtonlink && (
                 <Link href={data?.aboutButtonlink} target="_blank">

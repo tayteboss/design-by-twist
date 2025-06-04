@@ -671,9 +671,15 @@ const Menu = (props: Props) => {
                           setActiveProjectItem(item.slug.current)
                         }
                       >
-                        <Link href={`/work/${item.slug.current}`}>
-                          {item.title}
-                        </Link>
+                        {item.comingSoon ? (
+                          <Link href={`/work/${item.slug.current}`}>
+                            {item.title}
+                          </Link>
+                        ) : (
+                          <Link href={`/work/${item.slug.current}`}>
+                            {item.title}
+                          </Link>
+                        )}
                         {/* Thumbnail Presence */}
                         <AnimatePresence mode="wait">
                           {activeProjectItem === item.slug.current && (

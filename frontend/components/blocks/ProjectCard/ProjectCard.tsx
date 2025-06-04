@@ -175,7 +175,7 @@ const ProjectCard = (props: Props) => {
       className={comingSoon ? "cursor-gallery__slide" : ""}
       data-cursor-title="Coming soon"
     >
-      <Link href={`/work/${activeData.slug}`}>
+      {comingSoon ? (
         <Inner
           ref={ref}
           className={`view-element-fade-in ${
@@ -193,7 +193,31 @@ const ProjectCard = (props: Props) => {
             {activeData.tagline && <PortableText value={activeData.tagline} />}
           </ContentWrapper>
         </Inner>
-      </Link>
+      ) : (
+        <Link href={`/work/${activeData.slug}`}>
+          <Inner
+            ref={ref}
+            className={`view-element-fade-in ${
+              inView ? "view-element-fade-in--in-view" : ""
+            }`}
+          >
+            <ImageWrapper
+              $isPortrait={activeData.thumbnailRatio === "portrait"}
+            >
+              {comingSoon && <ComingSoon>Coming soon</ComingSoon>}
+              <MediaStack
+                data={activeData?.thumbnail}
+                sizes="(max-width: 768px) 50vw, 33vw"
+              />
+            </ImageWrapper>
+            <ContentWrapper>
+              {activeData.tagline && (
+                <PortableText value={activeData.tagline} />
+              )}
+            </ContentWrapper>
+          </Inner>
+        </Link>
+      )}
     </ProjectCardWrapper>
   );
 };

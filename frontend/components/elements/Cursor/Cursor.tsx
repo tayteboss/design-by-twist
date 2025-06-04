@@ -224,6 +224,12 @@ const Cursor = ({ cursorRefresh, appCursorRefresh }: Props) => {
 
   const clearCursor = () => {
     setIsHoveringLink(false);
+    setIsHoveringFloatingButton(false);
+    setIsHoveringGallerySlide(false);
+    setIsCursorGallery(false);
+    setIsGrabbing(false);
+    setCursorText("");
+    setRotation(0);
     setIsOnDevice(false);
   };
 

@@ -136,7 +136,7 @@ const RelatedCard = (props: Props) => {
       $anyHovered={anyHovered}
       variants={wrapperVariants}
     >
-      <Link href={`/work/${slug?.current}`}>
+      {comingSoon ? (
         <Inner>
           <ImageWrapper $isPortrait={defaultThumbnailRatio === "portrait"}>
             {comingSoon && <ComingSoon>Coming soon</ComingSoon>}
@@ -151,7 +151,23 @@ const RelatedCard = (props: Props) => {
             {defaultTagline && <PortableText value={defaultTagline} />}
           </ContentWrapper>
         </Inner>
-      </Link>
+      ) : (
+        <Link href={`/work/${slug?.current}`}>
+          <Inner>
+            <ImageWrapper $isPortrait={defaultThumbnailRatio === "portrait"}>
+              {defaultThumbnail && (
+                <MediaStack
+                  data={defaultThumbnail}
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                />
+              )}
+            </ImageWrapper>
+            <ContentWrapper>
+              {defaultTagline && <PortableText value={defaultTagline} />}
+            </ContentWrapper>
+          </Inner>
+        </Link>
+      )}
     </RelatedCardWrapper>
   );
 };

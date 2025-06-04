@@ -153,6 +153,12 @@ export const GlobalStyles = createGlobalStyle`
 		}
 	}
 
+	.content {
+		p {
+			margin-bottom: ${pxToRem(24)};
+		}
+	}
+
 	mux-player {
 		--media-object-fit: contain;
 		--media-object-position: center;

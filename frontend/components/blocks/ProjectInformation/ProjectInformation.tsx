@@ -183,6 +183,7 @@ const ProjectInformation = (props: Props) => {
                       initial="hidden"
                       animate="visible"
                       exit="hidden"
+                      className="content"
                     >
                       <Description variants={childVariants}>
                         <PortableText value={description} />

@@ -27,6 +27,7 @@ const Page = (props: Props) => {
 
   useEffect(() => {
     cursorRefresh();
+
     if (router.pathname === "/work/[...slug]") {
       document.body.setAttribute("data-project-title", data?.title);
       const timer = setTimeout(() => {

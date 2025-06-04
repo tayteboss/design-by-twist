@@ -49,12 +49,22 @@ const App = (props: Props) => {
       body?.classList.remove("modal-open");
     }
 
-    const timer = setTimeout(() => {
+    const timer1 = setTimeout(() => {
+      setAppCursorRefresh(appCursorRefresh + 1);
+    }, 2000);
+
+    const timer2 = setTimeout(() => {
+      setAppCursorRefresh(appCursorRefresh + 1);
+    }, 4000);
+
+    const timer3 = setTimeout(() => {
       setAppCursorRefresh(appCursorRefresh + 1);
     }, 3000);
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
     };
   }, [router.asPath]);
 
