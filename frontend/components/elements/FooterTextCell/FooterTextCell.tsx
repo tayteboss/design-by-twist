@@ -60,6 +60,8 @@ const NewsletterButtonWrapper = styled.div`
   padding-top: ${pxToRem(16)};
   max-width: 200px;
 
+  cursor: not-allowed;
+
   @media ${(props) => props.theme.mediaBreakpoints.mobile} {
     max-width: unset;
   }
@@ -121,9 +123,9 @@ const FooterTextCell = (props: Props) => {
         {text && <Text>{text}</Text>}
         {useNewsletterButton && (
           <NewsletterButtonWrapper>
-            <Link href="/#" target="_blank">
-              <PrimaryButtonLayout>Sign up</PrimaryButtonLayout>
-            </Link>
+            {/* <Link href="/#" target="_blank"> */}
+            <PrimaryButtonLayout>Coming soon</PrimaryButtonLayout>
+            {/* </Link> */}
           </NewsletterButtonWrapper>
         )}
       </TextWrapper>

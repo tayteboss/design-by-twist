@@ -113,11 +113,18 @@ type Props = {
   submitForm: boolean;
   setAllowExit: (allowExit: boolean) => void;
   handleExit: () => void;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const InformationForm = (props: Props) => {
-  const { activeService, activeBudget, submitForm, handleExit, setAllowExit } =
-    props;
+  const {
+    activeService,
+    activeBudget,
+    submitForm,
+    handleExit,
+    setAllowExit,
+    setSuccess,
+  } = props;
 
   const [canSubmit, setCanSubmit] = useState(false);
 
@@ -169,8 +176,24 @@ const InformationForm = (props: Props) => {
             activeBudget,
           };
 
-          await new Promise((r) => setTimeout(r, 500));
-          alert(JSON.stringify(allValues, null, 2));
+          try {
+            const response = await fetch("/api/send-email", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(allValues),
+            });
+
+            if (response.ok) {
+              setSuccess(true);
+            } else {
+              alert("Failed to send email. Try again later.");
+            }
+          } catch (error) {
+            console.error("Error submitting form:", error);
+            alert("An error occurred while submitting the form.");
+          }
         }}
       >
         <Form>

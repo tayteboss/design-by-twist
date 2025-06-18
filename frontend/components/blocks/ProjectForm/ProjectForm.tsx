@@ -39,10 +39,11 @@ type Props = {
   setAllowExit: React.Dispatch<React.SetStateAction<boolean>>;
   submitForm: boolean;
   handleExit: () => void;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ProjectForm = (props: Props) => {
-  const { submitForm, handleExit, setAllowExit } = props;
+  const { submitForm, handleExit, setAllowExit, setSuccess } = props;
 
   const [activeService, setActiveService] = useState<false | string>(false);
   const [activeBudget, setActiveBudget] = useState<false | string>(false);
@@ -85,6 +86,7 @@ const ProjectForm = (props: Props) => {
         submitForm={submitForm}
         setAllowExit={setAllowExit}
         handleExit={handleExit}
+        setSuccess={setSuccess}
       />
     </ProjectFormWrapper>
   );

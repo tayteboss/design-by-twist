@@ -51,7 +51,7 @@ export default {
         {
           title: 'About Button link',
           name: 'aboutButtonlink',
-          type: 'url',
+          type: 'string',
         },
         {
           title: 'About Image',
