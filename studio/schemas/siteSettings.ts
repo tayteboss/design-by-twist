@@ -24,16 +24,16 @@ export default {
       name: 'behanceUrl',
       type: 'url',
     },
-    {
-      title: 'New Business Email',
-      name: 'newBusinessEmail',
-      type: 'string',
-    },
-    {
-      title: 'Careers Email',
-      name: 'careersEmail',
-      type: 'string',
-    },
+    // {
+    //   title: 'New Business Email',
+    //   name: 'newBusinessEmail',
+    //   type: 'string',
+    // },
+    // {
+    //   title: 'Careers Email',
+    //   name: 'careersEmail',
+    //   type: 'string',
+    // },
     {
       title: 'Contact Email',
       name: 'contactEmail',

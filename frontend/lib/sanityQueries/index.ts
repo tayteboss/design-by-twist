@@ -53,6 +53,7 @@ export const homePageQueryString = `
 			featuredProjects[]-> {
 				...,
 				title,
+				comingSoon,
 				slug,
 				categoryMediaAndTagline[] {
 					...,

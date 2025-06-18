@@ -119,7 +119,7 @@ const EmblaContainer = styled.div<{ $height: number }>`
   }
 `;
 
-const EmblaSlide = styled.div`
+const EmblaSlide = styled.div<{ $isComingSoon: boolean }>`
   min-width: 0;
   position: relative;
   transform-origin: center center;
@@ -143,6 +143,26 @@ const EmblaSlide = styled.div`
       padding-top: 0 !important;
     }
   }
+
+  &::after {
+    content: "Coming soon";
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 2;
+    border-radius: 4px;
+    background: var(--colour-foreground);
+    color: var(--colour-black);
+    font-size: ${pxToRem(12)};
+    line-height: 1;
+    padding: ${pxToRem(3)} ${pxToRem(5)};
+    white-space: nowrap;
+    display: none;
+
+    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+      display: ${(props) => (props.$isComingSoon ? "block" : "none")};
+    }
+  }
 `;
 
 const MediaWrapper = styled.div<{ $isActive: boolean }>`
@@ -162,6 +182,8 @@ const MediaWrapper = styled.div<{ $isActive: boolean }>`
     width: 100%;
     height: 100%;
     display: block;
+    overflow: hidden;
+    border-radius: ${pxToRem(8)};
 
     img,
     video,
@@ -449,18 +471,18 @@ const FeaturedProjects = (props: Props) => {
                 {featuredProjects.map((project, i) => (
                   <EmblaSlide
                     className="embla__slide cursor-gallery__slide"
-                    data-cursor-title={project?.title || ""}
+                    data-cursor-title={
+                      project?.comingSoon ? "Coming soon" : project?.title || ""
+                    }
                     key={project?.slug?.current || `project-${i}`}
+                    $isComingSoon={project?.comingSoon}
                   >
                     <MediaWrapper
                       $isActive={i === activeIndex}
                       className="embla__media-wrapper"
                     >
-                      <Link
-                        href={`/work/${project?.slug?.current}`}
-                        legacyBehavior={false}
-                      >
-                        {project?.featuredThumbnail && (
+                      {project?.comingSoon ? (
+                        project?.featuredThumbnail && (
                           <MediaStack
                             data={project?.featuredThumbnail}
                             isPriority={
@@ -469,8 +491,26 @@ const FeaturedProjects = (props: Props) => {
                             noAnimation
                             alt={project?.title || "Featured project thumbnail"}
                           />
-                        )}
-                      </Link>
+                        )
+                      ) : (
+                        <Link
+                          href={`/work/${project?.slug?.current}`}
+                          legacyBehavior={false}
+                        >
+                          {project?.featuredThumbnail && (
+                            <MediaStack
+                              data={project?.featuredThumbnail}
+                              isPriority={
+                                i >= activeIndex - 1 && i <= activeIndex + 1
+                              }
+                              noAnimation
+                              alt={
+                                project?.title || "Featured project thumbnail"
+                              }
+                            />
+                          )}
+                        </Link>
+                      )}
                     </MediaWrapper>
                   </EmblaSlide>
                 ))}
