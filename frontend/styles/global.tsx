@@ -307,4 +307,28 @@ export const GlobalStyles = createGlobalStyle`
 	.lenis.lenis-scrolling iframe {
 		pointer-events: none;
 	}
+
+	.CookieConsent {
+		align-items: center !important;
+
+		& > div {
+			font-size: 16px !important;
+			line-height: 1.4 !important;
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+		}
+
+		@media ${theme.mediaBreakpoints.mobile} {
+			max-width: 100% !important;
+			margin: 0 0 !important;
+			border-radius: 0 !important;
+			flex-wrap: nowrap !important;
+			font-size: 13px !important;
+
+			& > div {
+				flex: auto !important;
+			}
+		}
+	}
 `;
