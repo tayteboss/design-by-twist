@@ -73,6 +73,7 @@ const ProjectForm = (props: Props) => {
         items={serviceItems}
         setActiveItem={setActiveService}
         activeItem={activeService}
+        allowMultiSelect={true}
       />
       <RadioItems
         title="Do you have a budget range?"

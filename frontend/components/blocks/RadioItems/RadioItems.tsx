@@ -44,10 +44,11 @@ type Props = {
   items: ItemsType[];
   activeItem: false | string;
   setActiveItem: React.Dispatch<React.SetStateAction<false | string>>;
+  allowMultiSelect?: boolean;
 };
 
 const RadioItems = (props: Props) => {
-  const { title, items, activeItem, setActiveItem } = props;
+  const { title, items, activeItem, allowMultiSelect, setActiveItem } = props;
 
   return (
     <RadioItemsWrapper>
@@ -56,7 +57,13 @@ const RadioItems = (props: Props) => {
         {items.map((item, i) => (
           <Button
             key={`${item.value}-${i}`}
-            onClick={() => setActiveItem(item.value)}
+            onClick={() => {
+              if (allowMultiSelect) {
+                setActiveItem(item.value);
+              } else {
+                setActiveItem(item.value);
+              }
+            }}
           >
             <PrimaryButtonLayout isActive={activeItem === item.value}>
               {item.label}
