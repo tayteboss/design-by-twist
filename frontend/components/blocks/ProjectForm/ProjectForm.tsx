@@ -58,11 +58,11 @@ const ProjectForm = (props: Props) => {
   ];
 
   const budgetItems = [
-    { label: "Under €10k", value: "under-10k" },
-    { label: "€10k-20k", value: "10k-20k" },
-    { label: "€20k-50k", value: "20k-50k" },
-    { label: "€50k-80k", value: "50k-80k" },
-    { label: "€80k+", value: "80k-plus" },
+    { label: "Under €20k", value: "under-20k" },
+    { label: "€20k - €40k", value: "20k-40k" },
+    { label: "€40k- €80k", value: "40k-80k" },
+    { label: "€80k - €120k", value: "80k-120k" },
+    { label: "€120k +", value: "120k-plus" },
   ];
 
   return (

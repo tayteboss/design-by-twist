@@ -10,21 +10,27 @@ export default async function handler(
   if (req.method === "POST") {
     const { name, email, information, activeService, activeBudget } = req.body;
 
-    if (!name || !email || !information || !activeService || !activeBudget) {
+    if (
+      !name ||
+      !email ||
+      !information ||
+      activeService === undefined ||
+      activeBudget === undefined
+    ) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
     try {
       const { data, error } = await resend.emails.send({
-        from: "Design by Twist <hi@designbytwist.com>",
-        to: ["speakto@tayte.co"],
+        from: "Design by Twist <hi@updates.designbytwist.com>",
+        to: ["hi@designbytwist.com"],
         subject: `New Project Inquiry - ${name}`,
         html: `
           <h1>New Project Inquiry</h1>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Service:</strong> ${activeService}</p>
-          <p><strong>Budget:</strong> ${activeBudget}</p>
+          <p><strong>Service:</strong> ${activeService || "Not specified"}</p>
+          <p><strong>Budget:</strong> ${activeBudget || "Not specified"}</p>
           <p><strong>Information:</strong></p>
           <p>${information}</p>
         `,
@@ -33,8 +39,6 @@ export default async function handler(
       if (error) {
         return res.status(400).json(error);
       }
-
-      console.log(data);
 
       return res.status(200).json(data);
     } catch (error) {
