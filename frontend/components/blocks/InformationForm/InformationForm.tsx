@@ -108,7 +108,7 @@ const Button = styled.button<{ $canSubmit: boolean }>`
 `;
 
 type Props = {
-  activeService: string | false;
+  activeService: string[];
   activeBudget: string | false;
   submitForm: boolean;
   setAllowExit: (allowExit: boolean) => void;

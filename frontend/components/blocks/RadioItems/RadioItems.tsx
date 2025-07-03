@@ -39,16 +39,66 @@ type ItemsType = {
   value: string;
 };
 
-type Props = {
+// Multi-select props
+type MultiSelectProps = {
   title: string;
   items: ItemsType[];
-  activeItem: false | string;
-  setActiveItem: React.Dispatch<React.SetStateAction<false | string>>;
-  allowMultiSelect?: boolean;
+  activeItem: string[];
+  setActiveItem: React.Dispatch<React.SetStateAction<string[]>>;
+  allowMultiSelect: true;
 };
+
+// Single-select props
+type SingleSelectProps = {
+  title: string;
+  items: ItemsType[];
+  activeItem: string | false;
+  setActiveItem: React.Dispatch<React.SetStateAction<string | false>>;
+  allowMultiSelect?: false;
+};
+
+type Props = MultiSelectProps | SingleSelectProps;
 
 const RadioItems = (props: Props) => {
   const { title, items, activeItem, allowMultiSelect, setActiveItem } = props;
+
+  const isItemActive = (itemValue: string): boolean => {
+    if (Array.isArray(activeItem)) {
+      return activeItem.includes(itemValue);
+    }
+    return activeItem === itemValue;
+  };
+
+  const handleItemClick = (itemValue: string) => {
+    if (allowMultiSelect) {
+      const currentItems = activeItem as string[];
+      if (currentItems.includes(itemValue)) {
+        // Remove item if already selected
+        (setActiveItem as React.Dispatch<React.SetStateAction<string[]>>)(
+          currentItems.filter((item) => item !== itemValue)
+        );
+      } else {
+        // Add item if not selected
+        (setActiveItem as React.Dispatch<React.SetStateAction<string[]>>)([
+          ...currentItems,
+          itemValue,
+        ]);
+      }
+    } else {
+      const currentItem = activeItem as string | false;
+      if (currentItem === itemValue) {
+        // Deselect if already selected
+        (setActiveItem as React.Dispatch<React.SetStateAction<string | false>>)(
+          false
+        );
+      } else {
+        // Select the item
+        (setActiveItem as React.Dispatch<React.SetStateAction<string | false>>)(
+          itemValue
+        );
+      }
+    }
+  };
 
   return (
     <RadioItemsWrapper>
@@ -57,15 +107,9 @@ const RadioItems = (props: Props) => {
         {items.map((item, i) => (
           <Button
             key={`${item.value}-${i}`}
-            onClick={() => {
-              if (allowMultiSelect) {
-                setActiveItem(item.value);
-              } else {
-                setActiveItem(item.value);
-              }
-            }}
+            onClick={() => handleItemClick(item.value)}
           >
-            <PrimaryButtonLayout isActive={activeItem === item.value}>
+            <PrimaryButtonLayout isActive={isItemActive(item.value)}>
               {item.label}
             </PrimaryButtonLayout>
           </Button>

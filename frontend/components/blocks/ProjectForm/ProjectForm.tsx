@@ -45,7 +45,7 @@ type Props = {
 const ProjectForm = (props: Props) => {
   const { submitForm, handleExit, setAllowExit, setSuccess } = props;
 
-  const [activeService, setActiveService] = useState<false | string>(false);
+  const [activeService, setActiveService] = useState<string[]>([]);
   const [activeBudget, setActiveBudget] = useState<false | string>(false);
 
   const serviceItems = [

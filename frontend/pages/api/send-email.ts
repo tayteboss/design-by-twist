@@ -20,20 +20,22 @@ export default async function handler(
       return res.status(400).json({ error: "Missing required fields" });
     }
 
+    const html = `
+      <h1>New Project Inquiry</h1>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Service:</strong> ${activeService.join(", ") || "Not specified"}</p>
+      <p><strong>Budget:</strong> ${activeBudget || "Not specified"}</p>
+      <p><strong>Information:</strong></p>
+      <p>${information}</p>
+    `;
+
     try {
       const { data, error } = await resend.emails.send({
         from: "Design by Twist <hi@updates.designbytwist.com>",
         to: ["hi@designbytwist.com"],
         subject: `New Project Inquiry - ${name}`,
-        html: `
-          <h1>New Project Inquiry</h1>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Service:</strong> ${activeService || "Not specified"}</p>
-          <p><strong>Budget:</strong> ${activeBudget || "Not specified"}</p>
-          <p><strong>Information:</strong></p>
-          <p>${information}</p>
-        `,
+        html,
       });
 
       if (error) {
