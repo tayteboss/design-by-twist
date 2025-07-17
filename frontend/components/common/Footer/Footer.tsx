@@ -53,6 +53,11 @@ const FooterBottom = styled(motion.div)`
   position: sticky;
   bottom: 0px;
   pointer-events: none;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   svg {
     width: 100%;
@@ -62,6 +67,9 @@ const FooterBottom = styled(motion.div)`
 
 const FooterBottomInner = styled(motion.div)`
   position: relative;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
 `;
 
 type Props = {

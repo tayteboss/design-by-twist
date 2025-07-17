@@ -19,6 +19,11 @@ const RelatedCardWrapper = styled(motion.div)<{
   filter: ${(props) =>
     props.$anyHovered && !props.$isHovered ? "blur(15px)" : "none"};
   position: relative;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   transition: filter var(--transition-speed-default) var(--transition-ease);
 

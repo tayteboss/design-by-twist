@@ -50,6 +50,11 @@ const Main = styled(motion.div)`
   backdrop-filter: blur(20px);
   border-radius: 100px;
   padding: ${pxToRem(16)};
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 
@@ -96,7 +101,6 @@ const CloudInner = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  transform: translateX(-50%) translateY(-50%);
   width: 100%;
   height: 100%;
   background: var(--colour-foreground);
@@ -106,9 +110,13 @@ const CloudInner = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-100%, -100%);
+  transform: translate(-100%, -100%) translateZ(0);
+  -webkit-transform: translate(-100%, -100%) translateZ(0);
   width: 100%;
   height: 100%;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 `;
@@ -124,6 +132,11 @@ const Back = styled(motion.button)`
   border-radius: 100px;
   font-size: 20px;
   line-height: 1;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 

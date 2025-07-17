@@ -490,6 +490,7 @@ const FeaturedProjects = (props: Props) => {
                             }
                             noAnimation
                             alt={project?.title || "Featured project thumbnail"}
+                            sizes="(max-width: 1024px) 90vw, 50vw"
                           />
                         )
                       ) : (

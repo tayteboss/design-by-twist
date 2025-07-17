@@ -28,6 +28,11 @@ const Inner = styled(motion.div)`
   inset: 0;
   height: 100%;
   width: 100%;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 `;
 
 const wrapperVariants = {
