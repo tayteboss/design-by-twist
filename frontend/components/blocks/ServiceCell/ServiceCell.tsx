@@ -286,7 +286,10 @@ const ServiceCell = (props: Props) => {
                       <EmblaSlide className="embla__slide" key={i}>
                         <ImageRatio variants={imageVariants}>
                           <ImageInner>
-                            <MediaStack data={image?.media} sizes={"20vw"} />
+                            <MediaStack
+                              data={image?.media}
+                              sizes="(max-width: 1024px) 80vw, 20vw"
+                            />
                           </ImageInner>
                         </ImageRatio>
                         {image?.caption && (

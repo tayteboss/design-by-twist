@@ -20,6 +20,11 @@ const Inner = styled(motion.div)`
   justify-content: center;
   align-items: center;
   padding: ${pxToRem(80)} 0;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 `;
 
 const Title = styled.div`

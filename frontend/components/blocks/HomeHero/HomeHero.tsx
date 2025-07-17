@@ -48,7 +48,13 @@ const LogoWrapper = styled.span`
   }
 `;
 
-const ContentWrapper = styled(motion.div)``;
+const ContentWrapper = styled(motion.div)`
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+`;
 
 const ContentInner = styled(motion.span)`
   display: flex;
@@ -79,6 +85,11 @@ const MediaWrapper = styled(motion.div)`
   top: 100%;
   left: 0;
   width: 100%;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     position: relative;
