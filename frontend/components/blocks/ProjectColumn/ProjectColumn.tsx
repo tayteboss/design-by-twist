@@ -11,7 +11,7 @@ const ProjectColumnWrapper = styled.div`
   height: 100%;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    grid-column: 1 / -1;
+    grid-column: span 3;
     gap: ${pxToRem(12)};
   }
 `;

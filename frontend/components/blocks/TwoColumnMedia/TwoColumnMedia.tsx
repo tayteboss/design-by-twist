@@ -10,6 +10,7 @@ const TwoColumnMediaWrapper = styled.section<{ $useSmallMb: boolean }>`
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     margin-bottom: ${(props) => (props.$useSmallMb ? "12px" : "32px")};
+    margin-bottom: ${pxToRem(12)};
   }
 
   .layout-grid {
