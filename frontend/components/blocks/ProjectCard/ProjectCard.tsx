@@ -60,6 +60,11 @@ const ImageWrapper = styled.div<{ $isPortrait: boolean }>`
 `;
 
 const ContentWrapper = styled.div`
+  strong {
+    font-family: var(--font-acid-grotesk-book);
+    font-weight: 400;
+  }
+
   * {
     font-size: ${pxToRem(20)};
     line-height: ${pxToRem(24)};

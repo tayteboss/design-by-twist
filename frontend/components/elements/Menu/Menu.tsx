@@ -675,46 +675,43 @@ const Menu = (props: Props) => {
                     }}
                     ref={outsideClickRef}
                   >
-                    {filteredProjects.map((item, i) => (
-                      <ProjectItemLink
-                        variants={projectChildVariants}
-                        key={`project-${item?.slug?.current || i}`}
-                        onClick={() => setIsHoveringProjectItems(false)}
-                        onMouseOver={() =>
-                          setActiveProjectItem(item.slug.current)
-                        }
-                      >
-                        {item.comingSoon ? (
-                          <Link href={`/work/${item.slug.current}`}>
-                            {item.title}
-                          </Link>
-                        ) : (
-                          <Link href={`/work/${item.slug.current}`}>
-                            {item.title}
-                          </Link>
-                        )}
-                        {/* Thumbnail Presence */}
-                        <AnimatePresence mode="wait">
-                          {activeProjectItem === item.slug.current && (
-                            <ProjectThumbnailWrapper
-                              variants={projectThumbnailVariants}
-                              initial="hidden"
-                              animate="visible"
-                              exit="hidden"
-                              key={`thumbnail-${item.slug.current}`}
-                            >
-                              <ProjectThumbnailInner>
-                                <MediaStack
-                                  data={item.mobileMenuThumbnail}
-                                  sizes="12vw"
-                                  noAnimation={true}
-                                />
-                              </ProjectThumbnailInner>
-                            </ProjectThumbnailWrapper>
-                          )}
-                        </AnimatePresence>
-                      </ProjectItemLink>
-                    ))}
+                    {filteredProjects.map(
+                      (item, i) =>
+                        !item.comingSoon && (
+                          <ProjectItemLink
+                            variants={projectChildVariants}
+                            key={`project-${item?.slug?.current || i}`}
+                            onClick={() => setIsHoveringProjectItems(false)}
+                            onMouseOver={() =>
+                              setActiveProjectItem(item.slug.current)
+                            }
+                          >
+                            <Link href={`/work/${item.slug.current}`}>
+                              {item.title}
+                            </Link>
+                            {/* Thumbnail Presence */}
+                            <AnimatePresence mode="wait">
+                              {activeProjectItem === item.slug.current && (
+                                <ProjectThumbnailWrapper
+                                  variants={projectThumbnailVariants}
+                                  initial="hidden"
+                                  animate="visible"
+                                  exit="hidden"
+                                  key={`thumbnail-${item.slug.current}`}
+                                >
+                                  <ProjectThumbnailInner>
+                                    <MediaStack
+                                      data={item.mobileMenuThumbnail}
+                                      sizes="12vw"
+                                      noAnimation={true}
+                                    />
+                                  </ProjectThumbnailInner>
+                                </ProjectThumbnailWrapper>
+                              )}
+                            </AnimatePresence>
+                          </ProjectItemLink>
+                        )
+                    )}
                     {/* Consider removing BlankProjectItem if onMouseLeave on ProjectList works */}
                     <BlankProjectItem
                       onClick={() => setIsHoveringProjectItems(false)}
