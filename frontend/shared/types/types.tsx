@@ -97,6 +97,14 @@ export type ProjectType = {
   informationTitle: string;
   informationDescription: any[];
   pageBuilder: any;
+  quote: {
+    quote: string;
+    author: string;
+    role: string;
+    textColour: {
+      hex: string;
+    };
+  };
   relatedProjects: ProjectType[];
 };
 

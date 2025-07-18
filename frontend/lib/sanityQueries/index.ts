@@ -212,6 +212,14 @@ export const projectFields = `
 					}
 			}
 	},
+	quote {
+		quote,
+		author,
+		role,
+		textColour {
+			hex
+		},
+	},
 	relatedProjects[]-> {
 		title,
 		slug,

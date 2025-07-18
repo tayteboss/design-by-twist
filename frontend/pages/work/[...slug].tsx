@@ -11,6 +11,7 @@ import PageBuilder from "../../components/common/PageBuilder";
 import ProjectInformation from "../../components/blocks/ProjectInformation";
 import BackToTop from "../../components/elements/BackToTop";
 import RelatedProjects from "../../components/blocks/RelatedProjects";
+import Quote from "../../components/blocks/Quote";
 
 type Props = {
   data: ProjectType;
@@ -56,6 +57,7 @@ const Page = (props: Props) => {
         description={data?.informationDescription}
       />
       <PageBuilder data={data?.pageBuilder} cursorRefresh={cursorRefresh} />
+      {data?.quote && <Quote data={data.quote} />}
       {data?.relatedProjects && <RelatedProjects data={data.relatedProjects} />}
       <BackToTop />
     </PageWrapper>

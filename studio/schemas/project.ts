@@ -278,6 +278,33 @@ export default {
       ],
     },
     {
+      title: 'Quote',
+      name: 'quote',
+      type: 'object',
+      fields: [
+        {
+          title: 'Quote',
+          name: 'quote',
+          type: 'text',
+        },
+        {
+          title: 'Author',
+          name: 'author',
+          type: 'string',
+        },
+        {
+          title: 'Role',
+          name: 'role',
+          type: 'string',
+        },
+        {
+          title: 'Text Colour',
+          name: 'textColour',
+          type: 'color',
+        },
+      ],
+    },
+    {
       title: 'Related Projects',
       name: 'relatedProjects',
       type: 'array',
