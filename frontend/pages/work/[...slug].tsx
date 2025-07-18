@@ -57,7 +57,7 @@ const Page = (props: Props) => {
         description={data?.informationDescription}
       />
       <PageBuilder data={data?.pageBuilder} cursorRefresh={cursorRefresh} />
-      {data?.quote && <Quote data={data.quote} />}
+      {data?.quote?.quote && <Quote data={data.quote} />}
       {data?.relatedProjects && <RelatedProjects data={data.relatedProjects} />}
       <BackToTop />
     </PageWrapper>
