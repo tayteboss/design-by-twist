@@ -9,9 +9,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 const RelatedProjectsWrapper = styled.section`
+  padding-top: ${pxToRem(180)};
   margin-bottom: ${pxToRem(225)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    padding-top: ${pxToRem(80)};
     margin-bottom: ${pxToRem(120)};
   }
 

@@ -41,7 +41,7 @@ const FullMediaSection = (props: Props) => {
   };
 
   return (
-    <FullMediaSectionWrapper $useSmallMb={useSmallMb}>
+    <FullMediaSectionWrapper $useSmallMb={useSmallMb} className="pb-section">
       {!isFullBleed && (
         <LayoutWrapper>
           <MediaWrapper>{media && <MediaStack data={media} />}</MediaWrapper>

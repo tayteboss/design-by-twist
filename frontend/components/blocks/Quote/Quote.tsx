@@ -4,11 +4,10 @@ import LayoutWrapper from "../../layout/LayoutWrapper";
 import pxToRem from "../../../utils/pxToRem";
 
 const QuoteWrapper = styled.div`
-  margin-bottom: ${pxToRem(180)};
+  padding-top: ${pxToRem(120)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     padding-top: ${pxToRem(40)};
-    margin-bottom: ${pxToRem(80)};
   }
 `;
 

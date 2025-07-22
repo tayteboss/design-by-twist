@@ -7,7 +7,11 @@ type Props = {
   cursorRefresh: () => void;
 };
 
-const PageBuilderWrapper = styled.div``;
+const PageBuilderWrapper = styled.div`
+  .pb-section:last-child {
+    margin-bottom: 0;
+  }
+`;
 
 const PageBuilder = (props: Props) => {
   const { data, cursorRefresh } = props;

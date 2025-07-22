@@ -54,7 +54,7 @@ const TwoColumnMedia = (props: Props) => {
   }
 
   return (
-    <TwoColumnMediaWrapper $useSmallMb={useSmallMb}>
+    <TwoColumnMediaWrapper $useSmallMb={useSmallMb} className="pb-section">
       <LayoutWrapper>
         <LayoutGrid>
           {hasLeftColumn && <ProjectColumn data={leftColumn} />}
