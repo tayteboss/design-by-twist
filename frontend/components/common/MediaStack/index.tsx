@@ -3,6 +3,7 @@ import { useInView } from "react-intersection-observer";
 import ImageComponent from "./ImageComponent";
 import VideoComponent from "./VideoComponent";
 import { MediaType } from "../../../shared/types/types";
+import useViewportWidth from "../../../hooks/useViewportWidth";
 
 const MediaStackWrapper = styled.div``;
 
@@ -30,6 +31,8 @@ const MediaStack = (props: Props) => {
   } = props ?? {};
 
   const useVideo = data?.media?.mediaType === "video";
+  const viewport = useViewportWidth();
+  const isMobile = viewport === "mobile";
 
   const { ref, inView } = useInView({
     triggerOnce: true,
@@ -48,6 +51,7 @@ const MediaStack = (props: Props) => {
           lazyLoad={lazyLoad}
           showAudioControls={data?.media?.showAudioControls}
           cursorRefresh={cursorRefresh}
+          isMobile={isMobile}
         />
       )}
       {!useVideo && (
@@ -59,6 +63,7 @@ const MediaStack = (props: Props) => {
           sizes={sizes}
           alt={alt}
           lazyLoad={lazyLoad}
+          isMobile={isMobile}
         />
       )}
     </MediaStackWrapper>

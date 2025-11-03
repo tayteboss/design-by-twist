@@ -79,28 +79,6 @@ const IconWrapper = styled.div`
   }
 `;
 
-const wrapperVariants = {
-  hidden: {
-    opacity: 1,
-    filter: "blur(10px)",
-    scale: 1.05,
-    transition: {
-      duration: 2,
-      ease: "easeInOut",
-    },
-  },
-  visible: {
-    opacity: 0,
-    filter: "blur(0px)",
-    scale: 1,
-    transition: {
-      duration: 2,
-      ease: "easeInOut",
-      delay: 0.2,
-    },
-  },
-};
-
 type Props = {
   data: MediaType;
   inView: boolean;
@@ -109,6 +87,7 @@ type Props = {
   lazyLoad?: boolean;
   showAudioControls?: boolean;
   cursorRefresh?: () => void;
+  isMobile?: boolean;
 };
 
 const VideoComponent = (props: Props) => {
@@ -120,12 +99,35 @@ const VideoComponent = (props: Props) => {
     lazyLoad,
     showAudioControls,
     cursorRefresh,
+    isMobile,
   } = props;
 
   const [isMuted, setIsMuted] = useState(true);
 
   const playbackId = data?.media?.video?.asset?.playbackId;
   const posterUrl = `https://image.mux.com/${data?.media?.video?.asset?.playbackId}/thumbnail.png?width=214&height=121&time=1`;
+
+  const wrapperVariants = {
+    hidden: {
+      opacity: 1,
+      filter: isMobile ? "blur(0px)" : "blur(10px)",
+      scale: 1.05,
+      transition: {
+        duration: 2,
+        ease: "easeInOut",
+      },
+    },
+    visible: {
+      opacity: 0,
+      filter: "blur(0px)",
+      scale: 1,
+      transition: {
+        duration: 2,
+        ease: "easeInOut",
+        delay: 0.2,
+      },
+    },
+  };
 
   return (
     <VideoComponentWrapper

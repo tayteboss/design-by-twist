@@ -180,6 +180,10 @@ export const GlobalStyles = createGlobalStyle`
 			opacity: 1;
 			filter: blur(0px);
 		}
+
+		@media ${theme.mediaBreakpoints.tabletPortrait} {
+			filter: blur(0px);
+		}
 	}
 
 	.view-element-bottom-top

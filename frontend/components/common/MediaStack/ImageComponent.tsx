@@ -57,27 +57,6 @@ const wrapperVariants = {
   },
 };
 
-const defaultVariants = {
-  hidden: {
-    opacity: 0,
-    filter: "blur(2px)",
-    scale: 1.05,
-    transition: {
-      duration: 0.75,
-      ease: "easeInOut",
-    },
-  },
-  visible: {
-    opacity: 1,
-    filter: "blur(0px)",
-    scale: 1,
-    transition: {
-      duration: 0.75,
-      ease: "easeInOut",
-    },
-  },
-};
-
 type Props = {
   data: MediaType;
   isPriority: boolean;
@@ -86,13 +65,44 @@ type Props = {
   sizes: undefined | string;
   alt?: string;
   lazyLoad?: boolean;
+  isMobile?: boolean;
 };
 
 const ImageComponent = (props: Props) => {
-  const { data, isPriority, inView, noAnimation, sizes, alt, lazyLoad } = props;
+  const {
+    data,
+    isPriority,
+    inView,
+    noAnimation,
+    sizes,
+    alt,
+    lazyLoad,
+    isMobile,
+  } = props;
 
   const imageUrl = data?.media?.image?.asset?.url;
   const blurDataURL = data?.media?.image?.asset?.metadata?.lqip;
+
+  const defaultVariants = {
+    hidden: {
+      opacity: 0,
+      filter: isMobile ? "blur(0px)" : "blur(2px)",
+      scale: 1.05,
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+      },
+    },
+    visible: {
+      opacity: 1,
+      filter: "blur(0px)",
+      scale: 1,
+      transition: {
+        duration: 0.75,
+        ease: "easeInOut",
+      },
+    },
+  };
 
   return (
     <ImageComponentWrapper className="media-wrapper">
