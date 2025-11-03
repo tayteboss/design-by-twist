@@ -44,12 +44,12 @@ const FullMediaSection = (props: Props) => {
     <FullMediaSectionWrapper $useSmallMb={useSmallMb} className="pb-section">
       {!isFullBleed && (
         <LayoutWrapper>
-          <MediaWrapper>{media && <MediaStack data={media} />}</MediaWrapper>
+          <MediaWrapper>{media && <MediaStack data={media} lazyLoad={true} />}</MediaWrapper>
         </LayoutWrapper>
       )}
       {isFullBleed && (
         <MediaWrapper $isFullBleed={true}>
-          {media && <MediaStack data={media} cursorRefresh={cursorRefresh} />}
+          {media && <MediaStack data={media} cursorRefresh={cursorRefresh} lazyLoad={true} />}
         </MediaWrapper>
       )}
     </FullMediaSectionWrapper>

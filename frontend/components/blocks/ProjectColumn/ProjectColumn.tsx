@@ -57,7 +57,7 @@ const ProjectColumn = (props: Props) => {
               $isFullHeight={item?.useFullHeight}
               key={`project-col-${i}`}
             >
-              <MediaStack data={media} />
+              <MediaStack data={media} lazyLoad={true} />
             </MediaWrapper>
           );
         })}
