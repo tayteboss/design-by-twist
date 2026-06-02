@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import { ProjectType, SiteSettingsType } from "../../shared/types/types";
 import CookieConsent from "react-cookie-consent";
+import { COOKIE_CONSENT_ACCEPTED_EVENT } from "../../lib/analytics";
 
 const siteSettings: SiteSettingsType = require("../../json/siteSettings.json");
 const projects: ProjectType[] = require("../../json/projectData.json");
@@ -36,6 +37,9 @@ const Layout = (props: Props) => {
           location="bottom"
           buttonText="Accept"
           cookieName="dbt-cookie-consent"
+          onAccept={() => {
+            window.dispatchEvent(new Event(COOKIE_CONSENT_ACCEPTED_EVENT));
+          }}
           style={{
             background: "rgba(0, 0, 0, 0.7)",
             backdropFilter: "blur(10px)",

@@ -230,6 +230,36 @@ export default {
         },
       ],
     },
+    {
+      title: 'Credits',
+      name: 'credits',
+      type: 'array',
+      of: [
+        {
+          title: 'Block',
+          type: 'block',
+          styles: [{title: 'Normal', value: 'normal'}],
+
+          lists: [],
+          marks: {
+            decorators: [{title: 'Underline', value: 'underline'}],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+    },
 
     {
       title: 'Page Builder',

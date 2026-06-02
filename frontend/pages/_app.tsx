@@ -11,6 +11,7 @@ import use1vh from "../hooks/use1vh";
 import { TransitionsType } from "../shared/types/types";
 import useHeaderHeight from "../hooks/useHeaderHeight";
 import Cursor from "../components/elements/Cursor";
+import Analytics from "../components/common/Analytics";
 
 const pageTransitionVariants: TransitionsType = {
   hidden: { opacity: 0, transition: { duration: 0.3 } },
@@ -70,6 +71,7 @@ const App = (props: Props) => {
 
   return (
     <>
+      <Analytics />
       <GlobalStyles />
       <ThemeProvider theme={theme}>
         <Layout cursorRefresh={() => setAppCursorRefresh(appCursorRefresh + 1)}>

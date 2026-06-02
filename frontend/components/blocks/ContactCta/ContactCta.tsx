@@ -48,10 +48,9 @@ const Title = styled.h3`
 `;
 
 const ButtonWrapper = styled.div`
-  display: none;
-
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    display: block;
+  .primary-button-layout {
+    border-color: var(--colour-foreground);
+    color: var(--colour-foreground);
   }
 `;
 
@@ -117,11 +116,7 @@ const ContactCta = (props: Props) => {
   }, [distanceToTop, router.asPath]);
 
   return (
-    <ContactCtaWrapper
-      className="cursor-floating-button"
-      data-cursor-title="Let's work"
-      ref={ref}
-    >
+    <ContactCtaWrapper ref={ref}>
       <LayoutWrapper>
         <Inner
           style={{ opacity }}
@@ -133,7 +128,7 @@ const ContactCta = (props: Props) => {
             <AnimateTextLayout>{title || ""}</AnimateTextLayout>
           </Title>
           <ButtonWrapper>
-            <PrimaryButtonLayout useLightTheme={true}>
+            <PrimaryButtonLayout useLightTheme={false}>
               {buttonTitle || ""}
             </PrimaryButtonLayout>
           </ButtonWrapper>

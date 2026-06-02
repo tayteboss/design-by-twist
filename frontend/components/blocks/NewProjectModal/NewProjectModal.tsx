@@ -38,8 +38,8 @@ const SuccessBox = styled(motion.div)`
   padding: ${pxToRem(24)};
   background: var(--colour-white);
   border-radius: 5px;
-  max-width: ${pxToRem(480)};
-  min-width: ${pxToRem(480)};
+  max-width: ${pxToRem(750)};
+  min-width: ${pxToRem(750)};
   width: 50%;
   z-index: 1001;
 `;

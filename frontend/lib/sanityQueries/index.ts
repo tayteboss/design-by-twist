@@ -164,6 +164,7 @@ export const projectFields = `
 	featuredColour,
 	informationTitle,
 	informationDescription,
+	credits,
 	pageBuilder[] {
 			component,
 			fullMedia {

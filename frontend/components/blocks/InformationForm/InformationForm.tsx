@@ -1,47 +1,23 @@
 import styled from "styled-components";
 import pxToRem from "../../../utils/pxToRem";
-import { Formik, Field, Form } from "formik";
+import { Field, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
 import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 
 const InformationFormWrapper = styled.div`
-  form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: ${pxToRem(12)};
-
-    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      gap: ${pxToRem(8)};
-    }
-  }
+  width: 100%;
 
   .field {
-    font-size: ${pxToRem(30)};
-    line-height: 1.2;
-    font-family: var(--font-holise-extra-light);
-    font-weight: 200;
-    padding: ${pxToRem(12)} ${pxToRem(20)};
-    background: var(--colour-white);
-    border: 1px solid var(--colour-black);
-    border-radius: 30px;
+		font-size: ${pxToRem(15)} !important;
+    line-height: 1 !important;
+    padding: 12.5px 30px !important;
+    font-family: var(--font-acid-grotesk-book) !important;
 
-    @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-      font-size: ${pxToRem(22)};
-    }
-
-    &__half {
-      width: calc(50% - 6px);
-    }
-
-    &__full {
-      width: 100%;
-      margin-bottom: ${pxToRem(40)};
-    }
-
-    &::placeholder {
-      opacity: 0.25;
-    }
-  }
+		&::placeholder {
+			color: rgba(0, 0, 0, 0.5);
+			opacity: 1 !important;
+		}
+	}
 `;
 
 const Title = styled.h4`
@@ -108,42 +84,34 @@ const Button = styled.button<{ $canSubmit: boolean }>`
 `;
 
 type Props = {
-  activeService: string[];
-  activeBudget: string | false;
   submitForm: boolean;
   setAllowExit: (allowExit: boolean) => void;
   handleExit: () => void;
-  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const validate = (value: string) => {
+  let error;
+  if (!value) {
+    error = "Required";
+  }
+  return error;
 };
 
 const InformationForm = (props: Props) => {
-  const {
-    activeService,
-    activeBudget,
-    submitForm,
-    handleExit,
-    setAllowExit,
-    setSuccess,
-  } = props;
+  const { submitForm, handleExit, setAllowExit } = props;
 
-  const [canSubmit, setCanSubmit] = useState(false);
-
-  const validate = (value: string) => {
-    let error;
-    if (!value) {
-      error = "Required";
-    }
-    return error;
-  };
-
-  const handleValidation = (values: {
+  const { values } = useFormikContext<{
     name: string;
     email: string;
     information: string;
-  }) => {
+  }>();
+
+  const [canSubmit, setCanSubmit] = useState(false);
+
+  useEffect(() => {
     const isValid = values.name && values.email && values.information;
     setCanSubmit(!!isValid);
-  };
+  }, [values]);
 
   useEffect(() => {
     if (canSubmit) {
@@ -151,7 +119,7 @@ const InformationForm = (props: Props) => {
     } else {
       setAllowExit(true);
     }
-  }, [canSubmit]);
+  }, [canSubmit, setAllowExit]);
 
   useEffect(() => {
     if (submitForm) {
@@ -161,89 +129,35 @@ const InformationForm = (props: Props) => {
 
   return (
     <InformationFormWrapper>
-      <Title>Your Information</Title>
-      <Formik
-        initialValues={{
-          name: "",
-          email: "",
-          information: "",
-        }}
-        validate={handleValidation}
-        onSubmit={async (values) => {
-          const allValues = {
-            ...values,
-            activeService,
-            activeBudget,
-          };
-
-          try {
-            const response = await fetch("/api/send-email", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(allValues),
-            });
-
-            if (response.ok) {
-              setSuccess(true);
-            } else {
-              alert("Failed to send email. Try again later.");
-            }
-          } catch (error) {
-            console.error("Error submitting form:", error);
-            alert("An error occurred while submitting the form.");
-          }
-        }}
-      >
-        <Form>
-          <Field
-            id="name"
-            name="name"
-            placeholder="Your name"
-            required
-            className="field field__half"
-            validate={validate}
-          />
-          <Field
-            id="email"
-            name="email"
-            placeholder="Your email"
-            type="email"
-            required
-            className="field field__half"
-            validate={validate}
-          />
-          <Field
-            id="information"
-            name="information"
-            as="textarea"
-            rows={4}
-            required
-            className="field field__full"
-            placeholder="Tell us about your project"
-            validate={validate}
-          />
-          <ButtonWrapper>
-            <CloseButton
-              onClick={() => {
-                setAllowExit(true);
-                handleExit();
-              }}
-            >
-              <PrimaryButtonLayout>Close</PrimaryButtonLayout>
-            </CloseButton>
-            <Button
-              id="submitButton"
-              type="submit"
-              disabled={!canSubmit}
-              $canSubmit={canSubmit}
-            >
-              Submit
-            </Button>
-          </ButtonWrapper>
-        </Form>
-      </Formik>
+      <Title>About your project</Title>
+      <Field
+        id="information"
+        name="information"
+        as="textarea"
+        rows={4}
+        required
+        className="field field__full"
+        placeholder="Tell us about your project"
+        validate={validate}
+      />
+      <ButtonWrapper>
+        <CloseButton
+          onClick={() => {
+            setAllowExit(true);
+            handleExit();
+          }}
+        >
+          <PrimaryButtonLayout>Close</PrimaryButtonLayout>
+        </CloseButton>
+        <Button
+          id="submitButton"
+          type="submit"
+          disabled={!canSubmit}
+          $canSubmit={canSubmit}
+        >
+          Submit
+        </Button>
+      </ButtonWrapper>
     </InformationFormWrapper>
   );
 };

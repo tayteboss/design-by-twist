@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { PortableText } from "@portabletext/react";
 import { useClickOutside } from "../../../hooks/useClickOutside";
+import LayoutGrid from "../../layout/LayoutGrid";
 
 const ProjectInformationWrapper = styled.section`
   padding: ${pxToRem(40)} 0 ${pxToRem(110)};
@@ -15,15 +16,18 @@ const Inner = styled.div`
   flex-direction: column;
   align-items: flex-start;
   position: relative;
+
+  .layout-grid {
+    row-gap: ${pxToRem(24)};
+  }
 `;
 
 const Title = styled.h1`
-  font-size: ${pxToRem(60)};
-  line-height: ${pxToRem(65)};
+  font-size: ${pxToRem(120)};
+  line-height: ${pxToRem(125)};
   font-family: var(--font-holise-extra-light);
   font-weight: 200;
-  max-width: ${pxToRem(520)};
-  margin-bottom: ${pxToRem(16)};
+  margin-bottom: ${pxToRem(80)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     font-size: ${pxToRem(50)};
@@ -31,51 +35,10 @@ const Title = styled.h1`
   }
 `;
 
-const Trigger = styled.button`
-  font-size: ${pxToRem(25)};
-  line-height: ${pxToRem(30)};
-  font-family: var(--font-acid-grotesk-book);
-
-  transition: all var(--transition-speed-default) var(--transition-ease);
-
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+const DescriptionWrapper = styled.div`
+  * {
     font-size: ${pxToRem(20)};
     line-height: ${pxToRem(25)};
-  }
-
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-
-const DescriptionWrapper = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(20px);
-  border-radius: 26px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: ${pxToRem(12)} ${pxToRem(16)};
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 0;
-  z-index: 2;
-`;
-
-const DescriptionOuter = styled(motion.div)`
-  max-width: ${pxToRem(640)};
-
-  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
-    width: 100%;
-  }
-`;
-
-const Description = styled(motion.div)`
-  padding: ${pxToRem(40)} 0 ${pxToRem(24)};
-
-  * {
-    font-size: ${pxToRem(21)};
-    line-height: ${pxToRem(27)};
     font-family: var(--font-acid-grotesk-book);
 
     @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
@@ -83,74 +46,47 @@ const Description = styled(motion.div)`
       line-height: ${pxToRem(25)};
     }
   }
+
+  a {
+    transition: all var(--transition-speed-default) var(--transition-ease);
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 `;
 
-const wrapperVariants = {
-  hidden: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-      when: "afterChildren",
-    },
-  },
-  visible: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-      when: "beforeChildren",
-    },
-  },
-};
+const DescriptionOuter = styled.div`
+  grid-column: 5 / 12;
 
-const outerVariants = {
-  hidden: {
-    height: 0,
-    width: "87px",
-    transition: {
-      duration: 0.4,
-      ease: "easeInOut",
-      when: "afterChildren",
-    },
-  },
-  visible: {
-    height: "auto",
-    width: "100%",
-    transition: {
-      duration: 0.4,
-      ease: "easeInOut",
-      when: "beforeChildren",
-    },
-  },
-};
+  
+  @media ${(props) => props.theme.mediaBreakpoints.tabletLandscape} {
+    grid-column: 1 / -1;
+    order: 1;
+  }
+`;
 
-const childVariants = {
-  hidden: {
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
-  visible: {
-    opacity: 1,
-    transition: {
-      duration: 0.3,
-      ease: "easeInOut",
-    },
-  },
-};
+const Description = styled.div``;
+
+const CreditsOuter = styled.div`
+  grid-column: 1 / 5;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletLandscape} {
+    grid-column: 1 / -1;
+    order: 2;
+  }
+`;
+
+const Credits = styled.div``;
 
 type Props = {
   title?: string;
   description?: any[];
+  credits?: any[];
 };
 
 const ProjectInformation = (props: Props) => {
-  const { title, description } = props;
+  const { title, description, credits } = props;
 
   const [isActive, setIsActive] = useState(false);
 
@@ -164,37 +100,26 @@ const ProjectInformation = (props: Props) => {
       <LayoutWrapper>
         <Inner>
           <Title>{title || ""}</Title>
-          <DescriptionWrapper
-            variants={wrapperVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            ref={ref}
-          >
-            <Trigger onClick={() => setIsActive(!isActive)}>
-              {isActive ? "↑ close" : "↓ info"}
-            </Trigger>
-            <AnimatePresence>
-              {isActive && (
-                <>
-                  {description && (
-                    <DescriptionOuter
-                      variants={outerVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="hidden"
-                      className="content"
-                    >
-                      <Description variants={childVariants}>
-                        <PortableText value={description} />
-                      </Description>
-                    </DescriptionOuter>
-                  )}
-                </>
-              )}
-            </AnimatePresence>
+          <DescriptionWrapper ref={ref}>
+            <LayoutGrid>
+            {credits && (
+              <CreditsOuter className="content">
+                <Credits>
+                  <PortableText value={credits} />
+                </Credits>
+              </CreditsOuter>
+            )}
+            {description && (
+              <DescriptionOuter className="content">
+                <Description>
+                  <PortableText value={description} />
+                </Description>
+              </DescriptionOuter>
+            )}
+            </LayoutGrid>
           </DescriptionWrapper>
         </Inner>
+   
       </LayoutWrapper>
     </ProjectInformationWrapper>
   );

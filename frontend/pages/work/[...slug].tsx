@@ -55,6 +55,7 @@ const Page = (props: Props) => {
       <ProjectInformation
         title={data?.informationTitle}
         description={data?.informationDescription}
+        credits={data?.credits}
       />
       <PageBuilder data={data?.pageBuilder} cursorRefresh={cursorRefresh} />
       {data?.quote?.quote && <Quote data={data.quote} />}

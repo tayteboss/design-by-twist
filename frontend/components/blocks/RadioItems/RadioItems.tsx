@@ -3,7 +3,7 @@ import PrimaryButtonLayout from "../../layout/PrimaryButtonLayout";
 import pxToRem from "../../../utils/pxToRem";
 
 const RadioItemsWrapper = styled.div`
-  margin-bottom: ${pxToRem(40)};
+  width: 100%;
 
   .primary-button-layout {
     min-width: unset;
@@ -11,9 +11,9 @@ const RadioItemsWrapper = styled.div`
 `;
 
 const Title = styled.h4`
-  margin-bottom: ${pxToRem(16)};
-  font-size: ${pxToRem(25)};
-  line-height: ${pxToRem(35)};
+  margin-bottom: ${pxToRem(12)};
+  font-size: ${pxToRem(18)};
+  line-height: ${pxToRem(25)};
   font-family: var(--font-acid-grotesk-book);
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
@@ -25,14 +25,23 @@ const Title = styled.h4`
 const Items = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${pxToRem(12)};
+  gap: ${pxToRem(10)};
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
     gap: ${pxToRem(8)};
   }
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  .primary-button-layout {
+    font-size: ${pxToRem(15)};
+    line-height: 1;
+    padding: 15px 30px;
+    font-family: var(--font-acid-grotesk-book);
+    color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(0, 0, 0, 1);
+  }
+`;
 
 type ItemsType = {
   label: string;

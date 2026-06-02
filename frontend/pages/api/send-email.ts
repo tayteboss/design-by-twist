@@ -8,7 +8,15 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { name, email, information, activeService, activeBudget } = req.body;
+    const {
+      name,
+      email,
+      information,
+      activeService,
+      activeBudget,
+      activeLaunchStage,
+      activeTimeline,
+    } = req.body;
 
     if (
       !name ||
@@ -26,6 +34,8 @@ export default async function handler(
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Service:</strong> ${activeService.join(", ") || "Not specified"}</p>
       <p><strong>Budget:</strong> ${activeBudget || "Not specified"}</p>
+      <p><strong>Stage:</strong> ${activeLaunchStage || "Not specified"}</p>
+      <p><strong>Timeline:</strong> ${activeTimeline || "Not specified"}</p>
       <p><strong>Information:</strong></p>
       <p>${information}</p>
     `;

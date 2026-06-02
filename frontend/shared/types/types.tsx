@@ -96,6 +96,7 @@ export type ProjectType = {
   useWhiteFeaturedLogo: boolean;
   informationTitle: string;
   informationDescription: any[];
+  credits: any[];
   pageBuilder: any;
   quote: {
     quote: string;
