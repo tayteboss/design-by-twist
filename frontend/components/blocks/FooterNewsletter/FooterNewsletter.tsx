@@ -2,7 +2,7 @@ import styled from "styled-components";
 import FooterTextCell from "../../elements/FooterTextCell";
 
 const FooterNewsletterWrapper = styled.div`
-  grid-column: span 4;
+  grid-column: span 3;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletLandscape} {
     grid-column: span 5;

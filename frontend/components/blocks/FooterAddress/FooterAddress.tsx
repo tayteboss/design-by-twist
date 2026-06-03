@@ -4,7 +4,7 @@ import FooterSocials from "../FooterSocials";
 import pxToRem from "../../../utils/pxToRem";
 
 const FooterAddressWrapper = styled.div`
-  grid-column: span 3;
+  grid-column: -4 / -1;
 
   .footer-socials {
     display: none !important;
