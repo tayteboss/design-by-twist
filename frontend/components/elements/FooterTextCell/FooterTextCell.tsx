@@ -177,7 +177,7 @@ const FooterTextCell = (props: Props) => {
     prependText,
   } = props;
 
-  const isComingSoon = true;
+  const isComingSoon = false;
 
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
