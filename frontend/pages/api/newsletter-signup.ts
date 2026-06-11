@@ -1,10 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 type NewsletterSignupResponse =
   | { success: true }
   | { error: string };
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function splitName(name: string): { firstName: string; lastName?: string } {
+  const trimmed = name.trim();
+  const spaceIndex = trimmed.indexOf(" ");
+
+  if (spaceIndex === -1) {
+    return { firstName: trimmed };
+  }
+
+  const lastName = trimmed.slice(spaceIndex + 1).trim();
+
+  return {
+    firstName: trimmed.slice(0, spaceIndex),
+    ...(lastName && { lastName }),
+  };
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -25,19 +44,32 @@ export default async function handler(
     return res.status(400).json({ error: "Invalid email address" });
   }
 
-  try {
-    // TODO: Send subscriber data to Flodesk
-    // Example:
-    // await fetch("https://api.flodesk.com/v1/subscribers", {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Basic ${Buffer.from(`${process.env.FLODESK_API_KEY}:`).toString("base64")}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ email, first_name: name }),
-    // });
+  if (!process.env.RESEND_API_KEY) {
+    console.error("Missing RESEND_API_KEY");
+    return res
+      .status(500)
+      .json({ error: "Failed to subscribe. Please try again." });
+  }
 
-    console.log("Newsletter signup:", { name, email });
+  const { firstName, lastName } = splitName(String(name));
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const segmentId = process.env.RESEND_SEGMENT_ID;
+
+  try {
+    const { error } = await resend.contacts.create({
+      email: normalizedEmail,
+      firstName,
+      ...(lastName && { lastName }),
+      unsubscribed: false,
+      ...(segmentId && { segments: [{ id: segmentId }] }),
+    });
+
+    if (error) {
+      console.error("Newsletter signup Resend error:", error);
+      return res
+        .status(500)
+        .json({ error: "Failed to subscribe. Please try again." });
+    }
 
     return res.status(200).json({ success: true });
   } catch (error) {

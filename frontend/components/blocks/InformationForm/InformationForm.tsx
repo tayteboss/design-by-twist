@@ -8,23 +8,28 @@ const InformationFormWrapper = styled.div`
   width: 100%;
 
   .field {
-		font-size: ${pxToRem(15)} !important;
-    line-height: 1 !important;
+    font-size: ${pxToRem(15)} !important;
+    line-height: 1.4 !important;
     padding: 12.5px 30px !important;
     font-family: var(--font-acid-grotesk-book) !important;
 
-		&::placeholder {
-			color: rgba(0, 0, 0, 0.5);
-			opacity: 1 !important;
-		}
-	}
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+      opacity: 1 !important;
+    }
+  }
 `;
 
 const Title = styled.h4`
-  margin-bottom: ${pxToRem(16)};
-  font-size: ${pxToRem(25)};
-  line-height: ${pxToRem(35)};
+  margin-bottom: ${pxToRem(12)};
+  font-size: ${pxToRem(18)};
+  line-height: ${pxToRem(25)};
   font-family: var(--font-acid-grotesk-book);
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    font-size: ${pxToRem(22)};
+    line-height: 1.2;
+  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -129,7 +134,7 @@ const InformationForm = (props: Props) => {
 
   return (
     <InformationFormWrapper>
-      <Title>About your project</Title>
+      <Title>What's the opportunity or challenge?</Title>
       <Field
         id="information"
         name="information"
@@ -137,7 +142,7 @@ const InformationForm = (props: Props) => {
         rows={4}
         required
         className="field field__full"
-        placeholder="Tell us about your project"
+        placeholder="New launch, repositioning, growth, internal change, fundraising, product release… anything useful for context."
         validate={validate}
       />
       <ButtonWrapper>
@@ -155,7 +160,7 @@ const InformationForm = (props: Props) => {
           disabled={!canSubmit}
           $canSubmit={canSubmit}
         >
-          Submit
+          Start a conversation
         </Button>
       </ButtonWrapper>
     </InformationFormWrapper>
